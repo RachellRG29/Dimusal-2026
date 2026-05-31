@@ -1,0 +1,733 @@
+/* ── HERO ── */
+.hero {
+  margin: 1rem 1.25rem;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  min-height: 620px;
+  display: flex;
+  align-items: flex-end;
+  background: var(--black);
+}
+
+/* capa 1: fondo negro con imagen de textura */
+.bg-hero {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.88;
+  z-index: 1;
+}
+
+/* capa 2: overlay degradado */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(1, 2, 1, 0.08) 0%,
+    rgba(1, 2, 1, 0.5) 100%
+  );
+  pointer-events: none;
+}
+
+/* capa 3: título sólido (debajo de la chica) */
+.titulo-dimusal {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  z-index: 3;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* capa 4: imagen chica piano (encima del título sólido) */
+.img-girl-piano {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 95%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom center;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* capa 5: título solo contorno (encima de la chica) */
+.contorno-titulo-dimusal {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  z-index: 5;
+  pointer-events: none;
+  line-height: 1;
+  /* solo contorno, sin relleno */
+  color: transparent;
+  -webkit-text-stroke: 2px var(--white);
+  text-stroke: 2px var(--white);
+}
+.hero__bottom {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1.75rem 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+/* ── BOTON REGISTRAR ARTISTAS ── */
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.28rem 1.1rem 0.28rem 0.28rem;
+  position: relative;
+  overflow: hidden;
+  /* sin transición en el propio botón — todo lo maneja ::before */
+}
+
+/* flood naranja que barre de izq → der */
+.hero__cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--orange);
+  border-radius: 50px;
+  transform: translateX(-105%);
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 0;
+}
+.hero__cta:hover::before {
+  transform: translateX(0);
+}
+
+/* círculo izquierdo */
+.hero__cta-arrow {
+  width: 30px;
+  height: 30px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  transition:
+    background 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hero__cta:hover .hero__cta-arrow {
+  background: rgba(21, 21, 21, 0.826);
+  transform: translateX(4px);
+}
+.hero__cta-arrow svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hero__cta:hover .hero__cta-arrow svg {
+  transform: translateX(3px);
+}
+
+/* texto — entra desde la derecha con leve slide */
+.hero__cta-text {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--black);
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  transition:
+    color 0.3s ease 0.1s,
+    transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translateX(0);
+}
+.hero__cta:hover .hero__cta-text {
+  color: #fff;
+  transform: translateX(3px); /* leve movimiento hacia izq al hover */
+}
+
+/* ── notas musicales ── */
+.hero__note {
+  position: absolute;
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: none;
+}
+/* posiciones distintas para cada nota */
+.hero__note--1 {
+  left: 22%;
+  bottom: 20%;
+}
+.hero__note--2 {
+  left: 50%;
+  bottom: 25%;
+}
+.hero__note--3 {
+  left: 72%;
+  bottom: 18%;
+}
+
+/* al hover las notas flotan hacia arriba y desaparecen */
+.hero__cta:hover .hero__note--1 {
+  animation: noteFloat 0.7s ease forwards 0.1s;
+}
+.hero__cta:hover .hero__note--2 {
+  animation: noteFloat 0.7s ease forwards 0.22s;
+}
+.hero__cta:hover .hero__note--3 {
+  animation: noteFloat 0.7s ease forwards 0.34s;
+}
+
+@keyframes scrollDot {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.4;
+  }
+}
+
+/* ── ABOUT ── */
+.about {
+  padding: 5rem 1.25rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.about__top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+.about__heading {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.about__desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+  max-width: 480px;
+}
+.about__logo-placeholder {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gray);
+  opacity: 0.25;
+  white-space: nowrap;
+}
+
+/* feature cards row */
+.about__features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 30px;
+  background-image: url(../images/homepage/banner-piano.png);
+  border-radius: 20px;
+  background-size: 100%; /* ocupa todo el ancho */
+  background-repeat: no-repeat;
+  background-position: center 60%; /* segundo valor: sube/baja la imagen */
+}
+
+.feature-card {
+  background: #f2f4f754;
+  border: 1.5px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  padding: 1.5rem;
+  line-height: 1.65;
+  color: #333;
+}
+.feature-card:first-child {
+  background: #1e1e1ed8;
+  backdrop-filter: blur(2px);
+  color: var(--white);
+  border-color: transparent;
+}
+
+/* ── OPPORTUNITIES ── */
+.opps {
+  padding: 4rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.opps__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.opp-card {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.opp-card__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.opp-card--artists .opp-card__bg-fill {
+  background: linear-gradient(135deg, #ffbb85 0%, #ff9b51 100%);
+}
+.opp-card--producers .opp-card__bg-fill {
+  background: linear-gradient(135deg, #afddff 0%, #6ab8f7 100%);
+}
+.opp-card--events .opp-card__bg-fill {
+  background: linear-gradient(135deg, #afddff 0%, #6ab8f7 100%);
+}
+
+.opp-card__bg-fill {
+  position: absolute;
+  inset: 0;
+}
+.opp-card__silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 85%;
+  opacity: 0.95;
+}
+.opp-card__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.1rem 1.1rem 1.1rem;
+  pointer-events: none;
+}
+.opp-card__label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.2;
+  max-width: 75%;
+}
+.opp-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--black);
+  background: linear-gradient(90deg, #afddff 0%, #8e8f91 100%);
+  border-radius: 50px;
+  padding: 0.45rem 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--black);
+  width: fit-content;
+  pointer-events: all;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.opp-card__btn:hover {
+  opacity: 0.85;
+}
+/* btn para card naranja de artistas */
+.opp-card--artists .opp-card__btn {
+  background: linear-gradient(90deg, #ffd4a8 0%, #8e8f91 100%);
+}
+.opp-card__desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #333;
+  padding: 0 0 0.5rem;
+}
+
+/* cards with desc below */
+.opp-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── ALLIES ── */
+.allies {
+  padding: 3.5rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.allies__heading {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.allies__logos {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.ally-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+}
+.ally-logo__icon {
+  width: auto;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ally-logo__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ally-logo__text {
+  line-height: 1.2;
+}
+.ally-logo__sub {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ally-logo__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gray);
+}
+
+/* ── CTA BANNER ── */
+/* wrapper externo para contener la chica que sobresale */
+.cta-banner-wrap {
+  margin: 2rem 1.25rem 1.2rem;
+  position: relative;
+  border-radius: 24px;
+}
+.cta-banner {
+  border-radius: 24px;
+  display: grid;
+  grid-template-columns: 1fr 38%;
+  min-height: 220px;
+  overflow: hidden;
+}
+/* lado izquierdo: degradado durazno */
+.cta-banner__left {
+  background: linear-gradient(
+    160deg,
+    var(--grad2-from) 0%,
+    var(--grad2-mid) 60%,
+    var(--grad2-to) 100%
+  );
+  border-radius: 20px;
+  padding: 2.5rem 8rem 2.5rem 2.5rem; /* padding-right amplio para q la chica no tape el texto */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+/* lado derecho: fondo negro */
+.cta-banner__right {
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.cta-banner__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.65;
+  border-radius: 40px;
+}
+.cta-banner__logo {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--white);
+  z-index: 2;
+  letter-spacing: -0.5px;
+}
+/* chica: posicionada sobre el wrapper, en la unión de los dos lados */
+.cta-banner__girl {
+  position: absolute;
+  bottom: -25px;
+  /* separación desde izq = columna izq (~62%) - mitad ancho chica */
+  right: 35%;
+  transform: translateX(46%);
+  height: 115%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom;
+  z-index: 10;
+  pointer-events: none;
+}
+.cta-banner__title {
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.cta-banner__sub {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.cta-banner__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* ── BOTON PARA REGISTRAR PRODUCTORES/ORGANIZADORES ── */
+.hero__cta_po {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.28rem 1.1rem 0.28rem 0.28rem;
+  position: relative;
+  overflow: hidden;
+  /* sin transición en el propio botón — todo lo maneja ::before */
+}
+
+/* flood naranja que barre de izq → der */
+.hero__cta_po::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gray);
+  border-radius: 50px;
+  transform: translateX(-105%);
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 0;
+}
+.hero__cta_po:hover::before {
+  transform: translateX(0);
+}
+
+/* círculo izquierdo */
+.hero__cta-arrow-po {
+  width: 30px;
+  height: 30px;
+  background: var(--gray);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  transition:
+    background 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hero__cta_po:hover .hero__cta-arrow-po {
+  background: #ff9b51c0;
+  transform: translateX(4px);
+}
+.hero__cta-arrow-po svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hero__cta_po:hover .hero__cta-arrow-po svg {
+  transform: translateX(3px);
+}
+
+/* texto — entra desde la derecha con leve slide */
+.hero__cta-text-po {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--black);
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  transition:
+    color 0.3s ease 0.1s,
+    transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translateX(0);
+}
+.hero__cta_po:hover .hero__cta-text-po {
+  color: #fff;
+  transform: translateX(3px); /* leve movimiento hacia izq al hover */
+}
+
+/* ── notas musicales ── */
+.hero__note-po {
+  position: absolute;
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: none;
+}
+/* posiciones distintas para cada nota */
+.hero__note--1 {
+  left: 22%;
+  bottom: 20%;
+}
+.hero__note--2 {
+  left: 50%;
+  bottom: 25%;
+}
+.hero__note--3 {
+  left: 72%;
+  bottom: 18%;
+}
+
+/* al hover las notas flotan hacia arriba y desaparecen */
+.hero__cta_po:hover .hero__note--1 {
+  animation: noteFloat 0.7s ease forwards 0.1s;
+}
+.hero__cta_po:hover .hero__note--2 {
+  animation: noteFloat 0.7s ease forwards 0.22s;
+}
+.hero__cta_po:hover .hero__note--3 {
+  animation: noteFloat 0.7s ease forwards 0.34s;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+  padding: 1.25rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* ────────────────────────
+       RESPONSIVE
+    ──────────────────────── */
+@media (max-width: 900px) {
+  .about__features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .opps__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  /* nav */
+  .navbar__links,
+  .navbar__actions {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+
+  /* hero */
+  .hero {
+    margin: 0.75rem 0.75rem;
+    min-height: 380px;
+  }
+  .titulo-dimusal,
+  .contorno-titulo-dimusal {
+    font-size: 3rem;
+  }
+  .hero__tagline {
+    font-size: 0.8rem;
+  }
+  .hero__bottom {
+    padding: 1.25rem;
+  }
+  .scroll-indicator {
+    display: none;
+  }
+
+  /* about */
+  .about__top {
+    grid-template-columns: 1fr;
+  }
+  .about__logo-placeholder {
+    display: none;
+  }
+  .about__features {
+    grid-template-columns: 1fr;
+  }
+
+  /* opps */
+  .opps__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* cta banner */
+  .cta-banner {
+    grid-template-columns: 1fr;
+  }
+  .cta-banner__image {
+    display: none;
+  }
+  .cta-banner__content {
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title-bg {
+    font-size: 2.5rem;
+  }
+}

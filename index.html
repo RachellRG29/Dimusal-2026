@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIMUSAL – Homepage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/homepage.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+  </head>
+  <body>
+    <!-- ══ NAVBAR ══ -->
+    <nav class="navbar">
+      <span class="navbar__logo">DIMUSAL</span>
+      <ul class="navbar__links">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#oportunidades">Oportunidades</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <button class="btn btn--outline">Iniciar sesión</button>
+        <button class="btn btn--orange">Registrarse</button>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menú" role="button">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- mobile nav -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#">Inicio</a>
+      <a href="#oportunidades">Oportunidades</a>
+      <a href="#contacto">Contacto</a>
+      <button class="btn btn--outline" style="width: 100%">
+        Iniciar sesión
+      </button>
+      <button class="btn btn--orange" style="width: 100%">Registrarse</button>
+    </div>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero">
+      <!-- CAPA 1: fondo bg negro/textura -->
+      <div class="bg-hero">
+        <img
+          class="hero__bg"
+          src="images/homepage/bg-black-bf.png"
+          alt="Fondo oscuro"
+        />
+      </div>
+
+      <!-- CAPA 2: overlay degradado -->
+      <div class="hero__overlay"></div>
+
+      <!-- CAPA 3: título sólido (detrás de la chica) -->
+      <div class="titulo-dimusal">DIMUSAL</div>
+
+      <!-- CAPA 4: imagen chica piano (encima del título sólido) -->
+      <img
+        class="img-girl-piano"
+        src="images/homepage/piano-girl-inicio.png"
+        alt="Artista tocando piano"
+      />
+
+      <!-- CAPA 5: contorno del título (encima de la chica) -->
+      <div class="contorno-titulo-dimusal">DIMUSAL</div>
+
+      <div class="scroll-indicator">
+        <div class="scroll-indicator__mouse">
+          <div class="scroll-indicator__dot"></div>
+        </div>
+      </div>
+
+      <!-- grupo de boton+tagline -->
+      <div class="hero__bottom">
+        <!-- boton registrate como artista -->
+        <a href="#" class="hero__cta">
+          <div class="hero__cta-arrow">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </div>
+          <span class="hero__cta-text">Regístrate como artista</span>
+          <!-- notas musicales decorativas -->
+          <span class="hero__note hero__note--1">♪</span>
+          <span class="hero__note hero__note--2">♫</span>
+          <span class="hero__note hero__note--3">♩</span>
+        </a>
+        <p class="hero__tagline">"Dónde tu música encuentra oportunidad"</p>
+      </div>
+    </section>
+
+    <!-- ══ ABOUT ══ -->
+    <section class="about">
+      <div class="about__top">
+        <div>
+          <h2 class="about__heading">¿Qué es DIMUSAL?</h2>
+          <p class="about__desc">
+            DIMUSAL es el ecosistema musical de El Salvador que impulsa tu
+            carrera con oportunidades reales, visibilidad y conexiones directas.
+          </p>
+        </div>
+        <div class="about__logo-placeholder">Logo</div>
+      </div>
+
+      <div class="about__features">
+        <div class="feature-card">
+          Accede a convocatorias, difusión, oportunidades de contratación y
+          espacios culturales.
+        </div>
+        <div class="feature-card">
+          Mantén tu perfil activo, recibe notificaciones y aplica en segundos
+          desde cualquier lugar.
+        </div>
+        <div class="feature-card">
+          Conexión entre promotores u organizadores. DIMUSAL trabaja para que tu
+          talento llegue más lejos.
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ OPPORTUNITIES ══ -->
+    <section class="opps" id="oportunidades">
+      <h2 class="section-title">Oportunidades</h2>
+
+      <div class="opps__grid">
+        <!-- Para Artistas -->
+        <div class="opp-wrapper">
+          <div class="opp-card opp-card--artists">
+            <div
+              class="opp-card__bg-fill"
+              style="
+                background: linear-gradient(135deg, #ffbb85 0%, #ff9b51 100%);
+              "
+            ></div>
+            <img
+              class="opp-card__silhouette"
+              src="images/homepage/img-musicos.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <div class="opp-card__content">
+              <span class="opp-card__label">Para Artistas</span>
+              <span class="opp-card__btn">Comenzar ahora</span>
+            </div>
+          </div>
+          <p class="opp-card__desc">
+            Impulsa tu carrera accediendo a oportunidades verificadas, muestra
+            tu música a productores y organizadores, y construye tu red
+            profesional en El Salvador.
+          </p>
+        </div>
+
+        <!-- Para Productores -->
+        <div class="opp-wrapper">
+          <div class="opp-card">
+            <div
+              class="opp-card__bg-fill"
+              style="
+                background: linear-gradient(135deg, #afddff 0%, #6ab8f7 100%);
+              "
+            ></div>
+            <img
+              class="opp-card__silhouette"
+              src="images/homepage/img-productor.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <div class="opp-card__content">
+              <span class="opp-card__label">Para Productores</span>
+              <span class="opp-card__btn">Explorar talento</span>
+            </div>
+          </div>
+          <p class="opp-card__desc">
+            Encuentra talento local auténtico, publica convocatorias y gestiona
+            casting directamente desde la plataforma con perfiles verificados.
+          </p>
+        </div>
+
+        <!-- Para Organizadores -->
+        <div class="opp-wrapper">
+          <div class="opp-card">
+            <div
+              class="opp-card__bg-fill"
+              style="
+                background: linear-gradient(135deg, #afddff 0%, #6ab8f7 100%);
+              "
+            ></div>
+            <img
+              class="opp-card__silhouette"
+              src="images/homepage/img-organizador-ev.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <div class="opp-card__content">
+              <span class="opp-card__label">Para Organizadores de eventos</span>
+              <span class="opp-card__btn">Publicar evento</span>
+            </div>
+          </div>
+          <p class="opp-card__desc">
+            Llena tus lineups con artistas emergentes y consolidados. Publica
+            tus festivales, tocatas o sesiones en vivo y recibe aplicaciones
+            organizadas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ALLIES ══ -->
+    <section class="allies">
+      <h3 class="allies__heading">Apoyado por aliados estratégicos</h3>
+      <div class="allies__logos">
+        <div class="ally-logo">
+          <div class="ally-logo__icon">
+            <img
+              src="images/logo/micultura.svg"
+              alt="Gobierno de El Salvador"
+            />
+          </div>
+          <div class="ally-logo__text">
+            <div class="ally-logo__sub">Gobierno de El Salvador</div>
+            <div class="ally-logo__name">Ministerio<br />de Cultura</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CTA BANNER ══ -->
+    <div class="cta-banner-wrap">
+      <div class="cta-banner">
+        <!-- IZQUIERDA: degradado durazno + texto -->
+        <div class="cta-banner__left">
+          <h2 class="cta-banner__title">
+            Hecho para la comunidad musical de El Salvador
+          </h2>
+          <p class="cta-banner__sub">
+            Crea tu perfil profesional, conéctate con tu audiencia y ofrece
+            oportunidades laborales
+          </p>
+          <div class="cta-banner__action">
+            <!-- boton registrate como productor/organizador -->
+            <a href="#" class="hero__cta_po">
+              <div class="hero__cta-arrow-po">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </div>
+              <span class="hero__cta-text-po"
+                >Regístrate como productor/organizador</span
+              >
+              <!-- notas musicales decorativas -->
+              <span class="hero__note-po hero__note--1">♪</span>
+              <span class="hero__note-po hero__note--2">♫</span>
+              <span class="hero__note-po hero__note--3">♩</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- DERECHA: fondo negro + bg etéreo + logo -->
+        <div class="cta-banner__right">
+          <img
+            class="cta-banner__bg"
+            src="images/homepage/background-etereal-3.png"
+            alt=""
+          />
+          <span class="cta-banner__logo">Logo</span>
+        </div>
+      </div>
+
+      <!-- fuera del grid, posicionada sobre la unión de los dos lados -->
+      <img
+        class="cta-banner__girl"
+        src="images/homepage/img-chica-piano-ethereal.png"
+        alt="Artista en el piano"
+      />
+    </div>
+
+    <!-- ══ FOOTER ══ -->
+    <footer id="contacto">
+      @2026 DIMUSAL | Todos los derechos reservados.
+    </footer>
+
+    <script src="js/homepage.js"></script>
+  </body>
+</html>

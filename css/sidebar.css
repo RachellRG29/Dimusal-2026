@@ -1,0 +1,147 @@
+/* ── CSS VARIABLES ── */
+:root {
+  --white: #f2f4f7;
+  --gray: #1e1e1e;
+  --black: #010201;
+  --orange: #ff9b51;
+  --sky: #afddff;
+  --grad1-from: #f2f4f7;
+  --grad1-to: #ff9b51;
+  --grad2-from: #f3d1a6;
+  --grad2-mid: #fad9ab;
+  --grad2-to: #ecdccc;
+}
+
+/* ── RESET ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Syne", sans-serif;
+  font-weight: 500;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+}
+.navbar__logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--orange);
+  letter-spacing: -0.5px;
+}
+.navbar__links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.navbar__links a {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--black);
+  transition: color 0.2s;
+}
+.navbar__links a:hover {
+  color: var(--orange);
+}
+.navbar__actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.btn {
+  font-family: "Syne", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 50px;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.btn--outline {
+  background: transparent;
+  border: 1.5px solid var(--black);
+  color: var(--black);
+}
+.btn--outline:hover {
+  background: var(--black);
+  color: var(--white);
+}
+.btn--orange {
+  background: var(--orange);
+  color: var(--white);
+}
+.btn--orange:hover {
+  background: #e8834a;
+}
+
+/* hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* mobile menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 99;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.mobile-menu.open {
+  display: flex;
+}
+.mobile-menu a {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.mobile-menu .btn {
+  text-align: center;
+}

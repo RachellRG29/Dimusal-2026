@@ -1,0 +1,13 @@
+blanco: #F2F4F7
+gris: #1E1E1E
+negro: #010201
+naranja: #FF9B51
+celeste: #AFDDFF
+
+degradado1: ##F2F4F7,#FF9B51
+degradado2: #F3D1A6, #FAD9AB, #ECDCCC
+
+Fuente: SYNE 
+titulo: syne bold
+subtitulo: syne semibold
+textos/parrafos: syne medium
