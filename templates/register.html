@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIMUSAL – Crear cuenta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/paleta-colores.css" />
+    <link rel="stylesheet" href="../css/register/register.css" />
+  </head>
+  <body>
+    <div class="formulario-register">
+      <!-- ══ FONDO: bg imagen + overlay ══ -->
+      <div class="register-bg">
+        <img
+          class="register-bg__img"
+          src="../images/homepage/banner-bateria.png"
+          alt=""
+        />
+        <div class="register-bg__overlay"></div>
+        <div class="register-bg__content">
+          <span class="register-bg__logo">DIMUSAL</span>
+          <p class="register-bg__tagline">
+            Impulsa tu carrera musical<br />en El Salvador
+          </p>
+        </div>
+      </div>
+
+      <!-- ══ CARD FLOTANTE ══ -->
+      <div class="register-right">
+        <div class="register-card">
+          <h1 class="register-card__title">Crear cuenta</h1>
+
+          <!-- ══ PASO 1: Datos personales ══ -->
+          <div class="register-step" id="step-1">
+            <h2 class="register-section-title">Datos personales</h2>
+
+            <!-- Nombre completo -->
+            <div class="reg-field">
+              <label for="nombre"
+                >Nombre completo <span class="req">*</span></label
+              >
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                autocomplete="name"
+              />
+            </div>
+
+            <!-- Teléfono + DUI -->
+            <div class="reg-row">
+              <div class="reg-field">
+                <label for="telefono"
+                  >Teléfono <span class="req">*</span></label
+                >
+                <input
+                  type="tel"
+                  id="telefono"
+                  name="telefono"
+                  autocomplete="tel"
+                />
+              </div>
+              <div class="reg-field">
+                <label for="dui">DUI <span class="req">*</span></label>
+                <input type="text" id="dui" name="dui" />
+              </div>
+            </div>
+
+            <!-- Correo -->
+            <div class="reg-field">
+              <label for="correo"
+                >Correo electrónico <span class="req">*</span></label
+              >
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                autocomplete="email"
+              />
+            </div>
+
+            <!-- Contraseña -->
+            <div class="reg-field">
+              <label for="password"
+                >Contraseña <span class="req">*</span></label
+              >
+              <div class="reg-field__input-wrap">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  autocomplete="new-password"
+                />
+                <span
+                  class="reg-field__eye"
+                  data-target="password"
+                  aria-label="Ver contraseña"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div class="reg-field">
+              <label for="confirm-password"
+                >Confirmar contraseña <span class="req">*</span></label
+              >
+              <div class="reg-field__input-wrap">
+                <input
+                  type="password"
+                  id="confirm-password"
+                  name="confirm-password"
+                  autocomplete="new-password"
+                />
+                <span
+                  class="reg-field__eye"
+                  data-target="confirm-password"
+                  aria-label="Ver contraseña"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Ubicación -->
+            <h2 class="register-section-title" style="margin-top: 1.5rem">
+              Ubicación
+            </h2>
+            <div class="reg-row">
+              <div class="reg-field">
+                <label for="departamento"
+                  >Departamento <span class="req">*</span></label
+                >
+                <input type="text" id="departamento" name="departamento" />
+              </div>
+              <div class="reg-field">
+                <label for="municipio"
+                  >Municipio <span class="req">*</span></label
+                >
+                <input type="text" id="municipio" name="municipio" />
+              </div>
+            </div>
+
+            <!-- boton registrar/avanzar -->
+            <a class="btn-register" id="btn-continuar" type="button">
+              Continuar
+            </a>
+          </div>
+
+          <!-- ══ PASO 2: Tipo de cuenta ══ -->
+          <div class="register-step hidden" id="step-2">
+            <h2 class="register-section-title">Tipo de cuenta</h2>
+
+            <div class="reg-field">
+              <label
+                >Cuéntanos quién eres y de dónde eres
+                <span class="req">*</span></label
+              >
+              <div class="reg-checkboxes">
+                <label class="reg-checkbox-label" id="check-artista-label">
+                  <input
+                    type="checkbox"
+                    id="check-artista"
+                    name="tipo"
+                    value="artista"
+                  />
+                  <span class="reg-checkbox-custom"></span>
+                  <span class="reg-checkbox-text">
+                    <strong>Artista</strong>
+                    <small
+                      >→ Sube tu música, aplica a eventos o colaboraciones
+                      profesionales.</small
+                    >
+                  </span>
+                </label>
+                <label class="reg-checkbox-label" id="check-oyente-label">
+                  <input
+                    type="checkbox"
+                    id="check-oyente"
+                    name="tipo"
+                    value="oyente"
+                  />
+                  <span class="reg-checkbox-custom"></span>
+                  <span class="reg-checkbox-text">
+                    <strong>Oyente</strong>
+                    <small
+                      >→ Descubre nuevos talentos, sigue artistas, asiste a
+                      evento</small
+                    >
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Nombre artístico + Portafolio -->
+            <div class="reg-row">
+              <div class="reg-field">
+                <label for="nombre-artistico">Nombre artístico</label>
+                <input
+                  type="text"
+                  id="nombre-artistico"
+                  name="nombre-artistico"
+                />
+              </div>
+              <div class="reg-field">
+                <label for="portafolio"
+                  >Portafolio <span class="req">*</span></label
+                >
+                <input
+                  type="url"
+                  id="portafolio"
+                  name="portafolio"
+                  placeholder="https://"
+                />
+              </div>
+            </div>
+
+            <!-- Foto/logo + Portada -->
+            <div class="reg-row">
+              <div class="reg-field">
+                <label>Foto/logo (500x500) <span class="req">*</span></label>
+                <div class="reg-upload" id="upload-foto">
+                  <input
+                    type="file"
+                    id="foto-logo"
+                    name="foto-logo"
+                    accept="image/*"
+                  />
+                  <span class="reg-upload__placeholder">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="reg-field">
+                <label
+                  >Portada del perfil (1500x500)
+                  <span class="req">*</span></label
+                >
+                <div class="reg-upload" id="upload-portada">
+                  <input
+                    type="file"
+                    id="portada"
+                    name="portada"
+                    accept="image/*"
+                  />
+                  <span class="reg-upload__placeholder">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="reg-field">
+              <label class="reg-label-group">Redes sociales</label>
+              <div class="reg-socials">
+                <div class="reg-social-item">
+                  <span class="reg-social-name">Spotify</span>
+                  <input type="text" name="spotify" placeholder="lorem ipsum" />
+                </div>
+                <div class="reg-social-item">
+                  <span class="reg-social-name">Instagram</span>
+                  <div class="reg-social-at-wrap">
+                    <span class="reg-social-at">@</span>
+                    <input type="text" name="instagram" />
+                  </div>
+                </div>
+                <div class="reg-social-item">
+                  <span class="reg-social-name">YouTube</span>
+                  <input type="text" name="youtube" placeholder="lorem ipsum" />
+                </div>
+                <div class="reg-social-item">
+                  <span class="reg-social-name">Tiktok</span>
+                  <div class="reg-social-at-wrap">
+                    <span class="reg-social-at">@</span>
+                    <input type="text" name="tiktok" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ¿Qué buscas? -->
+            <div class="reg-field">
+              <label for="objetivo"
+                >¿Qué buscas en DIMUSAL? (puedes elegir varias)
+                <span class="req">*</span></label
+              >
+              <div class="reg-select-wrap">
+                <select id="objetivo" name="objetivo">
+                  <option value="" disabled selected>Seleccione</option>
+                  <option value="eventos">Participar en eventos</option>
+                  <option value="colaboraciones">
+                    Colaboraciones profesionales
+                  </option>
+                  <option value="musica">Subir y compartir música</option>
+                  <option value="descubrir">Descubrir nuevos talentos</option>
+                  <option value="networking">Networking musical</option>
+                </select>
+                <span class="reg-select-arrow">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <!-- grupo de botones de register -->
+            <div class="botones-reg">
+              <!-- boton regresar -->
+              <a href="" class="btn-back-reg" type="button">back</a>
+
+              <!-- boton registrar -->
+              <a class="btn-register" type="button">Registrarme</a>
+            </div>
+
+            <p class="reg-login-link">
+              ¿Tienes cuenta? <a href="login.html">[Inicia sesión]</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- fin card -->
+    </div>
+
+    <script src="../js/register.js/register.js"></script>
+  </body>
+</html>

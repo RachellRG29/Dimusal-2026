@@ -1,0 +1,35 @@
+/* ── CSS VARIABLES ── */
+:root {
+  --white: #f2f4f7;
+  --gray: #1e1e1e;
+  --black: #010201;
+  --orange: #ff9b51;
+  --sky: #afddff;
+  --grad1-from: #f2f4f7;
+  --grad1-to: #ff9b51;
+  --grad2-from: #f3d1a6;
+  --grad2-mid: #fad9ab;
+  --grad2-to: #ecdccc;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden; /* sin scroll en la página */
+}
+
+body {
+  font-family: "Syne", sans-serif;
+  font-weight: 500;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+}

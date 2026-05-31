@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIMUSAL – Iniciar sesión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/login/login.css" />
+    <link rel="stylesheet" href="../css/paleta-colores.css" />
+  </head>
+  <body>
+    <div class="formulario-login">
+      <!-- ══ LADO IZQUIERDO ══ -->
+      <div class="login-left">
+        <!-- bg imagen — reemplaza src con tu imagen -->
+        <img
+          class="login-left__bg"
+          src="../images/homepage/banner-piano.png"
+          alt=""
+        />
+        <!-- overlay negro 40% -->
+        <div class="login-left__overlay"></div>
+
+        <div class="login-left__content">
+          <span class="login-left__logo">DIMUSAL</span>
+          <p class="login-left__tagline">
+            Impulsa tu carrera musical<br />en El Salvador
+          </p>
+        </div>
+      </div>
+
+      <!-- ══ LADO DERECHO: formulario ══ -->
+      <div class="login-right">
+        <div class="login-card">
+          <h1 class="login-card__title">Bienvenido</h1>
+          <p class="login-card__subtitle">
+            Tu talento merece ser escuchado. Descubre oportunidades,
+            colaboraciones y eventos en la industria musical salvadoreña.
+          </p>
+
+          <!-- Correo -->
+          <div class="login-field">
+            <label for="email">Correo electrónico</label>
+            <div class="login-field__input-wrap">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="login-field">
+            <label for="password">Contraseña</label>
+            <div class="login-field__input-wrap">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+              />
+              <span
+                class="login-field__eye"
+                id="togglePassword"
+                aria-label="Ver contraseña"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <p class="login-forgot">¿Olvidaste tu contraseña?</p>
+
+          <button class="login-btn" type="button">Inicia sesión</button>
+
+          <p class="login-register">
+            ¿Aún no tienes cuenta?
+            <a href="../templates/register.html">[Regístrate gratis]</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Toggle mostrar/ocultar contraseña
+      const toggle = document.getElementById("togglePassword");
+      const passInput = document.getElementById("password");
+      toggle.addEventListener("click", () => {
+        const isPassword = passInput.type === "password";
+        passInput.type = isPassword ? "text" : "password";
+        toggle.querySelector("svg").style.opacity = isPassword ? "0.5" : "1";
+      });
+    </script>
+  </body>
+</html>
