@@ -664,6 +664,9 @@ footer {
   padding: 1.25rem 1rem;
   font-size: 0.9rem;
   font-weight: 400;
+  left: 0 !important;
+  right: 0 !important;
+  position: absolute;
 }
 
 /* ────────────────────────
