@@ -90,6 +90,11 @@
   -webkit-text-stroke: 2px var(--white);
   text-stroke: 2px var(--white);
 }
+
+.hero__tagline {
+  color: var(--white);
+}
+
 .hero__bottom {
   position: relative;
   z-index: 3;
@@ -273,15 +278,17 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   padding: 30px;
-  background-image: url(../../images/homepage/banner-piano.png);
   border-radius: 20px;
-  background-size: 100%; /* ocupa todo el ancho */
+
+  background-image: url(../../images/homepage/banner-piano.png);
   background-repeat: no-repeat;
-  background-position: center 60%; /* segundo valor: sube/baja la imagen */
+  background-position: center;
+  background-size: cover;
 }
 
 .feature-card {
   background: #f2f4f754;
+  backdrop-filter: blur(2px);
   border: 1.5px solid rgba(0, 0, 0, 0.07);
   border-radius: 16px;
   padding: 1.5rem;
@@ -480,10 +487,6 @@
   );
   border-radius: 20px;
   padding: 2.5rem 8rem 2.5rem 2.5rem; /* padding-right amplio para q la chica no tape el texto */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
 }
 /* lado derecho: fondo negro */
 .cta-banner__right {
@@ -501,6 +504,7 @@
   object-position: center;
   opacity: 0.65;
   border-radius: 40px;
+  filter: blur(2px);
 }
 .cta-banner__logo {
   position: absolute;
@@ -672,12 +676,63 @@ footer {
 /* ────────────────────────
        RESPONSIVE
     ──────────────────────── */
+
+@media (max-width: 1400px) {
+  /* hero */
+  .hero {
+    margin: 0.75rem;
+    min-height: 560px;
+    align-items: flex-end;
+  }
+
+  .img-girl-piano {
+    height: 100%;
+    z-index: 4;
+  }
+
+  .hero__tagline {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .hero__bottom {
+    z-index: 6 !important; /* mayor que z-index:4 de la chica */
+    padding: 1.25rem;
+  }
+}
+
 @media (max-width: 900px) {
   .about__features {
     grid-template-columns: repeat(2, 1fr);
+
+    padding: 24px;
+    background-size: cover;
+    background-position: center;
   }
   .opps__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cta-banner-wrap {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .cta-banner__girl {
+    height: 100%;
+  }
+
+  .hero__bottom {
+    z-index: 6 !important; /* mayor que z-index:4 de la chica */
+    padding: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    /* gradiente para q el botón sea legible sobre la imagen */
+    background: linear-gradient(
+      to top,
+      rgba(1, 2, 1, 0.65) 0%,
+      transparent 100%
+    );
   }
 }
 
@@ -693,19 +748,28 @@ footer {
 
   /* hero */
   .hero {
-    margin: 0.75rem 0.75rem;
-    min-height: 380px;
+    margin: 0.75rem;
+    min-height: 560px;
+    align-items: flex-end;
   }
+
   .titulo-dimusal,
   .contorno-titulo-dimusal {
-    font-size: 3rem;
+    font-size: 2.8rem;
+    top: 1.25rem;
   }
+
+  .img-girl-piano {
+    height: 100%;
+    z-index: 4;
+  }
+
   .hero__tagline {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
   }
-  .hero__bottom {
-    padding: 1.25rem;
-  }
+
+  /* scroll indicator oculto en móvil */
   .scroll-indicator {
     display: none;
   }
@@ -717,8 +781,15 @@ footer {
   .about__logo-placeholder {
     display: none;
   }
+
   .about__features {
     grid-template-columns: 1fr;
+
+    padding: 20px;
+    min-height: 500px;
+
+    background-size: cover;
+    background-position: 30% center;
   }
 
   /* opps */
@@ -728,11 +799,37 @@ footer {
 
   /* cta banner */
   .cta-banner {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* una columna */
+    grid-template-rows: auto 160px; /* texto arriba, franja negra abajo */
   }
+
+  .cta-banner__left {
+    padding: 2rem 1.75rem 5rem 1.75rem; /* padding-bottom para q la chica no tape el texto */
+    border-radius: 20px 20px 0 0;
+  }
+  .cta-banner__right {
+    border-radius: 0 0 20px 20px;
+  }
+
+  .cta-banner-wrap {
+    margin: 1rem 0.75rem 1.2rem;
+  }
+
+  .cta-banner__girl {
+    right: 50%;
+    transform: translateX(50%);
+    height: 260px; /* tamaño fijo para móvil */
+    bottom: -25px; /* justo sobre la franja negra */
+  }
+
   .cta-banner__image {
     display: none;
   }
+
+  .hero__cta-text-po {
+    white-space: normal;
+  }
+
   .cta-banner__content {
     padding: 1.75rem 1.5rem;
   }
@@ -741,5 +838,20 @@ footer {
 @media (max-width: 480px) {
   .hero__title-bg {
     font-size: 2.5rem;
+  }
+
+  .titulo-dimusal,
+  .contorno-titulo-dimusal {
+    font-size: 2.2rem;
+  }
+
+  .img-girl-piano {
+    height: 100%;
+  }
+
+  .cta-banner__girl {
+    height: auto;
+    width: 100%;
+    bottom: -25px;
   }
 }
