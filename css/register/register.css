@@ -51,7 +51,7 @@ body {
 .register-bg__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.45);
   z-index: 1;
 }
 
@@ -583,24 +583,135 @@ body {
   opacity: 0.75;
 }
 
-/* ══ RESPONSIVE ══ */
-@media (max-width: 768px) {
+@media (max-width: 1004px) {
   html,
   body {
-    overflow: hidden;
+    width: 100%;
+    height: auto !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+  }
+
+  body {
+    display: block;
+  }
+
+  .formulario-register {
+    position: relative;
+    min-height: 100vh;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .register-bg__content {
+    top: 30px;
+    right: 24px;
+    max-width: 300px;
+  }
+
+  .register-bg__tagline {
+    font-size: 1.2rem;
+    max-width: 300px;
   }
 
   .register-right {
+    padding-top: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
     width: 100%;
-    padding: 1rem;
-    align-items: center;
+    height: auto !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+  }
+
+  body {
+    display: block;
+  }
+
+  .formulario-register {
+    position: relative;
+    min-height: 100vh;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Fondo */
+  .register-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+  }
+
+  .register-bg__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .register-bg__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  /* Logo y tagline */
+  .register-bg__content {
+    position: absolute;
+    top: 30px;
+    right: 24px;
+    left: auto;
+
+    z-index: 3;
+  }
+
+  .register-bg__logo {
+    font-size: 1.6rem;
+  }
+
+  /* Mantener tamaño estable */
+  .register-bg__tagline {
+    font-size: 1.3rem;
+    line-height: 1.35;
+    max-width: 380px;
+  }
+
+  /* Formulario */
+  .register-right {
+    position: relative;
+
+    left: 0 !important;
+
+    width: 100%;
+    height: auto !important;
+    min-height: auto;
+
+    padding: 140px 16px 40px;
+
+    z-index: 5;
   }
 
   .register-card {
-    border-radius: 20px;
-    padding: 2.5rem 1.5rem 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.14);
-    max-height: calc(100vh - 2rem);
+    width: 100%;
+    max-width: 100%;
+
+    max-height: none !important;
+    overflow: visible !important;
+
+    padding: 2rem 1.5rem;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-radius: 24px;
+
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
   }
 
   .reg-row {
@@ -610,11 +721,5 @@ body {
 
   .reg-socials {
     grid-template-columns: 1fr;
-  }
-
-  .register-bg__content {
-    top: 30px;
-    right: 24px;
-    left: auto;
   }
 }
