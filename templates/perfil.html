@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIMUSAL – Perfil Artista</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/paleta-colores.css" />
+    <link rel="stylesheet" href="../css/perfil/perfil.css" />
+  </head>
+  <body>
+    <!-- ══ NAVBAR ══ -->
+    <nav class="pa-navbar">
+      <div class="pa-navbar__left">
+        <button class="pa-btn-back" id="btnBack">
+          <span class="pa-btn-back__arrow">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </span>
+          <span>Regresar</span>
+        </button>
+      </div>
+      <div class="pa-navbar__center">
+        <span class="pa-navbar__logo">DIMUSAL</span>
+      </div>
+      <div class="pa-navbar__right">
+        <div class="pa-navbar__user" id="userMenu">
+          <span>Hola, <strong>Artista</strong></span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="16"
+            height="16"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+          <!-- dropdown -->
+          <div class="pa-user-dropdown" id="userDropdown">
+            <a href="#">Mi perfil</a>
+            <a href="#">Configuración</a>
+            <a href="#" class="logout">Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ══ PORTADA ══ -->
+    <div class="pa-cover">
+      <img
+        class="pa-cover__img"
+        src="../../images/homepage/banner-piano.png"
+        alt="Portada"
+        id="coverImg"
+      />
+      <button class="pa-cover__edit" id="editCover" title="Editar portada">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+          />
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+      </button>
+      <input type="file" id="coverInput" accept="image/*" hidden />
+    </div>
+
+    <!-- ══ HEADER PERFIL ══ -->
+    <div class="pa-profile-header">
+      <div class="pa-profile-header__inner">
+        <!-- avatar -->
+        <div class="pa-avatar-wrap">
+          <img
+            class="pa-avatar"
+            src="../../images/homepage/piano-girl-inicio.png"
+            alt="Avatar artista"
+            id="avatarImg"
+          />
+          <button class="pa-avatar__edit" id="editAvatar" title="Cambiar foto">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 13V17C21 18.1046 20.1046 19 19 19H9M5 19C3.89543 19 3 18.1046 3 17V9C3 7.89543 3.89543 7 5 7H7.5C8.05228 7 8.5 6.55228 8.5 6C8.5 5.44772 8.94772 5 9.5 5H14.5C15.0523 5 15.5 5.44772 15.5 6C15.5 6.55228 15.9477 7 16.5 7H19C20.1046 7 21 7.89543 21 9M9 13C9 14.6569 10.3431 16 12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10"
+                stroke="#fff"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <input type="file" id="avatarInput" accept="image/*" hidden />
+        </div>
+
+        <!-- info básica -->
+        <div class="pa-profile-header__info">
+          <h1 class="pa-profile-header__name">Jane Doe</h1>
+          <span class="pa-badge pa-badge--orange">Artist</span>
+          <p class="pa-profile-header__meta">
+            Departamento, Municipio &nbsp;·&nbsp; Disponible para
+            <span class="pa-meta-dash">________</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- tabs -->
+      <div class="pa-tabs">
+        <button class="pa-tab active" data-tab="perfil">Perfil</button>
+        <button class="pa-tab" data-tab="portafolio">Portafolio</button>
+        <button class="pa-tab" data-tab="oportunidades">Oportunidades</button>
+        <button class="pa-tab" data-tab="resenas">Reseñas</button>
+      </div>
+    </div>
+
+    <!-- ══ CONTENIDO TABS ══ -->
+    <main class="pa-main">
+      <!-- ── TAB: PERFIL ── -->
+      <section class="pa-tab-content active" id="tab-perfil">
+        <div class="pa-grid">
+          <!-- columna izquierda -->
+          <div class="pa-col-left">
+            <!-- Sobre mí -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Sobre mí</h2>
+              <p class="pa-card__text">
+                Lorem ipsum dolor sit amet consectetur adipiscing elit quisque
+                faucibus.
+              </p>
+              <p class="pa-card__text">
+                Lorem ipsum dolor sit amet consectetur adipiscing elit quisque
+                faucibus.
+              </p>
+              <hr class="pa-divider" />
+              <p class="pa-card__label">Géneros musicales</p>
+              <div class="pa-tags">
+                <span class="pa-tag pa-tag--orange">Artist</span>
+                <span class="pa-tag pa-tag--dark">Artist</span>
+                <span class="pa-tag pa-tag--dark">Artist</span>
+                <span class="pa-tag pa-tag--dark">Artist</span>
+              </div>
+            </div>
+
+            <!-- Instrumentos -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Instrumentos</h2>
+              <div class="pa-instruments-grid">
+                <div class="pa-instrument">
+                  <div class="pa-instrument__header">
+                    <span class="pa-instrument__name">Guitarra eléctrica</span>
+                    <span class="pa-instrument__level">Básico</span>
+                  </div>
+                  <div class="pa-progress">
+                    <div class="pa-progress__bar" style="width: 30%"></div>
+                  </div>
+                </div>
+                <div class="pa-instrument">
+                  <div class="pa-instrument__header">
+                    <span class="pa-instrument__name">Guitarra</span>
+                    <span class="pa-instrument__level">Básico</span>
+                  </div>
+                  <div class="pa-progress">
+                    <div class="pa-progress__bar" style="width: 30%"></div>
+                  </div>
+                </div>
+                <div class="pa-instrument">
+                  <div class="pa-instrument__header">
+                    <span class="pa-instrument__name">Bajo</span>
+                    <span class="pa-instrument__level">Intermedio</span>
+                  </div>
+                  <div class="pa-progress">
+                    <div class="pa-progress__bar" style="width: 55%"></div>
+                  </div>
+                </div>
+                <div class="pa-instrument">
+                  <div class="pa-instrument__header">
+                    <span class="pa-instrument__name">Producción</span>
+                    <span class="pa-instrument__level">Avanzado</span>
+                  </div>
+                  <div class="pa-progress">
+                    <div class="pa-progress__bar" style="width: 85%"></div>
+                  </div>
+                </div>
+                <div class="pa-instrument">
+                  <div class="pa-instrument__header">
+                    <span class="pa-instrument__name">Composición</span>
+                    <span class="pa-instrument__level">Básico</span>
+                  </div>
+                  <div class="pa-progress">
+                    <div class="pa-progress__bar" style="width: 30%"></div>
+                  </div>
+                </div>
+                <div class="pa-instrument">
+                  <div class="pa-instrument__header">
+                    <span class="pa-instrument__name">Piano</span>
+                    <span class="pa-instrument__level">Intermedio</span>
+                  </div>
+                  <div class="pa-progress">
+                    <div class="pa-progress__bar" style="width: 55%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /col-left -->
+
+          <!-- columna derecha -->
+          <div class="pa-col-right">
+            <!-- Información -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Información</h2>
+              <div class="pa-info-list">
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">Municipio</span>
+                  <span class="pa-info-item__sub">Departamento</span>
+                </div>
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">xx años</span>
+                  <span class="pa-info-item__sub">Activo desde 20xx</span>
+                </div>
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">correo@correo.com</span>
+                </div>
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">+503 0000-0000</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Redes Sociales</h2>
+              <div class="pa-socials-grid">
+                <a href="#" class="pa-social-tag">TikTok</a>
+                <a href="#" class="pa-social-tag">Instagram</a>
+                <a href="#" class="pa-social-tag">YouTube</a>
+                <a href="#" class="pa-social-tag">Spotify</a>
+              </div>
+            </div>
+
+            <!-- Disponibilidad -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Disponibilidad</h2>
+              <p class="pa-disponible">
+                <span class="pa-disponible__dot"></span>
+                Disponible para contratación
+              </p>
+              <div class="pa-tags" style="margin-top: 0.75rem">
+                <span class="pa-tag pa-tag--dark">Conciertos</span>
+                <span class="pa-tag pa-tag--dark">Grabación</span>
+                <span class="pa-tag pa-tag--dark">Clases</span>
+              </div>
+            </div>
+          </div>
+          <!-- /col-right -->
+        </div>
+      </section>
+
+      <!-- ── TAB: PORTAFOLIO ── -->
+      <section class="pa-tab-content" id="tab-portafolio">
+        <div class="pa-card pa-card--empty">
+          <p>El portafolio del artista aparecerá aquí.</p>
+        </div>
+      </section>
+
+      <!-- ── TAB: OPORTUNIDADES ── -->
+      <section class="pa-tab-content" id="tab-oportunidades">
+        <div class="pa-card pa-card--empty">
+          <p>Las oportunidades aplicadas aparecerán aquí.</p>
+        </div>
+      </section>
+
+      <!-- ── TAB: RESEÑAS ── -->
+      <section class="pa-tab-content" id="tab-resenas">
+        <div class="pa-card pa-card--empty">
+          <p>Las reseñas del artista aparecerán aquí.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="../js/perfil/perfil.js"></script>
+  </body>
+</html>

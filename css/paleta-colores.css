@@ -11,6 +11,12 @@
   --grad2-mid: #fad9ab;
   --grad2-to: #ecdccc;
 
+  /*perfil*/
+  --card-bg: #ffffff;
+  --border: rgba(255, 155, 81, 0.25);
+  --radius: 16px;
+
+  /*homepage-nabvar*/
   --white-nabvar: #f2f4f7dd;
 }
 
