@@ -273,7 +273,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   padding: 30px;
-  background-image: url(../images/homepage/banner-piano.png);
+  background-image: url(../../images/homepage/banner-piano.png);
   border-radius: 20px;
   background-size: 100%; /* ocupa todo el ancho */
   background-repeat: no-repeat;
