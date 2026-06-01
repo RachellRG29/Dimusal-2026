@@ -100,6 +100,8 @@
   padding: 1.75rem 2rem;
   flex-wrap: wrap;
   gap: 1rem;
+
+  overflow: visible !important;
 }
 /* ── BOTON REGISTRAR ARTISTAS ── */
 .hero__cta {
@@ -181,47 +183,54 @@
 /* ── notas musicales ── */
 .hero__note {
   position: absolute;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #fff;
   opacity: 0;
   pointer-events: none;
   z-index: 3;
-  transition: none;
 }
 /* posiciones distintas para cada nota */
 .hero__note--1 {
-  left: 22%;
-  bottom: 20%;
+  left: 30%;
+  bottom: 12px;
 }
+
 .hero__note--2 {
   left: 50%;
-  bottom: 25%;
+  bottom: 12px;
 }
+
 .hero__note--3 {
-  left: 72%;
-  bottom: 18%;
+  left: 70%;
+  bottom: 12px;
 }
 
 /* al hover las notas flotan hacia arriba y desaparecen */
 .hero__cta:hover .hero__note--1 {
-  animation: noteFloat 0.7s ease forwards 0.1s;
-}
-.hero__cta:hover .hero__note--2 {
-  animation: noteFloat 0.7s ease forwards 0.22s;
-}
-.hero__cta:hover .hero__note--3 {
-  animation: noteFloat 0.7s ease forwards 0.34s;
+  animation: noteUp 0.9s ease-out forwards;
 }
 
-@keyframes scrollDot {
-  0%,
-  100% {
+.hero__cta:hover .hero__note--2 {
+  animation: noteUp 0.9s ease-out 0.15s forwards;
+}
+
+.hero__cta:hover .hero__note--3 {
+  animation: noteUp 0.9s ease-out 0.3s forwards;
+}
+
+@keyframes noteUp {
+  0% {
     transform: translateY(0);
+    opacity: 0;
+  }
+
+  15% {
     opacity: 1;
   }
-  50% {
-    transform: translateY(8px);
-    opacity: 0.4;
+
+  100% {
+    transform: translateY(-45px);
+    opacity: 0;
   }
 }
 
@@ -638,13 +647,13 @@
 
 /* al hover las notas flotan hacia arriba y desaparecen */
 .hero__cta_po:hover .hero__note--1 {
-  animation: noteFloat 0.7s ease forwards 0.1s;
+  animation: noteUp 0.7s ease forwards 0.1s;
 }
 .hero__cta_po:hover .hero__note--2 {
-  animation: noteFloat 0.7s ease forwards 0.22s;
+  animation: noteUp 0.7s ease forwards 0.22s;
 }
 .hero__cta_po:hover .hero__note--3 {
-  animation: noteFloat 0.7s ease forwards 0.34s;
+  animation: noteUp 0.7s ease forwards 0.34s;
 }
 
 /* ── FOOTER ── */

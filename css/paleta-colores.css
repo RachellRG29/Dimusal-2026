@@ -12,24 +12,7 @@
   --grad2-to: #ecdccc;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  height: 100%;
-  overflow: hidden; /* sin scroll en la página */
-}
-
 body {
   font-family: "Syne", sans-serif;
   font-weight: 500;
-  min-height: 100vh;
-  display: flex;
-  align-items: stretch;
 }
