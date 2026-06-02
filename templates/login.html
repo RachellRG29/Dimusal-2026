@@ -97,16 +97,7 @@
         </div>
       </div>
     </div>
-
-    <script>
-      // Toggle mostrar/ocultar contraseña
-      const toggle = document.getElementById("togglePassword");
-      const passInput = document.getElementById("password");
-      toggle.addEventListener("click", () => {
-        const isPassword = passInput.type === "password";
-        passInput.type = isPassword ? "text" : "password";
-        toggle.querySelector("svg").style.opacity = isPassword ? "0.5" : "1";
-      });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/login.js/login.js"></script>
   </body>
 </html>
