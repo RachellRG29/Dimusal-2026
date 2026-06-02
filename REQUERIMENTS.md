@@ -2,12 +2,13 @@
 
 ## Programas necesarios (instalar manualmente)
 
-| Programa   | Versión | Descarga                            |
-| ---------- | ------- | ----------------------------------- |
-| Node.js    | v20 LTS | https://nodejs.org                  |
-| PostgreSQL | v17     | https://www.postgresql.org/download |
-| pgAdmin 4  | v8      | https://www.pgadmin.org/download    |
-| VS Code    | última  | https://code.visualstudio.com       |
+| Programa   | Versión | Descarga                              |
+| ---------- | ------- | ------------------------------------- |
+| Node.js    | v20 LTS | https://nodejs.org                    |
+| PostgreSQL | v17     | https://www.postgresql.org/download   |
+| pgAdmin 4  | v8      | https://www.pgadmin.org/download      |
+| VS Code    | última  | https://code.visualstudio.com         |
+| nodemailer | v6+     | Se instala con npm install nodemailer |
 
 ## Extensiones de VS Code necesarias
 
@@ -22,13 +23,14 @@ npm install
 
 Esto instalará automáticamente desde package.json:
 
-| Paquete  | Para qué sirve                     |
-| -------- | ---------------------------------- |
-| express  | Servidor backend                   |
-| pg       | Conexión con PostgreSQL            |
-| bcryptjs | Encriptar contraseñas              |
-| dotenv   | Variables de entorno (.env)        |
-| cors     | Permitir conexión frontend-backend |
+| Paquete    | Para qué sirve                           |
+| ---------- | ---------------------------------------- |
+| express    | Servidor backend                         |
+| pg         | Conexión con PostgreSQL                  |
+| bcryptjs   | Encriptar contraseñas                    |
+| dotenv     | Variables de entorno (.env)              |
+| cors       | Permitir conexión frontend-backend       |
+| nodemailer | Enviar correos de verificación por Gmail |
 
 ## Configurar archivo .env
 
@@ -79,3 +81,21 @@ node server.js
 
 - **SweetAlert2** — alertas bonitas
   https://cdn.jsdelivr.net/npm/sweetalert2@11
+
+## Configuración de correo Gmail
+
+Para que funcione el envío de códigos de verificación:
+
+1. Ir a: https://myaccount.google.com/security
+2. Activar **verificación en 2 pasos**
+3. Ir a: https://myaccount.google.com/apppasswords
+4. Escribir un nombre (ej: "Dimusal") y clic en **Crear**
+5. Copiar la contraseña de 16 caracteres generada
+6. Agregarla al .env sin espacios:
+
+GMAIL_USER=tucorreo@gmail.com
+GMAIL_PASS=xxxxxxxxxxxxxxxx
+
+## Instalar nodemailer
+
+npm install nodemailer

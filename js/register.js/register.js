@@ -108,7 +108,7 @@ document.querySelector(".btn-back-reg").addEventListener("click", (e) => {
   }, 300);
 });
 
-// ── Registrarme (enviar a PostgreSQL) ────────────────────────
+// ── Registrarme (enviar código de verificación) ───────────────
 document
   .querySelector("#step-2 .btn-register")
   .addEventListener("click", async () => {
@@ -163,41 +163,46 @@ document
       tiktok: document.querySelector('[name="tiktok"]').value.trim(),
     };
 
-    // Loading mientras registra
+    // Loading mientras envía el código
     Swal.fire({
-      title: "Creando tu cuenta...",
+      title: "Enviando código de verificación...",
       allowOutsideClick: false,
       didOpen: () => Swal.showLoading(),
     });
 
     try {
-      const res = await fetch("http://localhost:3000/api/register", {
+      const res = await fetch("http://localhost:3000/api/enviar-codigo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos),
+        body: JSON.stringify({
+          correo: datos.correo,
+          nombre: datos.nombre_completo,
+        }),
       });
 
       const data = await res.json();
 
       if (data.success) {
+        // Guardar todos los datos para registrar después de verificar
+        localStorage.setItem("reg_pendiente", JSON.stringify(datos));
         localStorage.removeItem("reg_step1");
 
         await Swal.fire({
           icon: "success",
-          title: "¡Cuenta creada exitosamente!",
-          text: "Tu cuenta fue creada correctamente. Ahora inicia sesión.",
+          title: "¡Código enviado!",
+          text: `Revisa tu correo ${datos.correo} e ingresa el código de 4 dígitos.`,
           confirmButtonColor: "#f97316",
-          timer: 2500,
+          timer: 3000,
           timerProgressBar: true,
           showConfirmButton: false,
           allowOutsideClick: false,
         });
 
-        window.location.href = "login.html";
+        window.location.href = "verificacion.html";
       } else {
         Swal.fire({
           icon: "error",
-          title: "Error al registrar",
+          title: "Error al enviar código",
           text: data.mensaje,
           confirmButtonColor: "#f97316",
         });
