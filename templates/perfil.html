@@ -12,6 +12,8 @@
     />
     <link rel="stylesheet" href="../css/paleta-colores.css" />
     <link rel="stylesheet" href="../css/perfil/perfil.css" />
+
+    <link rel="stylesheet" href="../css/btn-idioma.css" />
   </head>
   <body>
     <!-- ══ NAVBAR ══ -->
@@ -31,15 +33,16 @@
               <polyline points="12 19 5 12 12 5" />
             </svg>
           </span>
-          <span>Regresar</span>
+          <span data-es="Regresar" data-en="Go back">Regresar</span>
         </button>
       </div>
       <div class="pa-navbar__center">
         <span class="pa-navbar__logo">DIMUSAL</span>
       </div>
       <div class="pa-navbar__right">
+        <a class="btn-idioma" id="btnIdioma">ES</a>
         <div class="pa-navbar__user" id="userMenu">
-          <span>Hola, <strong>Artista</strong></span>
+          <span data-es='"Hola, <strong>Artista</strong>"' data-en='""'></span>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -54,9 +57,17 @@
           </svg>
           <!-- dropdown -->
           <div class="pa-user-dropdown" id="userDropdown">
-            <a href="#">Mi perfil</a>
-            <a href="#">Configuración</a>
-            <a href="#" class="logout">Cerrar sesión</a>
+            <a href="#" data-es="Mi perfil" data-en="My profile">Mi perfil</a>
+            <a href="#" data-es="Configuración" data-en="Configuration"
+              >Configuración</a
+            >
+            <a
+              href="#"
+              class="logout"
+              data-es="Cerrar sesión"
+              data-en="Cerrar sesión"
+              >Cerrar sesión</a
+            >
           </div>
         </div>
       </div>
@@ -129,10 +140,38 @@
 
       <!-- tabs -->
       <div class="pa-tabs">
-        <button class="pa-tab active" data-tab="perfil">Perfil</button>
-        <button class="pa-tab" data-tab="portafolio">Portafolio</button>
-        <button class="pa-tab" data-tab="oportunidades">Oportunidades</button>
-        <button class="pa-tab" data-tab="resenas">Reseñas</button>
+        <button
+          class="pa-tab active"
+          data-tab="perfil"
+          data-es="Perfil"
+          data-en="Perfil"
+        >
+          Perfil
+        </button>
+        <button
+          class="pa-tab"
+          data-tab="portafolio"
+          data-es="Portafolio"
+          data-en="Portfolio"
+        >
+          Portafolio
+        </button>
+        <button
+          class="pa-tab"
+          data-tab="oportunidades"
+          data-es="Oportunidades"
+          data-en="Opportunities"
+        >
+          Oportunidades
+        </button>
+        <button
+          class="pa-tab"
+          data-tab="resenas"
+          data-es="Reseñas"
+          data-en="Reviews"
+        >
+          Reseñas
+        </button>
       </div>
     </div>
 
@@ -162,7 +201,9 @@
                   />
                 </svg>
               </button>
-              <h2 class="pa-card__title">Sobre mí</h2>
+              <h2 class="pa-card__title" data-es="Sobre mí" data-en="About me">
+                Sobre mí
+              </h2>
               <p class="pa-card__text">
                 Lorem ipsum dolor sit amet consectetur adipiscing elit quisque
                 faucibus.
@@ -172,7 +213,13 @@
                 faucibus.
               </p>
               <hr class="pa-divider" />
-              <p class="pa-card__label">Géneros musicales</p>
+              <p
+                class="pa-card__label"
+                data-es="Géneros musicales"
+                data-en="musical genres"
+              >
+                Géneros musicales
+              </p>
               <div class="pa-tags">
                 <span class="pa-tag pa-tag--orange">Artist</span>
                 <span class="pa-tag pa-tag--dark">Artist</span>
@@ -200,7 +247,13 @@
                   />
                 </svg>
               </button>
-              <h2 class="pa-card__title">Instrumentos</h2>
+              <h2
+                class="pa-card__title"
+                data-es="Instrumentos musicales"
+                data-en="mMsical instruments"
+              >
+                Instrumentos
+              </h2>
               <div class="pa-instruments-grid">
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
@@ -282,7 +335,13 @@
                   />
                 </svg>
               </button>
-              <h2 class="pa-card__title">Información</h2>
+              <h2
+                class="pa-card__title"
+                data-es="Información"
+                data-en="Information"
+              >
+                Información
+              </h2>
               <div class="pa-info-list">
                 <div class="pa-info-item">
                   <span class="pa-info-item__main">Municipio</span>
@@ -320,7 +379,13 @@
                   />
                 </svg>
               </button>
-              <h2 class="pa-card__title">Redes Sociales</h2>
+              <h2
+                class="pa-card__title"
+                data-es="Redes Sociales"
+                data-en="Social networks"
+              >
+                Redes Sociales
+              </h2>
               <div class="pa-socials-grid">
                 <a href="#" class="pa-social-tag">TikTok</a>
                 <a href="#" class="pa-social-tag">Instagram</a>
@@ -348,7 +413,13 @@
                   />
                 </svg>
               </button>
-              <h2 class="pa-card__title">Disponibilidad</h2>
+              <h2
+                class="pa-card__title"
+                data-es="Disponibilidad"
+                data-en="Availability"
+              >
+                Disponibilidad
+              </h2>
               <p class="pa-disponible">
                 <span class="pa-disponible__dot"></span>
                 Disponible para contratación
@@ -367,25 +438,41 @@
       <!-- ── TAB: PORTAFOLIO ── -->
       <section class="pa-tab-content" id="tab-portafolio">
         <div class="pa-card pa-card--empty">
-          <p>El portafolio del artista aparecerá aquí.</p>
+          <p
+            data-es="El portafolio del artista aparecerá aquí."
+            data-en="The artist's portfolio will appear here."
+          >
+            El portafolio del artista aparecerá aquí.
+          </p>
         </div>
       </section>
 
       <!-- ── TAB: OPORTUNIDADES ── -->
       <section class="pa-tab-content" id="tab-oportunidades">
         <div class="pa-card pa-card--empty">
-          <p>Las oportunidades aplicadas aparecerán aquí.</p>
+          <p
+            data-es="Las oportunidades aplicadas aparecerán aquí."
+            data-en="The applied opportunities will appear here."
+          >
+            Las oportunidades aplicadas aparecerán aquí.
+          </p>
         </div>
       </section>
 
       <!-- ── TAB: RESEÑAS ── -->
       <section class="pa-tab-content" id="tab-resenas">
         <div class="pa-card pa-card--empty">
-          <p>Las reseñas del artista aparecerán aquí.</p>
+          <p
+            data-es="Las reseñas del artista aparecerán aquí."
+            data-en="The artist's reviews will appear here."
+          >
+            Las reseñas del artista aparecerán aquí.
+          </p>
         </div>
       </section>
     </main>
 
     <script src="../js/perfil/perfil.js"></script>
+    <script src="../js/idioma.js"></script>
   </body>
 </html>

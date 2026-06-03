@@ -12,6 +12,8 @@
     />
     <link rel="stylesheet" href="../css/login/login.css" />
     <link rel="stylesheet" href="../css/paleta-colores.css" />
+
+    <link rel="stylesheet" href="../css/btn-idioma.css" />
   </head>
   <body>
     <div class="formulario-login">
@@ -28,24 +30,40 @@
 
         <div class="login-left__content">
           <span class="login-left__logo">DIMUSAL</span>
-          <p class="login-left__tagline">
+          <p
+            class="login-left__tagline"
+            data-es='"Impulsa tu carrera musical<br/>en El Salvador"'
+            data-en='"Boost your music career <br/> in El Salvador"'
+          >
             Impulsa tu carrera musical<br />en El Salvador
           </p>
+
+          <a class="btn-idioma" id="btnIdioma">ES</a>
         </div>
       </div>
 
       <!-- ══ LADO DERECHO: formulario ══ -->
       <div class="login-right">
         <div class="login-card">
-          <h1 class="login-card__title">Bienvenido</h1>
-          <p class="login-card__subtitle">
-            Tu talento merece ser escuchado. Descubre oportunidades,
-            colaboraciones y eventos en la industria musical salvadoreña.
-          </p>
+          <h1
+            class="login-card__title"
+            data-es="Bienvenido"
+            data-en="Bienvenido"
+          ></h1>
+          <p
+            class="login-card__subtitle"
+            data-es="Tu talento merece ser escuchado. Descubre oportunidades,
+            colaboraciones y eventos en la industria musical salvadoreña."
+            data-en="Your talent deserves to be heard. Discover opportunities, collaborations, and events in the Salvadoran music industry."
+          ></p>
 
           <!-- Correo -->
           <div class="login-field">
-            <label for="email">Correo electrónico</label>
+            <label
+              for="email"
+              data-es="Correo electrónico"
+              data-en="Email"
+            ></label>
             <div class="login-field__input-wrap">
               <input
                 type="email"
@@ -58,7 +76,11 @@
 
           <!-- Contraseña -->
           <div class="login-field">
-            <label for="password">Contraseña</label>
+            <label
+              for="password"
+              data-es="Contraseña"
+              data-en="Password"
+            ></label>
             <div class="login-field__input-wrap">
               <input
                 type="password"
@@ -86,11 +108,28 @@
             </div>
           </div>
 
-          <p class="login-forgot">¿Olvidaste tu contraseña?</p>
+          <p
+            class="login-forgot"
+            data-es="¿Olvidaste tu contraseña?"
+            data-en="Forgot your password?"
+          >
+            ¿Olvidaste tu contraseña?
+          </p>
 
-          <button class="login-btn" type="button">Inicia sesión</button>
+          <button
+            class="login-btn"
+            type="button"
+            data-es="Inicia sesión"
+            data-en="Login"
+          >
+            Inicia sesión
+          </button>
 
-          <p class="login-register">
+          <p
+            class="login-register"
+            data-es='¿Aún no tienes cuenta? <a href="../templates/register.html">[Regístrate gratis]</a>'
+            data-en='Don&apos;t have an account yet? <a href="../templates/register.html">[Register for free]</a>'
+          >
             ¿Aún no tienes cuenta?
             <a href="../templates/register.html">[Regístrate gratis]</a>
           </p>
@@ -99,5 +138,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/login.js/login.js"></script>
+    <script src="../js/idioma.js"></script>
   </body>
 </html>

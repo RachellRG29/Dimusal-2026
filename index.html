@@ -15,26 +15,45 @@
 
     <link rel="stylesheet" href="css/homepage/navbar-hp.css" />
     <link rel="stylesheet" href="css/homepage/homepage.css" />
-    <link rel="stylesheet" href="css/footer.css" />
+
+    <link rel="stylesheet" href="css/btn-idioma.css" />
   </head>
   <body>
     <!-- ══ NAVBAR ══ -->
     <nav class="navbar">
       <span class="navbar__logo">DIMUSAL</span>
       <ul class="navbar__links">
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#oportunidades">Oportunidades</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li>
+          <a href="#" data-es="Inicio" data-en="Home">Inicio</a>
+        </li>
+        <li>
+          <a
+            href="#oportunidades"
+            data-es="Oportunidades"
+            data-en="Opportunities"
+            >Oportunidades</a
+          >
+        </li>
+        <li>
+          <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
+        </li>
       </ul>
+
+      <a class="btn-idioma" id="btnIdioma">ES</a>
+
       <div class="navbar__actions">
         <a
           href="templates/login.html"
+          data-es="Iniciar sesión"
+          data-en="Login"
           class="btn btn--outline"
           id="btn-iniciar-sesion"
           >Iniciar sesión</a
         >
         <a
           href="templates/register.html"
+          data-es="Registrarse"
+          data-en="Register"
           class="btn btn--orange"
           id="btn-registrar"
           >Registrarse</a
@@ -47,11 +66,15 @@
 
     <!-- mobile nav -->
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#">Inicio</a>
-      <a href="#oportunidades">Oportunidades</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#" data-es="Inicio" data-en="Home">Inicio</a>
+      <a href="#oportunidades" data-es="Oportunidades" data-en="Opportunities"
+        >Oportunidades</a
+      >
+      <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
       <a
         href="/templates/login.html"
+        data-es="Iniciar sesión"
+        data-en="Login"
         class="btn btn--outline"
         style="width: 100%"
       >
@@ -59,6 +82,8 @@
       </a>
       <a
         href="/templates/register.html"
+        data-es="Registrarse"
+        data-en="Register"
         class="btn btn--orange"
         style="width: 100%"
         >Registrarse</a
@@ -115,13 +140,24 @@
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </div>
-          <span class="hero__cta-text">Regístrate como artista</span>
+          <span
+            class="hero__cta-text"
+            data-es="Regístrate como artista"
+            data-en="Register as an artist"
+            >Regístrate como artista</span
+          >
           <!-- notas musicales decorativas -->
           <span class="hero__note hero__note--1">♪</span>
           <span class="hero__note hero__note--2">♫</span>
           <span class="hero__note hero__note--3">♩</span>
         </a>
-        <p class="hero__tagline">"Dónde tu música encuentra oportunidad"</p>
+        <p
+          class="hero__tagline"
+          data-es='"Dónde tu música encuentra oportunidad"'
+          data-en='"Where your music finds opportunity"'
+        >
+          "Dónde tu música encuentra oportunidad"
+        </p>
       </div>
     </section>
 
@@ -129,34 +165,55 @@
     <section class="about">
       <div class="about__top">
         <div>
-          <h2 class="about__heading">¿Qué es DIMUSAL?</h2>
-          <p class="about__desc">
-            DIMUSAL es el ecosistema musical de El Salvador que impulsa tu
-            carrera con oportunidades reales, visibilidad y conexiones directas.
-          </p>
+          <h2
+            class="about__heading"
+            data-es="¿Qué es DIMUSAL?"
+            data-en="What is DIMUSAL?"
+          >
+            ¿Qué es DIMUSAL?
+          </h2>
+          <p
+            class="about__desc"
+            data-es="DIMUSAL es el ecosistema musical de El Salvador que impulsa tu
+            carrera con oportunidades reales, visibilidad y conexiones directas."
+            data-en="DIMUSAL is El Salvador's music ecosystem that boosts your
+            career with real opportunities, visibility, and direct connections."
+          ></p>
         </div>
         <div class="about__logo-placeholder">Logo</div>
       </div>
 
       <div class="about__features">
-        <div class="feature-card">
-          Accede a convocatorias, difusión, oportunidades de contratación y
-          espacios culturales.
-        </div>
-        <div class="feature-card">
-          Mantén tu perfil activo, recibe notificaciones y aplica en segundos
-          desde cualquier lugar.
-        </div>
-        <div class="feature-card">
-          Conexión entre promotores u organizadores. DIMUSAL trabaja para que tu
-          talento llegue más lejos.
-        </div>
+        <div
+          class="feature-card"
+          data-es="Accede a convocatorias, difusión, oportunidades de contratación y
+          espacios culturales."
+          data-en="Access calls for proposals, information, hiring opportunities, and
+          cultural spaces."
+        ></div>
+        <div
+          class="feature-card"
+          data-es="Mantén tu perfil activo, recibe notificaciones y aplica en segundos
+          desde cualquier lugar."
+          data-en="Keep your profile active, receive notifications, and apply in seconds from anywhere."
+        ></div>
+        <div
+          class="feature-card"
+          data-es="Conexión entre promotores u organizadores. DIMUSAL trabaja para que tu
+          talento llegue más lejos."
+          data-en="Connecting promoters and organizers. DIMUSAL works to help your
+          talent reach further."
+        ></div>
       </div>
     </section>
 
     <!-- ══ OPPORTUNITIES ══ -->
     <section class="opps" id="oportunidades">
-      <h2 class="section-title">Oportunidades</h2>
+      <h2
+        class="section-title"
+        data-es="Oportunidades"
+        data-en="Opportunities"
+      ></h2>
 
       <div class="opps__grid">
         <!-- Para Artistas -->
@@ -175,15 +232,26 @@
               aria-hidden="true"
             />
             <div class="opp-card__content">
-              <span class="opp-card__label">Para Artistas</span>
-              <span class="opp-card__btn">Comenzar ahora</span>
+              <span
+                class="opp-card__label"
+                data-es="Para Artistas"
+                data-en="For Artists"
+              ></span>
+              <span
+                class="opp-card__btn"
+                data-es="Comenzar ahora"
+                data-en="Start now"
+              ></span>
             </div>
           </div>
-          <p class="opp-card__desc">
-            Impulsa tu carrera accediendo a oportunidades verificadas, muestra
+          <p
+            class="opp-card__desc"
+            data-es="Impulsa tu carrera accediendo a oportunidades verificadas, muestra
             tu música a productores y organizadores, y construye tu red
-            profesional en El Salvador.
-          </p>
+            profesional en El Salvador."
+            data-en="Boost your career by accessing verified opportunities, 
+            showcase your music to producers and organizers, and build your professional network in El Salvador."
+          ></p>
         </div>
 
         <!-- Para Productores -->
@@ -202,14 +270,25 @@
               aria-hidden="true"
             />
             <div class="opp-card__content">
-              <span class="opp-card__label">Para Productores</span>
-              <span class="opp-card__btn">Explorar talento</span>
+              <span
+                class="opp-card__label"
+                data-es="Para Productores"
+                data-en="For Producers"
+              ></span>
+              <span
+                class="opp-card__btn"
+                data-es="Explorar talento"
+                data-en="Explore talent"
+              ></span>
             </div>
           </div>
-          <p class="opp-card__desc">
-            Encuentra talento local auténtico, publica convocatorias y gestiona
-            casting directamente desde la plataforma con perfiles verificados.
-          </p>
+          <p
+            class="opp-card__desc"
+            data-es="Encuentra talento local auténtico, publica convocatorias y gestiona
+            casting directamente desde la plataforma con perfiles verificados."
+            data-en="Find authentic local talent, post job openings, 
+            and manage casting calls directly from the platform with verified profiles."
+          ></p>
         </div>
 
         <!-- Para Organizadores -->
@@ -228,22 +307,38 @@
               aria-hidden="true"
             />
             <div class="opp-card__content">
-              <span class="opp-card__label">Para Organizadores de eventos</span>
-              <span class="opp-card__btn">Publicar evento</span>
+              <span
+                class="opp-card__label"
+                data-es="Para Organizadores de eventos"
+                data-en="For Event Organizers"
+              ></span>
+              <span
+                class="opp-card__btn"
+                data-es="Publicar evento"
+                data-en="Publish event"
+              ></span>
             </div>
           </div>
-          <p class="opp-card__desc">
-            Llena tus lineups con artistas emergentes y consolidados. Publica
+          <p
+            class="opp-card__desc"
+            data-es="Llena tus lineups con artistas emergentes y consolidados. Publica
             tus festivales, tocatas o sesiones en vivo y recibe aplicaciones
-            organizadas.
-          </p>
+            organizadas."
+            data-en="Fill your lineups with emerging and established artists. Publish
+            your festivals, gigs, or live sessions and receive organized
+            applications."
+          ></p>
         </div>
       </div>
     </section>
 
     <!-- ══ ALLIES ══ -->
     <section class="allies">
-      <h3 class="allies__heading">Apoyado por aliados estratégicos</h3>
+      <h3
+        class="allies__heading"
+        data-es="Apoyado por aliados estratégicos"
+        data-en="Supported by strategic allies"
+      ></h3>
       <div class="allies__logos">
         <div class="ally-logo">
           <div class="ally-logo__icon">
@@ -253,8 +348,20 @@
             />
           </div>
           <div class="ally-logo__text">
-            <div class="ally-logo__sub">Gobierno de El Salvador</div>
-            <div class="ally-logo__name">Ministerio<br />de Cultura</div>
+            <div
+              class="ally-logo__sub"
+              data-es="Gobierno de El Salvador"
+              data-en="Government of El Salvador"
+            >
+              Gobierno de El Salvador
+            </div>
+            <div
+              class="ally-logo__name"
+              data-es='"Ministerio<br />de Cultura"'
+              data-en='"Ministry<br />of Culture"'
+            >
+              Ministerio<br />de Cultura
+            </div>
           </div>
         </div>
       </div>
@@ -265,13 +372,17 @@
       <div class="cta-banner">
         <!-- IZQUIERDA: degradado durazno + texto -->
         <div class="cta-banner__left">
-          <h2 class="cta-banner__title">
-            Hecho para la comunidad musical de El Salvador
-          </h2>
-          <p class="cta-banner__sub">
-            Crea tu perfil profesional, conéctate con tu audiencia y ofrece
-            oportunidades laborales
-          </p>
+          <h2
+            class="cta-banner__title"
+            data-es="Hecho para la comunidad musical de El Salvador"
+            data-en="Made for the musical community of El Salvador"
+          ></h2>
+          <p
+            class="cta-banner__sub"
+            data-es="Crea tu perfil profesional, conéctate con tu audiencia y ofrece
+            oportunidades laborales"
+            data-en="Create your professional profile, connect with your audience, and offer job opportunities."
+          ></p>
           <div class="cta-banner__action">
             <!-- boton registrate como productor/organizador -->
             <a href="#" class="hero__cta_po">
@@ -288,9 +399,11 @@
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
               </div>
-              <span class="hero__cta-text-po"
-                >Regístrate como productor/organizador</span
-              >
+              <span
+                class="hero__cta-text-po"
+                data-es="Regístrate como productor/organizador"
+                data-en="Register as a producer/organizer"
+              ></span>
               <!-- notas musicales decorativas -->
               <span class="hero__note-po hero__note--1">♪</span>
               <span class="hero__note-po hero__note--2">♫</span>
@@ -319,10 +432,13 @@
     </div>
 
     <!-- ══ FOOTER ══ -->
-    <footer id="contacto">
-      @2026 DIMUSAL | Todos los derechos reservados.
-    </footer>
+    <footer
+      id="contacto"
+      data-es="@2026 DIMUSAL | Todos los derechos reservados."
+      data-en="©2026 DIMUSAL | All rights reserved."
+    ></footer>
 
     <script src="js/homepage.js"></script>
+    <script src="js/idioma.js"></script>
   </body>
 </html>

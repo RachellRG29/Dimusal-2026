@@ -12,6 +12,8 @@
     />
     <link rel="stylesheet" href="../css/paleta-colores.css" />
     <link rel="stylesheet" href="../css/register/register.css" />
+
+    <link rel="stylesheet" href="../css/btn-idioma.css" />
   </head>
   <body>
     <div class="formulario-register">
@@ -25,24 +27,29 @@
         <div class="register-bg__overlay"></div>
         <div class="register-bg__content">
           <span class="register-bg__logo">DIMUSAL</span>
-          <p class="register-bg__tagline">
+          <p class="register-bg__tagline" data-es="" data-en="">
             Impulsa tu carrera musical<br />en El Salvador
           </p>
+          <a class="btn-idioma" id="btnIdioma">ES</a>
         </div>
       </div>
 
       <!-- ══ CARD FLOTANTE ══ -->
       <div class="register-right">
         <div class="register-card">
-          <h1 class="register-card__title">Crear cuenta</h1>
+          <h1 class="register-card__title" data-es="" data-en="">
+            Crear cuenta
+          </h1>
 
           <!-- ══ PASO 1: Datos personales ══ -->
           <div class="register-step" id="step-1">
-            <h2 class="register-section-title">Datos personales</h2>
+            <h2 class="register-section-title" data-es="" data-en="">
+              Datos personales
+            </h2>
 
             <!-- Nombre completo -->
             <div class="reg-field">
-              <label for="nombre"
+              <label for="nombre" data-es="" data-en=""
                 >Nombre completo <span class="req">*</span></label
               >
               <input
@@ -56,7 +63,7 @@
             <!-- Teléfono + DUI -->
             <div class="reg-row">
               <div class="reg-field">
-                <label for="telefono"
+                <label for="telefono" data-es="" data-en=""
                   >Teléfono <span class="req">*</span></label
                 >
                 <input
@@ -67,14 +74,16 @@
                 />
               </div>
               <div class="reg-field">
-                <label for="dui">DUI <span class="req">*</span></label>
+                <label for="dui" data-es="" data-en=""
+                  >DUI <span class="req">*</span></label
+                >
                 <input type="text" id="dui" name="dui" />
               </div>
             </div>
 
             <!-- Correo -->
             <div class="reg-field">
-              <label for="correo"
+              <label for="correo" data-es="" data-en=""
                 >Correo electrónico <span class="req">*</span></label
               >
               <input
@@ -87,7 +96,7 @@
 
             <!-- Contraseña -->
             <div class="reg-field">
-              <label for="password"
+              <label for="password" data-es="" data-en=""
                 >Contraseña <span class="req">*</span></label
               >
               <div class="reg-field__input-wrap">
@@ -119,7 +128,7 @@
 
             <!-- Confirmar contraseña -->
             <div class="reg-field">
-              <label for="confirm-password"
+              <label for="confirm-password" data-es="" data-en=""
                 >Confirmar contraseña <span class="req">*</span></label
               >
               <div class="reg-field__input-wrap">
@@ -155,13 +164,13 @@
             </h2>
             <div class="reg-row">
               <div class="reg-field">
-                <label for="departamento"
+                <label for="departamento" data-es="" data-en=""
                   >Departamento <span class="req">*</span></label
                 >
                 <input type="text" id="departamento" name="departamento" />
               </div>
               <div class="reg-field">
-                <label for="municipio"
+                <label for="municipio" data-es="" data-en=""
                   >Municipio <span class="req">*</span></label
                 >
                 <input type="text" id="municipio" name="municipio" />
@@ -169,21 +178,30 @@
             </div>
 
             <!-- boton registrar/avanzar -->
-            <a class="btn-register" id="btn-continuar" type="button">
+            <a
+              class="btn-register"
+              id="btn-continuar"
+              type="button"
+              data-es=""
+              data-en=""
+            >
               Continuar
             </a>
 
-            <p class="reg-login-link">
-              ¿Tienes cuenta? <a href="login.html">[Inicia sesión]</a>
+            <p class="reg-login-link" data-es="" data-en="">
+              ¿Tienes cuenta?
+              <a href="login.html" data-es="" data-en="">[Inicia sesión]</a>
             </p>
           </div>
 
           <!-- ══ PASO 2: Tipo de cuenta ══ -->
           <div class="register-step hidden" id="step-2">
-            <h2 class="register-section-title">Tipo de cuenta</h2>
+            <h2 class="register-section-title" data-es="" data-en="">
+              Tipo de cuenta
+            </h2>
 
             <div class="reg-field">
-              <label
+              <label data-es="" data-en=""
                 >Cuéntanos quién eres y de dónde eres
                 <span class="req">*</span></label
               >
@@ -197,8 +215,8 @@
                   />
                   <span class="reg-checkbox-custom"></span>
                   <span class="reg-checkbox-text">
-                    <strong>Artista</strong>
-                    <small
+                    <strong data-es="" data-en="">Artista</strong>
+                    <small data-es="" data-en=""
                       >→ Sube tu música, aplica a eventos o colaboraciones
                       profesionales.</small
                     >
@@ -213,8 +231,8 @@
                   />
                   <span class="reg-checkbox-custom"></span>
                   <span class="reg-checkbox-text">
-                    <strong>Oyente</strong>
-                    <small
+                    <strong data-es="" data-en="">Oyente</strong>
+                    <small data-es="" data-en=""
                       >→ Descubre nuevos talentos, sigue artistas, asiste a
                       evento</small
                     >
@@ -226,7 +244,9 @@
             <!-- Nombre artístico + Portafolio -->
             <div class="reg-row">
               <div class="reg-field">
-                <label for="nombre-artistico">Nombre artístico</label>
+                <label for="nombre-artistico" data-es="" data-en=""
+                  >Nombre artístico</label
+                >
                 <input
                   type="text"
                   id="nombre-artistico"
@@ -234,7 +254,7 @@
                 />
               </div>
               <div class="reg-field">
-                <label for="portafolio"
+                <label for="portafolio" data-es="" data-en=""
                   >Portafolio <span class="req">*</span></label
                 >
                 <input
@@ -249,7 +269,9 @@
             <!-- Foto/logo + Portada -->
             <div class="reg-row">
               <div class="reg-field">
-                <label>Foto/logo (500x500) <span class="req">*</span></label>
+                <label data-es="" data-en=""
+                  >Foto/logo (500x500) <span class="req">*</span></label
+                >
                 <div class="reg-upload" id="upload-foto">
                   <input
                     type="file"
@@ -274,7 +296,7 @@
                 </div>
               </div>
               <div class="reg-field">
-                <label
+                <label data-es="" data-en=""
                   >Portada del perfil (1500x500)
                   <span class="req">*</span></label
                 >
@@ -305,7 +327,9 @@
 
             <!-- Redes sociales -->
             <div class="reg-field">
-              <label class="reg-label-group">Redes sociales</label>
+              <label class="reg-label-group" data-es="" data-en=""
+                >Redes sociales</label
+              >
               <div class="reg-socials">
                 <div class="reg-social-item">
                   <span class="reg-social-name">Spotify</span>
@@ -334,20 +358,30 @@
 
             <!-- ¿Qué buscas? -->
             <div class="reg-field">
-              <label for="objetivo"
+              <label for="objetivo" data-es="" data-en=""
                 >¿Qué buscas en DIMUSAL? (puedes elegir varias)
                 <span class="req">*</span></label
               >
               <div class="reg-select-wrap">
                 <select id="objetivo" name="objetivo">
-                  <option value="" disabled selected>Seleccione</option>
-                  <option value="eventos">Participar en eventos</option>
-                  <option value="colaboraciones">
+                  <option value="" disabled selected data-es="" data-en="">
+                    Seleccione
+                  </option>
+                  <option value="eventos" data-es="" data-en="">
+                    Participar en eventos
+                  </option>
+                  <option value="colaboraciones" data-es="" data-en="">
                     Colaboraciones profesionales
                   </option>
-                  <option value="musica">Subir y compartir música</option>
-                  <option value="descubrir">Descubrir nuevos talentos</option>
-                  <option value="networking">Networking musical</option>
+                  <option value="musica" data-es="" data-en="">
+                    Subir y compartir música
+                  </option>
+                  <option value="descubrir" data-es="" data-en="">
+                    Descubrir nuevos talentos
+                  </option>
+                  <option value="networking" data-es="" data-en="">
+                    Networking musical
+                  </option>
                 </select>
                 <span class="reg-select-arrow">
                   <svg
@@ -366,10 +400,19 @@
             <!-- grupo de botones de register -->
             <div class="botones-reg">
               <!-- boton regresar -->
-              <a href="" class="btn-back-reg" type="button">back</a>
+              <a
+                href=""
+                class="btn-back-reg"
+                type="button"
+                data-es=""
+                data-en=""
+                >back</a
+              >
 
               <!-- boton registrar -->
-              <a class="btn-register" type="button">Registrarme</a>
+              <a class="btn-register" type="button" data-es="" data-en=""
+                >Registrarme</a
+              >
             </div>
           </div>
         </div>
@@ -378,5 +421,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/register.js/register.js"></script>
+    <script src="../js/idioma.js"></script>
   </body>
 </html>

@@ -11,3 +11,7 @@ Fuente: SYNE
 titulo: syne bold
 subtitulo: syne semibold
 textos/parrafos: syne medium
+
+
+data-es=""
+data-en=""
