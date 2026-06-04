@@ -13,5 +13,5 @@ subtitulo: syne semibold
 textos/parrafos: syne medium
 
 
-data-es=""
-data-en=""
+data-es="" data-en=""
+data-es='' data-en=''
