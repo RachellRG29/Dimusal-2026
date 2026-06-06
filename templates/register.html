@@ -211,29 +211,61 @@
             >
               Ubicación
             </h2>
+
+            <div class="reg-field">
+              <label
+                for="departamento"
+                data-es='Departamento <span class="req">*</span>'
+                data-en='Department <span class="req">*</span>'
+              >
+                Departamento <span class="req">*</span>
+              </label>
+
+              <div class="reg-select-wrap">
+                <select id="departamento" name="departamento" required>
+                  <option
+                    value=""
+                    selected
+                    disabled
+                    data-es="Seleccione un departamento"
+                    data-en="Select a department"
+                  >
+                    Seleccione un departamento
+                  </option>
+                </select>
+
+                <span class="reg-select-arrow">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
             <div class="reg-row">
               <div class="reg-field">
-                <label
-                  for="departamento"
-                  data-es='Departamento <span class="req">*</span>'
-                  data-en='Department <span class="req">*</span>'
+                <label for="distrito"
+                  >Distrito <span class="req">*</span></label
                 >
-                  Departamento <span class="req">*</span>
-                </label>
-
                 <div class="reg-select-wrap">
-                  <select id="departamento" name="departamento" required>
+                  <select id="distrito" name="distrito" required>
                     <option
                       value=""
+                      data-es="Seleccione un distrito"
+                      data-en="Select a distrit"
                       selected
                       disabled
-                      data-es="Seleccione un departamento"
-                      data-en="Select a department"
                     >
-                      Seleccione un departamento
+                      Seleccione un distrito
                     </option>
                   </select>
-
                   <span class="reg-select-arrow">
                     <svg
                       viewBox="0 0 24 24"
@@ -598,6 +630,8 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/register.js/register.js"></script>
+    <script src="../js/register.js/ubicacion.js"></script>
+
     <script src="../js/idioma.js"></script>
   </body>
 </html>
