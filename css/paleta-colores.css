@@ -18,6 +18,16 @@
 
   /*homepage-nabvar*/
   --white-nabvar: #f2f4f7dd;
+
+  /*dashboard*/
+  --grad1-start: #f2f4f7;
+  --grad1-end: #ff9b51;
+  --grad2-a: #f3d1a6;
+  --grad2-b: #fad9ab;
+  --grad2-c: #ecdccc;
+  --sidebar-w: 220px;
+  --radius: 16px;
+  --shadow: 0 2px 16px rgba(1, 2, 1, 0.07);
 }
 
 body {
