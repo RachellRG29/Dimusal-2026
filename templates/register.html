@@ -12,12 +12,12 @@
     />
     <link rel="stylesheet" href="../css/paleta-colores.css" />
     <link rel="stylesheet" href="../css/register/register.css" />
-
+    <link rel="stylesheet" href="../css/register/tags-register.css" />
     <link rel="stylesheet" href="../css/btn-idioma.css" />
   </head>
   <body>
     <div class="formulario-register">
-      <!-- ══ FONDO: bg imagen + overlay ══ -->
+      <!-- ══ FONDO ══ -->
       <div class="register-bg">
         <img
           class="register-bg__img"
@@ -34,7 +34,8 @@
           ></p>
         </div>
       </div>
-      <!-- ══ BOTON IDIOMA DE REGISTRO ══ -->
+
+      <!-- ══ BOTÓN IDIOMA ══ -->
       <a class="btn-idioma btn-idioma-register" id="btnIdioma">
         <div class="icon-idioma">
           <svg
@@ -62,7 +63,6 @@
             />
           </svg>
         </div>
-
         <span class="texto-idioma">ES</span>
       </a>
 
@@ -83,7 +83,6 @@
               data-en="Personal data"
             ></h2>
 
-            <!-- Nombre completo -->
             <div class="reg-field">
               <label
                 for="nombre"
@@ -98,7 +97,6 @@
               />
             </div>
 
-            <!-- Teléfono + DUI -->
             <div class="reg-row">
               <div class="reg-field">
                 <label
@@ -119,7 +117,6 @@
               </div>
             </div>
 
-            <!-- Correo -->
             <div class="reg-field">
               <label
                 for="correo"
@@ -134,7 +131,6 @@
               />
             </div>
 
-            <!-- Contraseña -->
             <div class="reg-field">
               <label
                 for="password"
@@ -168,7 +164,6 @@
               </div>
             </div>
 
-            <!-- Confirmar contraseña -->
             <div class="reg-field">
               <label
                 for="confirm-password"
@@ -202,7 +197,6 @@
               </div>
             </div>
 
-            <!-- Ubicación -->
             <h2
               class="register-section-title"
               data-es="Ubicación"
@@ -217,10 +211,8 @@
                 for="departamento"
                 data-es='Departamento <span class="req">*</span>'
                 data-en='Department <span class="req">*</span>'
+                >Departamento <span class="req">*</span></label
               >
-                Departamento <span class="req">*</span>
-              </label>
-
               <div class="reg-select-wrap">
                 <select id="departamento" name="departamento" required>
                   <option
@@ -233,7 +225,6 @@
                     Seleccione un departamento
                   </option>
                 </select>
-
                 <span class="reg-select-arrow">
                   <svg
                     viewBox="0 0 24 24"
@@ -266,8 +257,8 @@
                       Seleccione un distrito
                     </option>
                   </select>
-                  <span class="reg-select-arrow">
-                    <svg
+                  <span class="reg-select-arrow"
+                    ><svg
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -280,16 +271,13 @@
                   </span>
                 </div>
               </div>
-
               <div class="reg-field">
                 <label
                   for="municipio"
                   data-es='Municipio <span class="req">*</span>'
                   data-en='Municipality <span class="req">*</span>'
+                  >Municipio <span class="req">*</span></label
                 >
-                  Municipio <span class="req">*</span>
-                </label>
-
                 <div class="reg-select-wrap">
                   <select id="municipio" name="municipio" required>
                     <option
@@ -302,9 +290,8 @@
                       Seleccione un municipio
                     </option>
                   </select>
-
-                  <span class="reg-select-arrow">
-                    <svg
+                  <span class="reg-select-arrow"
+                    ><svg
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -319,26 +306,24 @@
               </div>
             </div>
 
-            <!-- boton registrar/avanzar -->
             <a
               class="btn-register"
               id="btn-continuar"
               type="button"
               data-es="Continuar"
               data-en="Continue"
+              >Continuar</a
             >
-              Continuar
-            </a>
 
             <p
               class="reg-login-link"
-              data-es='¿Tienes cuenta? <a href="login.html" >[Inicia sesión]</a>'
+              data-es='¿Tienes cuenta? <a href="login.html">[Inicia sesión]</a>'
               data-en='Do you have an account? <a href="login.html">[Log in]</a>'
             >
-              ¿Tienes cuenta?
-              <a href="login.html" data-es="" data-en="">[Inicia sesión]</a>
+              ¿Tienes cuenta? <a href="login.html">[Inicia sesión]</a>
             </p>
           </div>
+          <!-- /step-1 -->
 
           <!-- ══ PASO 2: Tipo de cuenta ══ -->
           <div class="register-step hidden" id="step-2">
@@ -368,13 +353,8 @@
                   <span class="reg-checkbox-custom"></span>
                   <span
                     class="reg-checkbox-text"
-                    data-es="<strong>Artista</strong>
-                    <small
-                      >→ Sube tu música, aplica a eventos o colaboraciones
-                      profesionales.</small"
-                    data-en="<strong>Artist</strong>
-                    <small
-                      >→ Upload your music, apply to events or professional collaborations.</small"
+                    data-es="<strong>Artista</strong><small>→ Sube tu música, aplica a eventos o colaboraciones profesionales.</small>"
+                    data-en="<strong>Artist</strong><small>→ Upload your music, apply to events or professional collaborations.</small>"
                   >
                   </span>
                 </label>
@@ -388,13 +368,8 @@
                   <span class="reg-checkbox-custom"></span>
                   <span
                     class="reg-checkbox-text"
-                    data-es="<strong >Oyente</strong>
-                    <small
-                      >→ Descubre nuevos talentos, sigue artistas, asiste a
-                      evento</small>"
-                    data-en="<strong >Listener</strong>
-                    <small
-                      >→ Discover new talent, follow artists, attend events</small>"
+                    data-es="<strong>Oyente</strong><small>→ Descubre nuevos talentos, sigue artistas, asiste a evento</small>"
+                    data-en="<strong>Listener</strong><small>→ Discover new talent, follow artists, attend events</small>"
                   >
                   </span>
                 </label>
@@ -430,7 +405,7 @@
               </div>
             </div>
 
-            <!-- Foto/logo + Portada -->
+            <!-- Foto + Portada -->
             <div class="reg-row">
               <div class="reg-field">
                 <label
@@ -462,10 +437,8 @@
               </div>
               <div class="reg-field">
                 <label
-                  data-es='Portada del perfil (1500x500)
-                  <span class="req">*</span>'
-                  data-en='Profile cover (1500x500)
-                  <span class="req">*</span>'
+                  data-es='Portada del perfil (1500x500) <span class="req">*</span>'
+                  data-en='Profile cover (1500x500) <span class="req">*</span>'
                 ></label>
                 <div class="reg-upload" id="upload-portada">
                   <input
@@ -526,14 +499,38 @@
               </div>
             </div>
 
+            <!-- /RF-01 -->
+
+            <!-- Botones -->
+            <div class="botones-reg">
+              <a
+                href=""
+                class="btn-back-reg"
+                type="button"
+                data-es=""
+                data-en=""
+                >back</a
+              >
+              <a
+                class="btn-register"
+                id="btn-continuar"
+                type="button"
+                data-es="Continuar"
+                data-en="Continue"
+                >Continuar</a
+              >
+            </div>
+          </div>
+          <!-- /step-2 -->
+
+          <!-- ══ PASO 3: Etiquetas ══ -->
+          <div class="register-step hidden" id="step-3">
             <!-- ¿Qué buscas? -->
             <div class="reg-field">
               <label
                 for="objetivo"
-                data-es='¿Qué buscas en DIMUSAL? (puedes elegir varias)
-                <span class="req">*</span>'
-                data-en='What are you looking for at DIMUSAL? (You can choose several)
-                <span class="req">*</span>'
+                data-es='¿Qué buscas en DIMUSAL? (puedes elegir varias) <span class="req">*</span>'
+                data-en='What are you looking for at DIMUSAL? (You can choose several) <span class="req">*</span>'
               ></label>
               <div class="reg-select-wrap">
                 <select id="objetivo" name="objetivo">
@@ -546,7 +543,6 @@
                   >
                     Seleccione
                   </option>
-
                   <option
                     value="eventos"
                     data-es="Participar en eventos"
@@ -554,7 +550,6 @@
                   >
                     Participar en eventos
                   </option>
-
                   <option
                     value="colaboraciones"
                     data-es="Colaboraciones profesionales"
@@ -562,7 +557,6 @@
                   >
                     Colaboraciones profesionales
                   </option>
-
                   <option
                     value="musica"
                     data-es="Subir y compartir música"
@@ -570,7 +564,6 @@
                   >
                     Subir y compartir música
                   </option>
-
                   <option
                     value="descubrir"
                     data-es="Descubrir nuevos talentos"
@@ -578,7 +571,6 @@
                   >
                     Descubrir nuevos talentos
                   </option>
-
                   <option
                     value="networking"
                     data-es="Redes musicales"
@@ -587,9 +579,8 @@
                     Redes musicales
                   </option>
                 </select>
-
-                <span class="reg-select-arrow">
-                  <svg
+                <span class="reg-select-arrow"
+                  ><svg
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -602,36 +593,469 @@
                 </span>
               </div>
             </div>
-            <!-- grupo de botones de register -->
-            <div class="botones-reg">
-              <!-- boton regresar -->
-              <a
-                href=""
-                class="btn-back-reg"
-                type="button"
-                data-es=""
-                data-en=""
-                >back</a
-              >
 
-              <!-- boton registrar -->
-              <a
-                class="btn-register"
-                type="button"
-                data-es="Registrarme"
-                data-en="Register"
-                >Registrarme</a
+            <!-- ══ RF-01: Selector de etiquetas musicales ══ -->
+            <div class="reg-field reg-tags-section" id="regTagsSection">
+              <label class="reg-label-group">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="width: 14px; height: 14px; color: var(--orange)"
+                >
+                  <path
+                    d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+                  />
+                  <line x1="7" y1="7" x2="7.01" y2="7" />
+                </svg>
+                Etiquetas musicales
+                <span class="reg-tags-hint"
+                  >(opcional — puedes editarlas después en tu perfil)</span
+                >
+              </label>
+
+              <!-- Géneros -->
+              <div class="reg-tag-group">
+                <div class="reg-tag-group-label">Géneros</div>
+                <div class="reg-tag-chips" id="reg-group-genres">
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Rock"
+                    onclick="regToggleTag(this)"
+                  >
+                    Rock
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Pop"
+                    onclick="regToggleTag(this)"
+                  >
+                    Pop
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Jazz"
+                    onclick="regToggleTag(this)"
+                  >
+                    Jazz
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Clásica"
+                    onclick="regToggleTag(this)"
+                  >
+                    Clásica
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Folk"
+                    onclick="regToggleTag(this)"
+                  >
+                    Folk
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Cumbia"
+                    onclick="regToggleTag(this)"
+                  >
+                    Cumbia
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Reggaeton"
+                    onclick="regToggleTag(this)"
+                  >
+                    Reggaeton
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Hip-Hop"
+                    onclick="regToggleTag(this)"
+                  >
+                    Hip-Hop
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Electrónica"
+                    onclick="regToggleTag(this)"
+                  >
+                    Electrónica
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Metal"
+                    onclick="regToggleTag(this)"
+                  >
+                    Metal
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Blues"
+                    onclick="regToggleTag(this)"
+                  >
+                    Blues
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Salsa"
+                    onclick="regToggleTag(this)"
+                  >
+                    Salsa
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Tropical"
+                    onclick="regToggleTag(this)"
+                  >
+                    Tropical
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Indie"
+                    onclick="regToggleTag(this)"
+                  >
+                    Indie
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Alternativo"
+                    onclick="regToggleTag(this)"
+                  >
+                    Alternativo
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="R&amp;B"
+                    onclick="regToggleTag(this)"
+                  >
+                    R&amp;B
+                  </button>
+                </div>
+              </div>
+
+              <!-- Instrumentos -->
+              <div class="reg-tag-group">
+                <div class="reg-tag-group-label">Instrumentos</div>
+                <div class="reg-tag-chips" id="reg-group-instruments">
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Guitarra"
+                    onclick="regToggleTag(this)"
+                  >
+                    Guitarra
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Piano"
+                    onclick="regToggleTag(this)"
+                  >
+                    Piano
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Batería"
+                    onclick="regToggleTag(this)"
+                  >
+                    Batería
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Bajo"
+                    onclick="regToggleTag(this)"
+                  >
+                    Bajo
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Voz"
+                    onclick="regToggleTag(this)"
+                  >
+                    Voz
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Violín"
+                    onclick="regToggleTag(this)"
+                  >
+                    Violín
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Saxofón"
+                    onclick="regToggleTag(this)"
+                  >
+                    Saxofón
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Teclado"
+                    onclick="regToggleTag(this)"
+                  >
+                    Teclado
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Percusión"
+                    onclick="regToggleTag(this)"
+                  >
+                    Percusión
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="DJ / Producción"
+                    onclick="regToggleTag(this)"
+                  >
+                    DJ / Producción
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Flauta"
+                    onclick="regToggleTag(this)"
+                  >
+                    Flauta
+                  </button>
+                </div>
+              </div>
+
+              <!-- Estilo de presentación -->
+              <div class="reg-tag-group">
+                <div class="reg-tag-group-label">Estilo de presentación</div>
+                <div class="reg-tag-chips" id="reg-group-styles">
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Acústico"
+                    onclick="regToggleTag(this)"
+                  >
+                    Acústico
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="En vivo"
+                    onclick="regToggleTag(this)"
+                  >
+                    En vivo
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Solo"
+                    onclick="regToggleTag(this)"
+                  >
+                    Solo
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Banda"
+                    onclick="regToggleTag(this)"
+                  >
+                    Banda
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Dúo"
+                    onclick="regToggleTag(this)"
+                  >
+                    Dúo
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Experimental"
+                    onclick="regToggleTag(this)"
+                  >
+                    Experimental
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Electrónico en vivo"
+                    onclick="regToggleTag(this)"
+                  >
+                    Electrónico en vivo
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tipos de evento -->
+              <div class="reg-tag-group">
+                <div class="reg-tag-group-label">Tipos de evento</div>
+                <div class="reg-tag-chips" id="reg-group-events">
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Festival"
+                    onclick="regToggleTag(this)"
+                  >
+                    Festival
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Tocata"
+                    onclick="regToggleTag(this)"
+                  >
+                    Tocata
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Boda"
+                    onclick="regToggleTag(this)"
+                  >
+                    Boda
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Corporativo"
+                    onclick="regToggleTag(this)"
+                  >
+                    Corporativo
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Bar / Venue"
+                    onclick="regToggleTag(this)"
+                  >
+                    Bar / Venue
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Cultural"
+                    onclick="regToggleTag(this)"
+                  >
+                    Cultural
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Grabación"
+                    onclick="regToggleTag(this)"
+                  >
+                    Grabación
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Colaboración"
+                    onclick="regToggleTag(this)"
+                  >
+                    Colaboración
+                  </button>
+                  <button
+                    type="button"
+                    class="reg-tag-chip"
+                    data-tag="Streaming"
+                    onclick="regToggleTag(this)"
+                  >
+                    Streaming
+                  </button>
+                </div>
+              </div>
+
+              <!-- Custom -->
+              <div class="reg-tag-group">
+                <div class="reg-tag-group-label">Personalizada</div>
+                <div class="reg-custom-input-row">
+                  <input
+                    type="text"
+                    id="regCustomTagInput"
+                    class="reg-custom-input"
+                    placeholder="Escribe y presiona Enter…"
+                    maxlength="32"
+                    onkeydown="regHandleCustomKey(event)"
+                  />
+                  <button
+                    type="button"
+                    class="reg-custom-add-btn"
+                    onclick="regAddCustomTag()"
+                  >
+                    +
+                  </button>
+                </div>
+                <div class="reg-tag-chips" id="reg-group-custom"></div>
+              </div>
+
+              <!-- Resumen tags seleccionadas -->
+              <div
+                class="reg-tags-summary"
+                id="regTagsSummary"
+                style="display: none"
               >
+                <div class="reg-tags-summary-label">
+                  Seleccionadas: <span id="regTagCount">0</span>
+                </div>
+                <div
+                  class="reg-tags-summary-chips"
+                  id="regTagsSummaryChips"
+                ></div>
+              </div>
+              <!-- Botones -->
+              <div class="botones-reg">
+                <a
+                  href=""
+                  class="btn-back-reg"
+                  type="button"
+                  data-es=""
+                  data-en=""
+                  >back</a
+                >
+                <a
+                  class="btn-register"
+                  type="button"
+                  data-es="Registrarme"
+                  data-en="Register"
+                  >Registrarme</a
+                >
+              </div>
             </div>
           </div>
+          <!-- /step-3 -->
         </div>
       </div>
-      <!-- fin card -->
+      <!-- /card -->
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/register.js/register.js"></script>
     <script src="../js/register.js/ubicacion.js"></script>
-
+    <script src="../js/register.js/tags-register.js"></script>
     <script src="../js/idioma.js"></script>
   </body>
 </html>

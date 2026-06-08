@@ -1,0 +1,192 @@
+/* ═══════════════════════════════════════════════════
+   RF-01 – Sistema de Etiquetas Musicales
+   tags-register.css — Selector inline en el paso 2
+═══════════════════════════════════════════════════ */
+
+:root {
+  --orange: #ff9b51;
+  --black: #1e1e1e;
+  --gray: #6b6b6b;
+}
+
+/* ── Sección contenedora ────────────────────────── */
+.reg-tags-section {
+  border: 1.5px solid #ebe9e5;
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: #fffaf5;
+}
+.reg-tags-section > .reg-label-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--black);
+}
+.reg-tags-hint {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-left: 2px;
+}
+
+/* ── Grupos de etiquetas ────────────────────────── */
+.reg-tag-group {
+  margin-bottom: 12px;
+}
+.reg-tag-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.reg-tag-group-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9a8070;
+  margin-bottom: 7px;
+}
+
+.reg-tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── Chips ──────────────────────────────────────── */
+.reg-tag-chip {
+  padding: 4px 11px;
+  border-radius: 50px;
+  font-family: "Syne", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1.5px solid #e0ddd8;
+  background: #fff;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  line-height: 1.4;
+}
+.reg-tag-chip:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: #fff6ef;
+}
+.reg-tag-chip.selected {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+.reg-tag-chip.custom-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.reg-remove-custom {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.reg-remove-custom:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Input etiqueta personalizada ───────────────── */
+.reg-custom-input-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.reg-custom-input {
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: 50px;
+  border: 1.5px solid #e0ddd8;
+  font-family: "Syne", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.15s;
+  background: #fff;
+}
+.reg-custom-input:focus {
+  border-color: var(--orange);
+}
+.reg-custom-input::placeholder {
+  color: #ccc;
+}
+.reg-custom-add-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-family: "Syne", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+.reg-custom-add-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Resumen de etiquetas seleccionadas ─────────── */
+.reg-tags-summary {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 155, 81, 0.08);
+  border: 1.5px dashed #f0c899;
+  border-radius: 10px;
+}
+.reg-tags-summary-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9a8070;
+  margin-bottom: 8px;
+}
+.reg-tags-summary-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.reg-summary-chip {
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: var(--orange);
+  color: #fff;
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 500px) {
+  .reg-tags-section {
+    padding: 12px 14px;
+  }
+}

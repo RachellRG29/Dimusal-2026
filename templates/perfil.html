@@ -12,10 +12,549 @@
     />
     <link rel="stylesheet" href="../css/paleta-colores.css" />
     <link rel="stylesheet" href="../css/perfil/perfil.css" />
-
+    <link rel="stylesheet" href="../css/perfil/tags-perfil.css" />
     <link rel="stylesheet" href="../css/btn-idioma.css" />
   </head>
   <body>
+    <!-- ══ MODAL: Gestor de Etiquetas ══ -->
+    <div
+      class="tags-modal-backdrop"
+      id="tagsModalBackdrop"
+      onclick="closeTagsModal(event)"
+    >
+      <div
+        class="tags-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tagsModalTitle"
+      >
+        <div class="tags-modal-header">
+          <div>
+            <div class="tags-modal-title" id="tagsModalTitle">
+              Mis etiquetas musicales
+            </div>
+            <div class="tags-modal-subtitle">
+              Define tu estilo para aparecer en búsquedas relevantes
+            </div>
+          </div>
+          <button
+            class="tags-modal-close"
+            onclick="closeTagsModal()"
+            aria-label="Cerrar"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="tags-modal-body">
+          <!-- Géneros -->
+          <div class="tag-group">
+            <div class="tag-group-label">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="18" r="3" />
+                <circle cx="15" cy="15" r="3" />
+                <path d="M12 15V7l6-2v4" />
+              </svg>
+              Géneros musicales
+            </div>
+            <div class="tag-group-chips" id="group-genres">
+              <button
+                class="tag-chip"
+                data-tag="Rock"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Rock
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Pop"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Pop
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Jazz"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Jazz
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Clásica"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Clásica
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Folk"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Folk
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Cumbia"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Cumbia
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Reggaeton"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Reggaeton
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Hip-Hop"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Hip-Hop
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Electrónica"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Electrónica
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Metal"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Metal
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Blues"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Blues
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Salsa"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Salsa
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Tropical"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Tropical
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Indie"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Indie
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Alternativo"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                Alternativo
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="R&B"
+                data-group="genres"
+                onclick="toggleTag(this)"
+              >
+                R&amp;B
+              </button>
+            </div>
+          </div>
+
+          <!-- Instrumentos -->
+          <div class="tag-group">
+            <div class="tag-group-label">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18V5l12-2v13" />
+                <circle cx="6" cy="18" r="3" />
+                <circle cx="18" cy="16" r="3" />
+              </svg>
+              Instrumentos
+            </div>
+            <div class="tag-group-chips" id="group-instruments">
+              <button
+                class="tag-chip"
+                data-tag="Guitarra"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Guitarra
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Piano"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Piano
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Batería"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Batería
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Bajo"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Bajo
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Voz"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Voz
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Violín"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Violín
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Saxofón"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Saxofón
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Trompeta"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Trompeta
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Teclado"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Teclado
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Percusión"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Percusión
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="DJ / Producción"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                DJ / Producción
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Flauta"
+                data-group="instruments"
+                onclick="toggleTag(this)"
+              >
+                Flauta
+              </button>
+            </div>
+          </div>
+
+          <!-- Estilos de presentación -->
+          <div class="tag-group">
+            <div class="tag-group-label">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                />
+              </svg>
+              Estilo de presentación
+            </div>
+            <div class="tag-group-chips" id="group-styles">
+              <button
+                class="tag-chip"
+                data-tag="Acústico"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Acústico
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="En vivo"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                En vivo
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Solo"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Solo
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Banda"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Banda
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Dúo"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Dúo
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Orquesta"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Orquesta
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Experimental"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Experimental
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Electrónico en vivo"
+                data-group="styles"
+                onclick="toggleTag(this)"
+              >
+                Electrónico en vivo
+              </button>
+            </div>
+          </div>
+
+          <!-- Tipos de evento -->
+          <div class="tag-group">
+            <div class="tag-group-label">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Tipos de evento
+            </div>
+            <div class="tag-group-chips" id="group-events">
+              <button
+                class="tag-chip"
+                data-tag="Festival"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Festival
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Tocata"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Tocata
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Boda"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Boda
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Corporativo"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Corporativo
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Bar / Venue"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Bar / Venue
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Cultural"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Cultural
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Grabación"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Grabación
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Colaboración"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Colaboración
+              </button>
+              <button
+                class="tag-chip"
+                data-tag="Streaming"
+                data-group="events"
+                onclick="toggleTag(this)"
+              >
+                Streaming
+              </button>
+            </div>
+          </div>
+
+          <!-- Etiquetas personalizadas -->
+          <div class="tag-group">
+            <div class="tag-group-label">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Etiquetas personalizadas
+            </div>
+            <div class="custom-tag-input-row">
+              <input
+                type="text"
+                id="customTagInput"
+                class="custom-tag-input"
+                placeholder="Escribe una etiqueta y presiona Enter…"
+                maxlength="32"
+                onkeydown="handleCustomTagKey(event)"
+              />
+              <button class="custom-tag-add-btn" onclick="addCustomTag()">
+                Agregar
+              </button>
+            </div>
+            <div class="tag-group-chips" id="group-custom"></div>
+          </div>
+
+          <!-- Resumen seleccionados -->
+          <div class="tags-selected-summary" id="tagsSummary">
+            <div class="tags-summary-label">
+              Etiquetas seleccionadas (<span id="tagCount">0</span>)
+            </div>
+            <div class="tags-summary-chips" id="tagsSummaryChips"></div>
+          </div>
+        </div>
+
+        <div class="tags-modal-footer">
+          <button class="btn-secondary-tags" onclick="closeTagsModal()">
+            Cancelar
+          </button>
+          <button class="btn-primary-tags" onclick="saveProfileTags()">
+            Guardar etiquetas
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /modal etiquetas -->
+
     <!-- ══ NAVBAR ══ -->
     <nav class="pa-navbar">
       <div class="pa-navbar__left">
@@ -40,7 +579,6 @@
         <span class="pa-navbar__logo">DIMUSAL</span>
       </div>
       <div class="pa-navbar__right">
-        <!-- ══ BOTON IDIOMA DE PERFIL ARTISTA ══ -->
         <a class="btn-idioma btn-idioma-p-artista" id="btnIdioma">
           <div class="icon-idioma">
             <svg
@@ -68,7 +606,6 @@
               />
             </svg>
           </div>
-
           <span class="texto-idioma">ES</span>
         </a>
         <div class="pa-navbar__user" id="userMenu">
@@ -88,7 +625,6 @@
           >
             <polyline points="6 9 12 15 18 9" />
           </svg>
-          <!-- dropdown -->
           <div class="pa-user-dropdown" id="userDropdown">
             <a href="#" data-es="Configuración" data-en="Configuration"
               >Configuración</a
@@ -134,7 +670,6 @@
     <!-- ══ HEADER PERFIL ══ -->
     <div class="pa-profile-header">
       <div class="pa-profile-header__inner">
-        <!-- avatar -->
         <div class="pa-avatar-wrap">
           <img
             class="pa-avatar"
@@ -158,8 +693,6 @@
           </button>
           <input type="file" id="avatarInput" accept="image/*" hidden />
         </div>
-
-        <!-- info básica -->
         <div class="pa-profile-header__info">
           <h1 class="pa-profile-header__name">Jane Doe</h1>
           <span class="pa-badge pa-badge--orange">Artist</span>
@@ -211,6 +744,59 @@
     <main class="pa-main">
       <!-- ── TAB: PERFIL ── -->
       <section class="pa-tab-content active" id="tab-perfil">
+        <!-- ══ RF-01: Barra de etiquetas del perfil ══ -->
+        <div class="profile-tags-bar" id="profileTagsBar">
+          <div class="profile-tags-bar-left">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+                color: var(--orange);
+              "
+            >
+              <path
+                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+              />
+              <line x1="7" y1="7" x2="7.01" y2="7" />
+            </svg>
+            <span class="profile-tags-label">Mis etiquetas:</span>
+            <div class="profile-tags-display" id="profileTagsDisplay">
+              <span class="profile-tags-empty"
+                >Sin etiquetas —
+                <button class="link-tags-btn" onclick="openTagsModal()">
+                  agregar ahora
+                </button>
+              </span>
+            </div>
+          </div>
+          <button class="edit-tags-btn" onclick="openTagsModal()">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 13px; height: 13px"
+            >
+              <path
+                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+              />
+              <path
+                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+              />
+            </svg>
+            Editar etiquetas
+          </button>
+        </div>
+
         <div class="pa-grid">
           <!-- columna izquierda -->
           <div class="pa-col-left">
@@ -248,7 +834,7 @@
               <p
                 class="pa-card__label"
                 data-es="Géneros musicales"
-                data-en="mmMsical genres"
+                data-en="Musical genres"
               >
                 Géneros musicales
               </p>
@@ -289,8 +875,8 @@
               <div class="pa-instruments-grid">
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
-                    <span class="pa-instrument__name">Guitarra eléctrica</span>
-                    <span class="pa-instrument__level">Básico</span>
+                    <span class="pa-instrument__name">Guitarra eléctrica</span
+                    ><span class="pa-instrument__level">Básico</span>
                   </div>
                   <div class="pa-progress">
                     <div class="pa-progress__bar" style="width: 30%"></div>
@@ -298,8 +884,8 @@
                 </div>
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
-                    <span class="pa-instrument__name">Guitarra</span>
-                    <span class="pa-instrument__level">Básico</span>
+                    <span class="pa-instrument__name">Guitarra</span
+                    ><span class="pa-instrument__level">Básico</span>
                   </div>
                   <div class="pa-progress">
                     <div class="pa-progress__bar" style="width: 30%"></div>
@@ -307,8 +893,8 @@
                 </div>
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
-                    <span class="pa-instrument__name">Bajo</span>
-                    <span class="pa-instrument__level">Intermedio</span>
+                    <span class="pa-instrument__name">Bajo</span
+                    ><span class="pa-instrument__level">Intermedio</span>
                   </div>
                   <div class="pa-progress">
                     <div class="pa-progress__bar" style="width: 55%"></div>
@@ -316,8 +902,8 @@
                 </div>
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
-                    <span class="pa-instrument__name">Producción</span>
-                    <span class="pa-instrument__level">Avanzado</span>
+                    <span class="pa-instrument__name">Producción</span
+                    ><span class="pa-instrument__level">Avanzado</span>
                   </div>
                   <div class="pa-progress">
                     <div class="pa-progress__bar" style="width: 85%"></div>
@@ -325,8 +911,8 @@
                 </div>
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
-                    <span class="pa-instrument__name">Composición</span>
-                    <span class="pa-instrument__level">Básico</span>
+                    <span class="pa-instrument__name">Composición</span
+                    ><span class="pa-instrument__level">Básico</span>
                   </div>
                   <div class="pa-progress">
                     <div class="pa-progress__bar" style="width: 30%"></div>
@@ -334,8 +920,8 @@
                 </div>
                 <div class="pa-instrument">
                   <div class="pa-instrument__header">
-                    <span class="pa-instrument__name">Piano</span>
-                    <span class="pa-instrument__level">Intermedio</span>
+                    <span class="pa-instrument__name">Piano</span
+                    ><span class="pa-instrument__level">Intermedio</span>
                   </div>
                   <div class="pa-progress">
                     <div class="pa-progress__bar" style="width: 55%"></div>
@@ -376,12 +962,12 @@
               </h2>
               <div class="pa-info-list">
                 <div class="pa-info-item">
-                  <span class="pa-info-item__main">Municipio</span>
-                  <span class="pa-info-item__sub">Departamento</span>
+                  <span class="pa-info-item__main">Municipio</span
+                  ><span class="pa-info-item__sub">Departamento</span>
                 </div>
                 <div class="pa-info-item">
-                  <span class="pa-info-item__main">xx años</span>
-                  <span class="pa-info-item__sub">Activo desde 20xx</span>
+                  <span class="pa-info-item__main">xx años</span
+                  ><span class="pa-info-item__sub">Activo desde 20xx</span>
                 </div>
                 <div class="pa-info-item">
                   <span class="pa-info-item__main">correo@correo.com</span>
@@ -505,6 +1091,7 @@
     </main>
 
     <script src="../js/perfil/perfil.js"></script>
+    <script src="../js/perfil/tags-perfil.js"></script>
     <script src="../js/idioma.js"></script>
   </body>
 </html>

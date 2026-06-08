@@ -1,3 +1,5 @@
+/* dashboard.js */
+
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
   const overlay = document.getElementById("overlay");
@@ -5,16 +7,20 @@ function toggleSidebar() {
   overlay.classList.toggle("visible");
 }
 
-function setTab(el) {
+function setTab(btn) {
   document
-    .querySelectorAll(".tab")
+    .querySelectorAll(".filter-tabs .tab")
     .forEach((t) => t.classList.remove("active"));
-  el.classList.add("active");
+  btn.classList.add("active");
 }
 
-// Animate progress bar on load
+// Animación de la barra de progreso al cargar
 window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("progressFill").style.width = "30%";
-  }, 400);
+  const fill = document.getElementById("progressFill");
+  if (fill) {
+    fill.style.width = "0%";
+    setTimeout(() => {
+      fill.style.width = "30%";
+    }, 400);
+  }
 });
