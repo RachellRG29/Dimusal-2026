@@ -1,0 +1,304 @@
+/* ── Sidebar ────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--grad2-a) 0%, var(--grad2-c) 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 16px 24px;
+  position: fixed;
+  border-radius: 20px;
+  margin: 8px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+.sidebar-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  margin-bottom: 36px;
+  padding-left: 4px;
+}
+.sidebar-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a8070;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 28px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.18s,
+    color 0.18s;
+}
+.nav-item:hover {
+  background: rgba(255, 155, 81, 0.15);
+  color: var(--black);
+}
+.nav-item.active {
+  background: var(--orange);
+  color: #fff;
+  font-weight: 600;
+}
+.nav-item svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 155, 81, 0.18);
+  cursor: pointer;
+  text-decoration: none;
+}
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-info .name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--black);
+}
+.user-info .role {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #9a8070;
+}
+
+/* ── Hamburger ──────────────────────────────────── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: all 0.25s;
+}
+.sidebar-overlay {
+  display: none;
+}
+
+.mobile-topbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar,
+  .sidebar-overlay {
+    display: none !important;
+  }
+
+  .mobile-topbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: var(--white);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-menu svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .mobile-topbar-content {
+    height: 64px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-logo {
+    font-family: "Syne", sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--orange);
+  }
+
+  .mobile-menu-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .mobile-menu-btn span {
+    width: 24px;
+    height: 2px;
+    background: var(--black);
+    border-radius: 999px;
+    transition: 0.3s;
+  }
+
+  /* Menú desplegable */
+  .mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    background: white;
+    transition: max-height 0.35s ease;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-menu.open {
+    max-height: 700px;
+  }
+
+  .mobile-menu-section {
+    padding: 18px 20px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #a78f7f;
+  }
+
+  .mobile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 20px;
+    text-decoration: none;
+
+    color: var(--black);
+    font-weight: 600;
+    font-family: "Syne", sans-serif;
+
+    transition: 0.2s;
+  }
+
+  .mobile-menu-item:hover {
+    background: rgba(255, 155, 81, 0.08);
+  }
+
+  .mobile-menu-item.active {
+    color: var(--orange);
+    background: rgba(255, 155, 81, 0.08);
+  }
+
+  .mobile-profile {
+    margin: 15px;
+    padding: 14px;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: #f8f8f8;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mobile-profile .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+  }
+
+  .mobile-profile .name {
+    font-weight: 700;
+  }
+
+  .mobile-profile .role {
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .main {
+    padding-top: 80px;
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .topbar-greeting h1 {
+    font-size: 1.3rem;
+  }
+  .banner-title {
+    font-size: 1.3rem;
+  }
+  .stat-number {
+    font-size: 1.6rem;
+  }
+  .progress-pct {
+    font-size: 2rem;
+  }
+}

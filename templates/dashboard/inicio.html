@@ -1,0 +1,213 @@
+<!-- Banner -->
+<div class="banner">
+  <div class="banner-image"></div>
+  <div class="banner-left">
+    <div
+      class="banner-tag"
+      data-es="Ecosistema Musical Salvadoreño"
+      data-en="Salvadoran Musical Ecosystem"
+    ></div>
+    <div
+      class="banner-title"
+      data-es="Tu carrera musical empieza aquí"
+      data-en="Your music career starts here"
+    ></div>
+    <div class="banner-actions">
+      <button
+        class="btn-primary"
+        onclick="openTagsModal()"
+        data-es="Completar perfil ahora"
+        data-en="Complete profile now"
+      ></button>
+      <button
+        class="btn-secondary"
+        data-es="Ver oportunidades"
+        data-en="See opportunities"
+      ></button>
+    </div>
+  </div>
+  <div class="banner-progress">
+    <div class="progress-pct">30%</div>
+    <div
+      class="progress-label"
+      data-es="Perfil completado"
+      data-en="Completed profile"
+    ></div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div
+      class="progress-hint"
+      data-es="Completa para aparecer en búsquedas"
+      data-en="Complete to appear in searches"
+    ></div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-dot"></div>
+    <div class="stat-number">0</div>
+    <div
+      class="stat-label"
+      data-es=" Postulaciones enviadas"
+      data-en="Applications submitted"
+    ></div>
+    <span
+      class="stat-badge badge-orange"
+      data-es="¡Empieza hoy!"
+      data-en="Start today!"
+    ></span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-dot"></div>
+    <div class="stat-number">12</div>
+    <div
+      class="stat-label"
+      data-es="Convocatorias abiertas"
+      data-en="Open calls"
+    ></div>
+    <span
+      class="stat-badge badge-celeste"
+      data-es="Para ti"
+      data-en="For you"
+    ></span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-dot"></div>
+    <div class="stat-number">0</div>
+    <div class="stat-label" data-es="Conexiones" data-en="Connections"></div>
+    <span
+      class="stat-badge badge-orange"
+      data-es="Conéctate"
+      data-en="Connect"
+    ></span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-dot"></div>
+    <div class="stat-number">3</div>
+    <div
+      class="stat-label"
+      data-es="Festivales próximos"
+      data-en="Upcoming festivals"
+    ></div>
+    <span
+      class="stat-badge badge-celeste"
+      data-es="Este mes"
+      data-en="This month"
+    ></span>
+  </div>
+</div>
+
+<!-- Right column: Tips + Recomendaciones por afinidad -->
+<div style="display: flex; flex-direction: column; gap: 20px">
+  <!-- Tips -->
+  <div>
+    <div class="section-header">
+      <div
+        class="section-title"
+        data-es="Tips para destacar en DIMUSAL"
+        data-en="Tips for standing out in DIMUSAL"
+      ></div>
+    </div>
+    <div class="tips-card">
+      <div class="tips-list">
+        <div class="tip-item">
+          <div class="tip-num">1</div>
+          <div
+            class="tip-text"
+            data-es="Mantén tu perfil completo al 100% — los productores filtran por
+            artistas verificados."
+            data-en="Keep your profile 100% complete — producers filter for verified artists."
+          ></div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">2</div>
+          <div
+            class="tip-text"
+            data-es="Vincula tus redes sociales para mostrar tu base de fans actual."
+            data-en="Link your social media accounts to showcase your current fan base."
+          ></div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">3</div>
+          <div
+            class="tip-text"
+            data-es="Postúlate rápido: las convocatorias de cultura tienen cupos
+            limitados."
+            data-en="Apply quickly: cultural opportunities have limited spaces."
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RF-01: Recomendaciones por afinidad de etiquetas ── -->
+<div id="affinitySection">
+  <div class="section-header">
+    <div
+      class="section-title"
+      data-es="Recomendado para ti"
+      data-en="Recommended for you"
+    ></div>
+    <span class="affinity-badge">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 11px; height: 11px"
+      >
+        <path
+          d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+        />
+        <line x1="7" y1="7" x2="7.01" y2="7" />
+      </svg>
+      Por afinidad
+    </span>
+  </div>
+  <div class="affinity-card" id="affinityCard">
+    <div class="affinity-empty" id="affinityEmpty">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 32px; height: 32px; color: #ccc; margin-bottom: 10px"
+      >
+        <path
+          d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+        />
+        <line x1="7" y1="7" x2="7.01" y2="7" />
+      </svg>
+      <div
+        style="
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #aaa;
+          text-align: center;
+        "
+      >
+        Agrega etiquetas a tu perfil para ver recomendaciones personalizadas
+      </div>
+      <button
+        class="btn-primary"
+        style="margin-top: 12px; padding: 8px 18px; font-size: 0.78rem"
+        onclick="openTagsModal()"
+      >
+        Agregar etiquetas
+      </button>
+    </div>
+    <div class="affinity-list" id="affinityList" style="display: none">
+      <!-- se llena dinámicamente -->
+    </div>
+  </div>
+</div>
+
+<script src="../../js/idioma.js"></script>

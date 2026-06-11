@@ -8,6 +8,16 @@
   display: flex;
   align-items: flex-end;
   background: var(--black);
+  top: 10px;
+
+  transition:
+    margin 0.05s linear,
+    border-radius 0.05s linear;
+  will-change: margin, border-radius;
+}
+.hero.is-expanded {
+  margin: 0 !important;
+  border-radius: 0 !important;
 }
 
 /* capa 1: fondo negro con imagen de textura */

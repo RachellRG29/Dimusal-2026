@@ -10,582 +10,22 @@
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      /* ── Paleta de colores (inlined) ── */
-      :root {
-        --orange: #ff9b51;
-        --black: #1e1e1e;
-        --white: #ffffff;
-        --gray: #6b6b6b;
-        --sidebar-w: 240px;
-        --radius: 16px;
-        --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        --grad2-a: #fff5ec;
-        --grad2-c: #ffe8d0;
-      }
-    </style>
+
+    <link rel="stylesheet" href="../css/paleta-colores.css" />
+
     <link rel="stylesheet" href="../css/dashboard/dashboard.css" />
+    <link rel="stylesheet" href="../css/dashboard/sidebar.css" />
+    <link rel="stylesheet" href="../css/btn-idioma.css" />
+
+    <link rel="stylesheet" href="../css/dashboard/inicio.css" />
     <link rel="stylesheet" href="../css/dashboard/tags.css" />
+
+    <link rel="stylesheet" href="../css/dashboard/oportunidades.css" />
+    <link rel="stylesheet" href="../css/dashboard/eventos.css" />
   </head>
   <body>
     <!-- Overlay -->
     <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
-
-    <!-- ── Modal: Gestor de Etiquetas ── -->
-    <div
-      class="tags-modal-backdrop"
-      id="tagsModalBackdrop"
-      onclick="closeTagsModal(event)"
-    >
-      <div
-        class="tags-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="tagsModalTitle"
-      >
-        <div class="tags-modal-header">
-          <div>
-            <div class="tags-modal-title" id="tagsModalTitle">
-              Mis etiquetas musicales
-            </div>
-            <div class="tags-modal-subtitle">
-              Define tu estilo para aparecer en búsquedas relevantes
-            </div>
-          </div>
-          <button
-            class="tags-modal-close"
-            onclick="closeTagsModal()"
-            aria-label="Cerrar"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="tags-modal-body">
-          <!-- Géneros -->
-          <div class="tag-group">
-            <div class="tag-group-label">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="9" cy="18" r="3" />
-                <circle cx="15" cy="15" r="3" />
-                <path d="M12 15V7l6-2v4" />
-              </svg>
-              Géneros musicales
-            </div>
-            <div class="tag-group-chips" id="group-genres">
-              <button
-                class="tag-chip"
-                data-tag="Rock"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Rock
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Pop"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Pop
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Jazz"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Jazz
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Clásica"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Clásica
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Folk"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Folk
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Cumbia"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Cumbia
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Reggaeton"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Reggaeton
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Hip-Hop"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Hip-Hop
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Electrónica"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Electrónica
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Metal"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Metal
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Blues"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Blues
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Salsa"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Salsa
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Tropical"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Tropical
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Indie"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Indie
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Alternativo"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                Alternativo
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="R&B"
-                data-group="genres"
-                onclick="toggleTag(this)"
-              >
-                R&B
-              </button>
-            </div>
-          </div>
-
-          <!-- Instrumentos -->
-          <div class="tag-group">
-            <div class="tag-group-label">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M9 18V5l12-2v13" />
-                <circle cx="6" cy="18" r="3" />
-                <circle cx="18" cy="16" r="3" />
-              </svg>
-              Instrumentos
-            </div>
-            <div class="tag-group-chips" id="group-instruments">
-              <button
-                class="tag-chip"
-                data-tag="Guitarra"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Guitarra
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Piano"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Piano
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Batería"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Batería
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Bajo"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Bajo
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Voz"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Voz
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Violín"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Violín
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Saxofón"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Saxofón
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Trompeta"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Trompeta
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Teclado"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Teclado
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Percusión"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Percusión
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="DJ / Producción"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                DJ / Producción
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Flauta"
-                data-group="instruments"
-                onclick="toggleTag(this)"
-              >
-                Flauta
-              </button>
-            </div>
-          </div>
-
-          <!-- Estilos de presentación -->
-          <div class="tag-group">
-            <div class="tag-group-label">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polygon
-                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                />
-              </svg>
-              Estilo de presentación
-            </div>
-            <div class="tag-group-chips" id="group-styles">
-              <button
-                class="tag-chip"
-                data-tag="Acústico"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Acústico
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="En vivo"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                En vivo
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Solo"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Solo
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Banda"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Banda
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Dúo"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Dúo
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Orquesta"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Orquesta
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Experimental"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Experimental
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Electrónico en vivo"
-                data-group="styles"
-                onclick="toggleTag(this)"
-              >
-                Electrónico en vivo
-              </button>
-            </div>
-          </div>
-
-          <!-- Tipos de evento -->
-          <div class="tag-group">
-            <div class="tag-group-label">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              Tipos de evento
-            </div>
-            <div class="tag-group-chips" id="group-events">
-              <button
-                class="tag-chip"
-                data-tag="Festival"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Festival
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Tocata"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Tocata
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Boda"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Boda
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Corporativo"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Corporativo
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Bar / Venue"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Bar / Venue
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Cultural"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Cultural
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Grabación"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Grabación
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Colaboración"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Colaboración
-              </button>
-              <button
-                class="tag-chip"
-                data-tag="Streaming"
-                data-group="events"
-                onclick="toggleTag(this)"
-              >
-                Streaming
-              </button>
-            </div>
-          </div>
-
-          <!-- Etiquetas personalizadas -->
-          <div class="tag-group">
-            <div class="tag-group-label">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-              Etiquetas personalizadas
-            </div>
-            <div class="custom-tag-input-row">
-              <input
-                type="text"
-                id="customTagInput"
-                class="custom-tag-input"
-                placeholder="Escribe una etiqueta y presiona Enter…"
-                maxlength="32"
-                onkeydown="handleCustomTagKey(event)"
-              />
-              <button class="custom-tag-add-btn" onclick="addCustomTag()">
-                Agregar
-              </button>
-            </div>
-            <div class="tag-group-chips" id="group-custom"></div>
-          </div>
-
-          <!-- Resumen seleccionados -->
-          <div class="tags-selected-summary" id="tagsSummary">
-            <div class="tags-summary-label">
-              Etiquetas seleccionadas (<span id="tagCount">0</span>)
-            </div>
-            <div class="tags-summary-chips" id="tagsSummaryChips"></div>
-          </div>
-        </div>
-
-        <div class="tags-modal-footer">
-          <button
-            class="btn-secondary"
-            onclick="closeTagsModal()"
-            style="
-              padding: 9px 22px;
-              font-size: 0.85rem;
-              border-radius: 50px;
-              background: rgba(0, 0, 0, 0.06);
-              color: var(--black);
-              border: none;
-              font-family: &quot;Syne&quot;, sans-serif;
-              font-weight: 600;
-              cursor: pointer;
-            "
-          >
-            Cancelar
-          </button>
-          <button
-            class="btn-primary"
-            onclick="saveProfileTags()"
-            style="padding: 9px 26px"
-          >
-            Guardar etiquetas
-          </button>
-        </div>
-      </div>
-    </div>
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -593,8 +33,12 @@
 
       <div class="sidebar-section-label">Principal</div>
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
-          <svg
+        <!-- Inicio -->
+        <a
+          href="#"
+          data-page="../../templates/dashboard/inicio.html"
+          class="nav-item active"
+          data-es='<svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -606,11 +50,28 @@
             <rect x="14" y="3" width="7" height="7" rx="1.5" />
             <rect x="3" y="14" width="7" height="7" rx="1.5" />
             <rect x="14" y="14" width="7" height="7" rx="1.5" />
-          </svg>
-          Inicio
+          </svg> Inicio'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg> Home'
+        >
         </a>
-        <a href="#" class="nav-item">
-          <svg
+        <!-- Oportunidades -->
+        <a
+          href="#"
+          data-page="../../templates/dashboard/oportunidades.html"
+          class="nav-item"
+          data-es='<svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -620,10 +81,39 @@
           >
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-          Oportunidades
+          </svg> Oportunidades'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg> Opportunities'
+        >
         </a>
-        <a href="#" class="nav-item">
+        <!-- Eventos -->
+        <a
+          href="#"
+          data-page="../../templates/dashboard/eventos.html"
+          class="nav-item"
+          data-es='
+           <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path></svg>
+          Eventos'
+          data-en='
+          <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path></svg>
+           Events'
+        >
+        </a>
+        <!-- Mensajes -->
+        <a
+          href="#"
+          data-page="../../templates/dashboard/mensajes.html"
+          class="nav-item"
+          data-es='
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -635,15 +125,34 @@
             <path
               d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
             />
-          </svg>
-          Mensajes
+          </svg> Mensajes'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            />
+          </svg> Messages'
+        >
         </a>
       </nav>
 
-      <div class="sidebar-section-label">Gestión</div>
+      <div
+        class="sidebar-section-label"
+        data-es="Gestión"
+        data-en="Management"
+      ></div>
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item">
-          <svg
+        <!-- Mis Postulaciones -->
+        <a
+          href="#"
+          class="nav-item"
+          data-es='<svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -655,11 +164,27 @@
               d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
             />
             <polyline points="14 2 14 8 20 8" />
-          </svg>
-          Mis Postulaciones
+          </svg> Mis Postulaciones'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+          </svg> My Applications'
+        >
         </a>
-        <a href="#" class="nav-item">
-          <svg
+        <!-- Convocatorias guardadas -->
+        <a
+          href="#"
+          class="nav-item"
+          data-es='<svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -668,11 +193,24 @@
             stroke-linejoin="round"
           >
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-          </svg>
-          Convocatorias guardadas
+          </svg> Convocatorias guardadas'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg> Saved calls'
+        >
         </a>
-        <a href="#" class="nav-item">
-          <svg
+        <!-- Historial -->
+        <a
+          href="#"
+          class="nav-item"
+          data-es='<svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -682,8 +220,20 @@
           >
             <polyline points="12 8 12 12 14 14" />
             <circle cx="12" cy="12" r="10" />
-          </svg>
-          Historial
+          </svg> 
+          Historial'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="12 8 12 12 14 14" />
+            <circle cx="12" cy="12" r="10" />
+          </svg> Record'
+        >
         </a>
       </nav>
 
@@ -695,6 +245,239 @@
         </div>
       </a>
     </aside>
+
+    <!-- Navbar móvil superior -->
+    <header class="mobile-topbar">
+      <div class="mobile-topbar-content">
+        <div class="mobile-logo">DIMUSAL</div>
+
+        <button
+          class="mobile-menu-btn"
+          id="mobileMenuBtn"
+          aria-label="Abrir menú"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Menú desplegable -->
+      <nav class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-section">Principal</div>
+        <!-- Inicio -->
+        <a
+          href="#"
+          class="mobile-menu-item active"
+          data-page="../../templates/dashboard/inicio.html"
+          data-es='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg> Inicio'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg> Home'
+        >
+        </a>
+        <!-- Oportunidades -->
+        <a
+          href="#"
+          class="mobile-menu-item"
+          data-page="../../templates/dashboard/oportunidades.html"
+          data-es='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg> Oportunidades'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg> Opportunities'
+        >
+        </a>
+
+        <!-- Eventos -->
+        <a
+          href="#"
+          class="mobile-menu-item"
+          data-page="../../templates/dashboard/eventos.html"
+          data-es='
+           <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path></svg>
+          Eventos'
+          data-en='
+          <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path></svg>
+           Events'
+        >
+        </a>
+
+        <!-- Mensajes -->
+        <a
+          href="#"
+          class="mobile-menu-item"
+          data-page="../../templates/dashboard/mensajes.html"
+          data-es='
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            />
+          </svg> Mensajes'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            />
+          </svg> Messages'
+        >
+        </a>
+
+        <div class="mobile-menu-section">Gestión</div>
+
+        <!-- Mis Postulaciones -->
+        <a
+          href="#"
+          class="mobile-menu-item"
+          data-es='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+          </svg> Mis Postulaciones'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+          </svg> My Applications'
+        >
+        </a>
+
+        <!-- Convocatorias Guardadas -->
+        <a
+          href="#"
+          class="mobile-menu-item"
+          data-es='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg> Convocatorias guardadas'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg> Saved calls'
+        >
+        </a>
+
+        <!-- Historial -->
+        <a
+          href="#"
+          class="mobile-menu-item"
+          data-es='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="12 8 12 12 14 14" />
+            <circle cx="12" cy="12" r="10" />
+          </svg> 
+          Historial'
+          data-en='<svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="12 8 12 12 14 14" />
+            <circle cx="12" cy="12" r="10" />
+          </svg> Record'
+        >
+        </a>
+
+        <!-- Perfil -->
+        <a href="../../templates/perfil.html" class="mobile-profile">
+          <div class="avatar">NA</div>
+
+          <div>
+            <div class="name">Nombre Apellido</div>
+            <div class="role">Artista</div>
+          </div>
+        </a>
+      </nav>
+    </header>
 
     <!-- Main -->
     <main class="main">
@@ -711,7 +494,41 @@
             </p>
           </div>
         </div>
+
+        <!-- ══ NOTIFICACIONES + btn IDIOMA ══ -->
         <div class="topbar-right">
+          <!-- ══ BOTON IDIOMA DE HOMEPAGE ══ -->
+          <a class="btn-idioma btn-idioma-homepage" id="btnIdioma">
+            <div class="icon-idioma">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                xml:space="preserve"
+              >
+                <path
+                  style="fill: #fff"
+                  d="M185.802 105.689h277.06c21.364 0 38.688 17.32 38.688 38.689V462.86c.001 21.366-17.318 38.69-38.687 38.69H280.479z"
+                />
+                <path
+                  style="fill: #0084ff"
+                  d="m361.15 406.306-80.671 95.239-31.69-95.239z"
+                />
+                <path
+                  style="fill: #10bafc"
+                  d="M361.15 406.306H49.137c-21.364 0-38.688-17.32-38.688-38.69V49.138c0-21.365 17.32-38.689 38.688-38.689h182.387z"
+                />
+                <path
+                  d="M462.863 95.24H270.286L241.455 7.197A10.45 10.45 0 0 0 231.524 0H49.137C22.043 0 0 22.043 0 49.138v318.478c0 27.095 22.043 49.138 49.137 49.138h192.115l29.311 88.095a10.45 10.45 0 0 0 9.914 7.15h182.384C489.957 512 512 489.957 512 462.862V144.38c0-27.095-22.043-49.14-49.137-49.14M20.898 367.616V49.138c0-15.571 12.668-28.24 28.239-28.24h174.814l122.783 374.96H49.137c-15.571-.001-28.239-12.67-28.239-28.242m390.46-126.245c-5.469 11.908-15.308 30.468-31.079 51.099a285 285 0 0 1-11.901-16.717c-9.028-13.722-15.237-25.776-19.184-34.381zm-84.948 0c3.62 8.944 11.118 25.394 24.047 45.165a307 307 0 0 0 16.206 22.461 295 295 0 0 1-19.759 20.226l-28.768-87.852zm-63.132 175.384h75.328l-54.084 63.85zm227.824 46.107c0 15.571-12.668 28.24-28.239 28.24H303.018l65.929-77.834a10.4 10.4 0 0 0 2.673-6.961c0-1.378-.266-2.695-.751-3.9l-16.85-51.458a318 318 0 0 0 26.302-25.839 318.7 318.7 0 0 0 69.799 57.876 10.44 10.44 0 0 0 14.367-3.455c3.013-4.921 1.466-11.354-3.456-14.367a297.9 297.9 0 0 1-67.082-56.152c23.199-29.342 35.285-55.429 40.202-67.64h30.828c5.77 0 10.449-4.678 10.449-10.449s-4.679-10.449-10.449-10.449h-74.907V202.71c0-5.771-4.679-10.449-10.449-10.449s-10.449 4.678-10.449 10.449v17.763h-57.882l-34.165-104.335h185.734c15.571 0 28.239 12.669 28.239 28.24v318.483h.002z"
+                />
+                <path
+                  d="M147.087 286.44c42.444 0 76.974-34.531 76.974-76.974 0-5.771-4.678-10.449-10.449-10.449H154.41c-5.771 0-10.449 4.678-10.449 10.449s4.678 10.449 10.449 10.449h47.777c-4.91 25.944-27.75 45.628-55.1 45.628-30.921 0-56.077-25.156-56.077-56.077s25.156-56.077 56.077-56.077a56.1 56.1 0 0 1 36.343 13.368c4.391 3.742 10.988 3.215 14.73-1.178 3.742-4.394 3.214-10.988-1.179-14.73a77 77 0 0 0-49.894-18.358c-42.444 0-76.974 34.531-76.974 76.974s34.529 76.975 76.974 76.975m54.535 64.994h-4.678c-5.77 0-10.449 4.678-10.449 10.449s4.679 10.449 10.449 10.449h4.678c5.77 0 10.449-4.678 10.449-10.449s-4.679-10.449-10.449-10.449m-38.481 0H61.649c-5.77 0-10.449 4.678-10.449 10.449s4.679 10.449 10.449 10.449h101.492c5.77 0 10.449-4.678 10.449-10.449s-4.679-10.449-10.449-10.449"
+                />
+              </svg>
+            </div>
+
+            <span class="texto-idioma">ES</span>
+          </a>
+
           <div class="notif-btn" aria-label="Notificaciones">
             <div class="notif-dot"></div>
             <svg
@@ -746,471 +563,15 @@
         </div>
       </div>
 
-      <!-- Content -->
-      <div class="content">
-        <!-- Banner -->
-        <div class="banner">
-          <div class="banner-image"></div>
-          <div class="banner-left">
-            <div class="banner-tag">Ecosistema Musical Salvadoreño</div>
-            <div class="banner-title">Tu carrera musical empieza aquí</div>
-            <div class="banner-actions">
-              <button class="btn-primary" onclick="openTagsModal()">
-                Completar perfil ahora
-              </button>
-              <button class="btn-secondary">Ver oportunidades</button>
-            </div>
-          </div>
-          <div class="banner-progress">
-            <div class="progress-pct">30%</div>
-            <div class="progress-label">Perfil completado</div>
-            <div class="progress-bar-track">
-              <div class="progress-bar-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-hint">Completa para aparecer en búsquedas</div>
-          </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-dot"></div>
-            <div class="stat-number">0</div>
-            <div class="stat-label">Postulaciones enviadas</div>
-            <span class="stat-badge badge-orange">¡Empieza hoy!</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-dot"></div>
-            <div class="stat-number">12</div>
-            <div class="stat-label">Convocatorias abiertas</div>
-            <span class="stat-badge badge-celeste">Para ti</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-dot"></div>
-            <div class="stat-number">0</div>
-            <div class="stat-label">Conexiones</div>
-            <span class="stat-badge badge-orange">Conéctate</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-dot"></div>
-            <div class="stat-number">3</div>
-            <div class="stat-label">Festivales próximos</div>
-            <span class="stat-badge badge-celeste">Este mes</span>
-          </div>
-        </div>
-
-        <!-- ── RF-01: Banner de etiquetas del perfil ── -->
-        <div class="profile-tags-bar" id="profileTagsBar">
-          <div class="profile-tags-bar-left">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="
-                width: 16px;
-                height: 16px;
-                flex-shrink: 0;
-                color: var(--orange);
-              "
-            >
-              <path
-                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
-              />
-              <line x1="7" y1="7" x2="7.01" y2="7" />
-            </svg>
-            <span class="profile-tags-label">Mis etiquetas:</span>
-            <div class="profile-tags-display" id="profileTagsDisplay">
-              <span class="profile-tags-empty"
-                >Sin etiquetas —
-                <button class="link-tags-btn" onclick="openTagsModal()">
-                  agregar ahora
-                </button></span
-              >
-            </div>
-          </div>
-          <button class="edit-tags-btn" onclick="openTagsModal()">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="width: 13px; height: 13px"
-            >
-              <path
-                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-              />
-              <path
-                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-              />
-            </svg>
-            Editar etiquetas
-          </button>
-        </div>
-
-        <!-- Bottom grid -->
-        <div class="bottom-grid">
-          <!-- Opportunities -->
-          <div>
-            <div class="section-header">
-              <div class="section-title">Oportunidades recomendadas</div>
-              <a href="#" class="link-ver-todas">Ver todas</a>
-            </div>
-            <div class="filter-tabs">
-              <button class="tab active" onclick="setTab(this)">Todas</button>
-              <button class="tab" onclick="setTab(this)">Tocatas</button>
-              <button class="tab" onclick="setTab(this)">Festivales</button>
-              <button class="tab" onclick="setTab(this)">Difusión</button>
-              <button class="tab" onclick="setTab(this)">Grabación</button>
-              <button class="tab" onclick="setTab(this)">Colaboración</button>
-            </div>
-
-            <!-- ── RF-01: Filtro por etiquetas en oportunidades ── -->
-            <div class="opp-tag-filter" id="oppTagFilter">
-              <div class="opp-tag-filter-label">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  style="width: 13px; height: 13px"
-                >
-                  <polygon
-                    points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-                  />
-                </svg>
-                Filtrar por etiqueta:
-              </div>
-              <div class="opp-tag-filter-chips" id="oppTagFilterChips">
-                <button
-                  class="filter-tag-chip active"
-                  data-filter="all"
-                  onclick="filterByTag(this, 'all')"
-                >
-                  Todos
-                </button>
-                <button
-                  class="filter-tag-chip"
-                  data-filter="Rock"
-                  onclick="filterByTag(this, 'Rock')"
-                >
-                  Rock
-                </button>
-                <button
-                  class="filter-tag-chip"
-                  data-filter="Alternativo"
-                  onclick="filterByTag(this, 'Alternativo')"
-                >
-                  Alternativo
-                </button>
-                <button
-                  class="filter-tag-chip"
-                  data-filter="Clásica"
-                  onclick="filterByTag(this, 'Clásica')"
-                >
-                  Clásica
-                </button>
-                <button
-                  class="filter-tag-chip"
-                  data-filter="Popular"
-                  onclick="filterByTag(this, 'Popular')"
-                >
-                  Popular
-                </button>
-                <button
-                  class="filter-tag-chip"
-                  data-filter="Jazz"
-                  onclick="filterByTag(this, 'Jazz')"
-                >
-                  Jazz
-                </button>
-                <button
-                  class="filter-tag-chip"
-                  data-filter="Indie"
-                  onclick="filterByTag(this, 'Indie')"
-                >
-                  Indie
-                </button>
-              </div>
-            </div>
-
-            <div class="opp-list" id="oppList">
-              <div class="opp-card" data-tags="Festival,Rock,Alternativo">
-                <div class="opp-left">
-                  <div class="opp-title">Festival de Música Independiente</div>
-                  <div class="opp-meta">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                      />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    San Salvador
-                    <span style="margin-left: auto">Cierra: 15 junio</span>
-                  </div>
-                  <div class="opp-tags">
-                    <span class="tag">Festival</span>
-                    <span class="tag" style="background: #f0f0f0">Rock</span>
-                    <span class="tag" style="background: #f0f0f0"
-                      >Alternativo</span
-                    >
-                  </div>
-                </div>
-                <div class="opp-right">
-                  <button
-                    class="btn-primary"
-                    style="padding: 8px 18px; font-size: 0.78rem"
-                  >
-                    Postularme
-                  </button>
-                </div>
-              </div>
-
-              <div class="opp-card" data-tags="Difusión,Clásica,Popular">
-                <div class="opp-left">
-                  <div class="opp-title">
-                    Convocatoria: Artistas para Espacios Culturales
-                  </div>
-                  <div class="opp-meta">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                      />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    Ministerio de Cultura
-                    <span style="margin-left: auto">Cierra: 20 junio</span>
-                  </div>
-                  <div class="opp-tags">
-                    <span class="tag orange">Difusión</span>
-                    <span class="tag" style="background: #f0f0f0">Clásica</span>
-                    <span class="tag" style="background: #f0f0f0">Popular</span>
-                  </div>
-                </div>
-                <div class="opp-right">
-                  <button
-                    class="btn-primary"
-                    style="padding: 8px 18px; font-size: 0.78rem"
-                  >
-                    Postularme
-                  </button>
-                </div>
-              </div>
-
-              <div class="opp-card" data-tags="Tocata,Indie,Alternativo">
-                <div class="opp-left">
-                  <div class="opp-title">
-                    Tocata en El Árbol Bar – Búsqueda de Teloneros
-                  </div>
-                  <div class="opp-meta">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                      />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    Santa Ana
-                    <span style="margin-left: auto">Cierra: 8 julio</span>
-                  </div>
-                  <div class="opp-tags">
-                    <span class="tag orange">Tocata</span>
-                    <span class="tag" style="background: #f0f0f0">Indie</span>
-                    <span class="tag" style="background: #f0f0f0"
-                      >Alternativo</span
-                    >
-                  </div>
-                </div>
-                <div class="opp-right">
-                  <button
-                    class="btn-primary"
-                    style="padding: 8px 18px; font-size: 0.78rem"
-                  >
-                    Postularme
-                  </button>
-                </div>
-              </div>
-
-              <div class="opp-card" data-tags="Festival,Jazz">
-                <div class="opp-left">
-                  <div class="opp-title">
-                    Festival Internacional de Jazz San Salvador
-                  </div>
-                  <div class="opp-meta">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                      />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    San Salvador
-                    <span style="margin-left: auto">Cierra: 25 julio</span>
-                  </div>
-                  <div class="opp-tags">
-                    <span class="tag">Festival</span>
-                    <span class="tag" style="background: #f0f0f0">Jazz</span>
-                  </div>
-                </div>
-                <div class="opp-right">
-                  <button
-                    class="btn-primary"
-                    style="padding: 8px 18px; font-size: 0.78rem"
-                  >
-                    Postularme
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right column: Tips + Recomendaciones por afinidad -->
-          <div style="display: flex; flex-direction: column; gap: 20px">
-            <!-- Tips -->
-            <div>
-              <div class="section-header">
-                <div class="section-title">Tips para destacar en DIMUSAL</div>
-              </div>
-              <div class="tips-card">
-                <div class="tips-list">
-                  <div class="tip-item">
-                    <div class="tip-num">1</div>
-                    <div class="tip-text">
-                      Mantén tu perfil completo al 100% — los productores
-                      filtran por artistas verificados.
-                    </div>
-                  </div>
-                  <div class="tip-item">
-                    <div class="tip-num">2</div>
-                    <div class="tip-text">
-                      Vincula tus redes sociales para mostrar tu base de fans
-                      actual.
-                    </div>
-                  </div>
-                  <div class="tip-item">
-                    <div class="tip-num">3</div>
-                    <div class="tip-text">
-                      Postúlate rápido: las convocatorias de cultura tienen
-                      cupos limitados.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ── RF-01: Recomendaciones por afinidad de etiquetas ── -->
-            <div id="affinitySection">
-              <div class="section-header">
-                <div class="section-title">Recomendado para ti</div>
-                <span class="affinity-badge">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    style="width: 11px; height: 11px"
-                  >
-                    <path
-                      d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
-                    />
-                    <line x1="7" y1="7" x2="7.01" y2="7" />
-                  </svg>
-                  Por afinidad
-                </span>
-              </div>
-              <div class="affinity-card" id="affinityCard">
-                <div class="affinity-empty" id="affinityEmpty">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    style="
-                      width: 32px;
-                      height: 32px;
-                      color: #ccc;
-                      margin-bottom: 10px;
-                    "
-                  >
-                    <path
-                      d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
-                    />
-                    <line x1="7" y1="7" x2="7.01" y2="7" />
-                  </svg>
-                  <div
-                    style="
-                      font-size: 0.85rem;
-                      font-weight: 600;
-                      color: #aaa;
-                      text-align: center;
-                    "
-                  >
-                    Agrega etiquetas a tu perfil para ver recomendaciones
-                    personalizadas
-                  </div>
-                  <button
-                    class="btn-primary"
-                    style="
-                      margin-top: 12px;
-                      padding: 8px 18px;
-                      font-size: 0.78rem;
-                    "
-                    onclick="openTagsModal()"
-                  >
-                    Agregar etiquetas
-                  </button>
-                </div>
-                <div
-                  class="affinity-list"
-                  id="affinityList"
-                  style="display: none"
-                >
-                  <!-- se llena dinámicamente -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="content" id="main-content"></div>
     </main>
 
     <script src="../js/dashboard/dashboard.js"></script>
-    <script src="../js/dashboard/tags.js"></script>
+    <script src="../js/dashboard/nabvar.js"></script>
+
+    <!--Cargamos oportunidades -->
+    <script src="../js/dashboard/oportunidades.js"></script>
+
+    <script src="../js/idioma.js"></script>
   </body>
 </html>
