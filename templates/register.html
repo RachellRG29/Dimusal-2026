@@ -343,6 +343,7 @@
                 <span class="req">*</span></label
               >
               <div class="reg-checkboxes">
+                <!-- Artista -->
                 <label class="reg-checkbox-label" id="check-artista-label">
                   <input
                     type="checkbox"
@@ -358,6 +359,7 @@
                   >
                   </span>
                 </label>
+                <!-- Oyente -->
                 <label class="reg-checkbox-label" id="check-oyente-label">
                   <input
                     type="checkbox"
@@ -369,6 +371,22 @@
                   <span
                     class="reg-checkbox-text"
                     data-es="<strong>Oyente</strong><small>→ Descubre nuevos talentos, sigue artistas, asiste a evento</small>"
+                    data-en="<strong>Listener</strong><small>→ Discover new talent, follow artists, attend events</small>"
+                  >
+                  </span>
+                </label>
+                <!-- Promotor -->
+                <label class="reg-checkbox-label" id="check-oyente-label">
+                  <input
+                    type="checkbox"
+                    id="check-promotor"
+                    name="tipo"
+                    value="promotor"
+                  />
+                  <span class="reg-checkbox-custom"></span>
+                  <span
+                    class="reg-checkbox-text"
+                    data-es="<strong>Promotor</strong><small>→ Descubre nuevos talentos, sigue artistas, asiste a evento</small>"
                     data-en="<strong>Listener</strong><small>→ Discover new talent, follow artists, attend events</small>"
                   >
                   </span>
@@ -525,7 +543,7 @@
 
           <!-- ══ PASO 3: Etiquetas ══ -->
           <div class="register-step hidden" id="step-3">
-            <!-- ¿Qué buscas? -->
+            <!-- ¿Qué buscas?: artista -->
             <div class="reg-field">
               <label
                 for="objetivo"

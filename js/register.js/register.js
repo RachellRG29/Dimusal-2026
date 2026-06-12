@@ -138,7 +138,7 @@ document
       return;
     }
 
-    const objetivo = document.getElementById("objetivo").value;
+    /* const objetivo = document.getElementById("objetivo").value;
     if (!objetivo) {
       Swal.fire({
         icon: "warning",
@@ -147,7 +147,7 @@ document
         confirmButtonColor: "#f97316",
       });
       return;
-    }
+    }*/
 
     const datos = {
       ...step1,
