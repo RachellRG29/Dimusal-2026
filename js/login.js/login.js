@@ -52,7 +52,7 @@ document.querySelector(".login-btn").addEventListener("click", async () => {
         showConfirmButton: false,
       });
 
-      window.location.href = "../../index.html";
+      window.location.href = "/dashboard.html";
     } else {
       Swal.fire({
         icon: "error",

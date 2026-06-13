@@ -99,3 +99,5 @@ GMAIL_PASS=xxxxxxxxxxxxxxxx
 ## Instalar nodemailer
 
 npm install nodemailer
+Es para instalar multer, que es la librería que maneja la subida de archivos (imágenes) en el servidor.
+npm install multer

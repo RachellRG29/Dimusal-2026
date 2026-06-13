@@ -10,10 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/paleta-colores.css" />
-    <link rel="stylesheet" href="../css/register/register.css" />
-    <link rel="stylesheet" href="../css/register/tags-register.css" />
-    <link rel="stylesheet" href="../css/btn-idioma.css" />
+    <link rel="stylesheet" href="/css/paleta-colores.css" />
+    <link rel="stylesheet" href="/css/register/register.css" />
+    <link rel="stylesheet" href="/css/register/tags-register.css" />
+    <link rel="stylesheet" href="/css/btn-idioma.css" />
   </head>
   <body>
     <div class="formulario-register">
@@ -21,7 +21,7 @@
       <div class="register-bg">
         <img
           class="register-bg__img"
-          src="../images/homepage/banner-bateria.png"
+          src="/images/homepage/banner-bateria.png"
           alt=""
         />
         <div class="register-bg__overlay"></div>
@@ -75,7 +75,9 @@
             data-en="Create account"
           ></h1>
 
-          <!-- ══ PASO 1: Datos personales ══ -->
+          <!-- ══════════════════════════════════════════
+               PASO 1: Datos personales
+          ══════════════════════════════════════════ -->
           <div class="register-step" id="step-1">
             <h2
               class="register-section-title"
@@ -113,7 +115,12 @@
               </div>
               <div class="reg-field">
                 <label for="dui">DUI <span class="req">*</span></label>
-                <input type="text" id="dui" name="dui" />
+                <input
+                  type="text"
+                  id="dui"
+                  name="dui"
+                  placeholder="00000000-0"
+                />
               </div>
             </div>
 
@@ -121,7 +128,7 @@
               <label
                 for="correo"
                 data-es='Correo electrónico <span class="req">*</span>'
-                data-en='Email<span class="req">*</span>'
+                data-en='Email <span class="req">*</span>'
               ></label>
               <input
                 type="email"
@@ -135,7 +142,7 @@
               <label
                 for="password"
                 data-es='Contraseña <span class="req">*</span>'
-                data-en='Password<span class="req">*</span>'
+                data-en='Password <span class="req">*</span>'
               ></label>
               <div class="reg-field__input-wrap">
                 <input
@@ -202,17 +209,14 @@
               data-es="Ubicación"
               data-en="Location"
               style="margin-top: 1.5rem"
-            >
-              Ubicación
-            </h2>
+            ></h2>
 
             <div class="reg-field">
               <label
                 for="departamento"
                 data-es='Departamento <span class="req">*</span>'
                 data-en='Department <span class="req">*</span>'
-                >Departamento <span class="req">*</span></label
-              >
+              ></label>
               <div class="reg-select-wrap">
                 <select id="departamento" name="departamento" required>
                   <option
@@ -249,16 +253,16 @@
                   <select id="distrito" name="distrito" required>
                     <option
                       value=""
-                      data-es="Seleccione un distrito"
-                      data-en="Select a distrit"
                       selected
                       disabled
+                      data-es="Seleccione un distrito"
+                      data-en="Select a district"
                     >
                       Seleccione un distrito
                     </option>
                   </select>
-                  <span class="reg-select-arrow"
-                    ><svg
+                  <span class="reg-select-arrow">
+                    <svg
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -276,8 +280,7 @@
                   for="municipio"
                   data-es='Municipio <span class="req">*</span>'
                   data-en='Municipality <span class="req">*</span>'
-                  >Municipio <span class="req">*</span></label
-                >
+                ></label>
                 <div class="reg-select-wrap">
                   <select id="municipio" name="municipio" required>
                     <option
@@ -290,8 +293,8 @@
                       Seleccione un municipio
                     </option>
                   </select>
-                  <span class="reg-select-arrow"
-                    ><svg
+                  <span class="reg-select-arrow">
+                    <svg
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -306,9 +309,10 @@
               </div>
             </div>
 
+            <!-- ✅ ID único: btn-continuar-1 -->
             <a
               class="btn-register"
-              id="btn-continuar"
+              id="btn-continuar-1"
               type="button"
               data-es="Continuar"
               data-en="Continue"
@@ -325,23 +329,21 @@
           </div>
           <!-- /step-1 -->
 
-          <!-- ══ PASO 2: Tipo de cuenta ══ -->
+          <!-- ══════════════════════════════════════════
+               PASO 2: Tipo de cuenta + Redes
+          ══════════════════════════════════════════ -->
           <div class="register-step hidden" id="step-2">
             <h2
               class="register-section-title"
               data-es="Tipo de cuenta"
               data-en="Account type"
-            >
-              Tipo de cuenta
-            </h2>
+            ></h2>
 
             <div class="reg-field">
               <label
-                data-es='Cuéntanos quién eres y de dónde eres <span class="req">*</span>'
-                data-en='Tell us who you are and where you´re from <span class="req">*</span>'
-                >Cuéntanos quién eres y de dónde eres
-                <span class="req">*</span></label
-              >
+                data-es='Cuéntanos quién eres <span class="req">*</span>'
+                data-en='Tell us who you are <span class="req">*</span>'
+              ></label>
               <div class="reg-checkboxes">
                 <!-- Artista -->
                 <label class="reg-checkbox-label" id="check-artista-label">
@@ -356,8 +358,7 @@
                     class="reg-checkbox-text"
                     data-es="<strong>Artista</strong><small>→ Sube tu música, aplica a eventos o colaboraciones profesionales.</small>"
                     data-en="<strong>Artist</strong><small>→ Upload your music, apply to events or professional collaborations.</small>"
-                  >
-                  </span>
+                  ></span>
                 </label>
                 <!-- Oyente -->
                 <label class="reg-checkbox-label" id="check-oyente-label">
@@ -370,13 +371,12 @@
                   <span class="reg-checkbox-custom"></span>
                   <span
                     class="reg-checkbox-text"
-                    data-es="<strong>Oyente</strong><small>→ Descubre nuevos talentos, sigue artistas, asiste a evento</small>"
-                    data-en="<strong>Listener</strong><small>→ Discover new talent, follow artists, attend events</small>"
-                  >
-                  </span>
+                    data-es="<strong>Oyente</strong><small>→ Descubre nuevos talentos, sigue artistas, asiste a eventos.</small>"
+                    data-en="<strong>Listener</strong><small>→ Discover new talent, follow artists, attend events.</small>"
+                  ></span>
                 </label>
                 <!-- Promotor -->
-                <label class="reg-checkbox-label" id="check-oyente-label">
+                <label class="reg-checkbox-label" id="check-promotor-label">
                   <input
                     type="checkbox"
                     id="check-promotor"
@@ -386,10 +386,9 @@
                   <span class="reg-checkbox-custom"></span>
                   <span
                     class="reg-checkbox-text"
-                    data-es="<strong>Promotor</strong><small>→ Descubre nuevos talentos, sigue artistas, asiste a evento</small>"
-                    data-en="<strong>Listener</strong><small>→ Discover new talent, follow artists, attend events</small>"
-                  >
-                  </span>
+                    data-es="<strong>Promotor</strong><small>→ Organiza eventos, conecta artistas y amplía la escena musical.</small>"
+                    data-en="<strong>Promoter</strong><small>→ Organize events, connect artists and grow the music scene.</small>"
+                  ></span>
                 </label>
               </div>
             </div>
@@ -411,8 +410,8 @@
               <div class="reg-field">
                 <label
                   for="portafolio"
-                  data-es='Portafolio <span class="req">*</span>'
-                  data-en='Portfolio <span class="req">*</span>'
+                  data-es="Portafolio"
+                  data-en="Portfolio"
                 ></label>
                 <input
                   type="url"
@@ -427,8 +426,8 @@
             <div class="reg-row">
               <div class="reg-field">
                 <label
-                  data-es='Foto/logo (500x500) <span class="req">*</span>'
-                  data-en='Photo/logo (500x500) <span class="req">*</span>'
+                  data-es='Foto/logo (500×500) <span class="req">*</span>'
+                  data-en='Photo/logo (500×500) <span class="req">*</span>'
                 ></label>
                 <div class="reg-upload" id="upload-foto">
                   <input
@@ -455,8 +454,8 @@
               </div>
               <div class="reg-field">
                 <label
-                  data-es='Portada del perfil (1500x500) <span class="req">*</span>'
-                  data-en='Profile cover (1500x500) <span class="req">*</span>'
+                  data-es='Portada del perfil (1500×500) <span class="req">*</span>'
+                  data-en='Profile cover (1500×500) <span class="req">*</span>'
                 ></label>
                 <div class="reg-upload" id="upload-portada">
                   <input
@@ -489,12 +488,15 @@
                 class="reg-label-group"
                 data-es="Redes sociales"
                 data-en="Social networks"
-                >Redes sociales</label
-              >
+              ></label>
               <div class="reg-socials">
                 <div class="reg-social-item">
                   <span class="reg-social-name">Spotify</span>
-                  <input type="text" name="spotify" placeholder="lorem ipsum" />
+                  <input
+                    type="text"
+                    name="spotify"
+                    placeholder="https://open.spotify.com/..."
+                  />
                 </div>
                 <div class="reg-social-item">
                   <span class="reg-social-name">Instagram</span>
@@ -505,10 +507,14 @@
                 </div>
                 <div class="reg-social-item">
                   <span class="reg-social-name">YouTube</span>
-                  <input type="text" name="youtube" placeholder="lorem ipsum" />
+                  <input
+                    type="text"
+                    name="youtube"
+                    placeholder="https://youtube.com/..."
+                  />
                 </div>
                 <div class="reg-social-item">
-                  <span class="reg-social-name">Tiktok</span>
+                  <span class="reg-social-name">TikTok</span>
                   <div class="reg-social-at-wrap">
                     <span class="reg-social-at">@</span>
                     <input type="text" name="tiktok" />
@@ -517,21 +523,15 @@
               </div>
             </div>
 
-            <!-- /RF-01 -->
-
             <!-- Botones -->
             <div class="botones-reg">
-              <a
-                href=""
-                class="btn-back-reg"
-                type="button"
-                data-es=""
-                data-en=""
+              <!-- ✅ IDs únicos para back y continuar del paso 2 -->
+              <a href="" class="btn-back-reg" id="btn-back-2" type="button"
                 >back</a
               >
               <a
                 class="btn-register"
-                id="btn-continuar"
+                id="btn-continuar-2"
                 type="button"
                 data-es="Continuar"
                 data-en="Continue"
@@ -541,14 +541,15 @@
           </div>
           <!-- /step-2 -->
 
-          <!-- ══ PASO 3: Etiquetas ══ -->
+          <!-- ══════════════════════════════════════════
+               PASO 3: Objetivo + Etiquetas
+          ══════════════════════════════════════════ -->
           <div class="register-step hidden" id="step-3">
-            <!-- ¿Qué buscas?: artista -->
             <div class="reg-field">
               <label
                 for="objetivo"
-                data-es='¿Qué buscas en DIMUSAL? (puedes elegir varias) <span class="req">*</span>'
-                data-en='What are you looking for at DIMUSAL? (You can choose several) <span class="req">*</span>'
+                data-es='¿Qué buscas en DIMUSAL? <span class="req">*</span>'
+                data-en='What are you looking for at DIMUSAL? <span class="req">*</span>'
               ></label>
               <div class="reg-select-wrap">
                 <select id="objetivo" name="objetivo">
@@ -597,8 +598,8 @@
                     Redes musicales
                   </option>
                 </select>
-                <span class="reg-select-arrow"
-                  ><svg
+                <span class="reg-select-arrow">
+                  <svg
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -612,7 +613,7 @@
               </div>
             </div>
 
-            <!-- ══ RF-01: Selector de etiquetas musicales ══ -->
+            <!-- ══ Selector de etiquetas musicales ══ -->
             <div class="reg-field reg-tags-section" id="regTagsSection">
               <label class="reg-label-group">
                 <svg
@@ -1007,29 +1008,6 @@
                 </div>
               </div>
 
-              <!-- Custom 
-              <div class="reg-tag-group">
-                <div class="reg-tag-group-label">Personalizada</div>
-                <div class="reg-custom-input-row">
-                  <input
-                    type="text"
-                    id="regCustomTagInput"
-                    class="reg-custom-input"
-                    placeholder="Escribe y presiona Enter…"
-                    maxlength="32"
-                    onkeydown="regHandleCustomKey(event)"
-                  />
-                  <button
-                    type="button"
-                    class="reg-custom-add-btn"
-                    onclick="regAddCustomTag()"
-                  >
-                    +
-                  </button>
-                </div>
-                <div class="reg-tag-chips" id="reg-group-custom"></div>
-              </div>-->
-
               <!-- Resumen tags seleccionadas -->
               <div
                 class="reg-tags-summary"
@@ -1044,24 +1022,22 @@
                   id="regTagsSummaryChips"
                 ></div>
               </div>
-              <!-- Botones -->
-              <div class="botones-reg">
-                <a
-                  href=""
-                  class="btn-back-reg"
-                  type="button"
-                  data-es=""
-                  data-en=""
-                  >back</a
-                >
-                <a
-                  class="btn-register"
-                  type="button"
-                  data-es="Registrarme"
-                  data-en="Register"
-                  >Registrarme</a
-                >
-              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="botones-reg">
+              <!-- ✅ IDs únicos para back y registrarme del paso 3 -->
+              <a href="" class="btn-back-reg" id="btn-back-3" type="button"
+                >back</a
+              >
+              <a
+                class="btn-register"
+                id="btn-registrarme"
+                type="button"
+                data-es="Registrarme"
+                data-en="Register"
+                >Registrarme</a
+              >
             </div>
           </div>
           <!-- /step-3 -->
@@ -1069,11 +1045,181 @@
       </div>
       <!-- /card -->
     </div>
-
+    <!-- ══ MODAL VERIFICACIÓN (no cancelable) ══ -->
+    <div
+      id="modal-verificacion"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: white;
+          border-radius: 20px;
+          padding: 48px 40px;
+          width: 100%;
+          max-width: 440px;
+          text-align: center;
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+          font-family: &quot;Syne&quot;, sans-serif;
+        "
+      >
+        <div
+          style="
+            font-size: 28px;
+            font-weight: 800;
+            color: #f97316;
+            margin-bottom: 8px;
+          "
+        >
+          DIMUSAL
+        </div>
+        <h2
+          style="
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+          "
+        >
+          Verifica tu correo
+        </h2>
+        <p
+          style="
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 32px;
+            line-height: 1.6;
+          "
+        >
+          Enviamos un código de 4 dígitos a<br />
+          <span
+            id="modal-correo-display"
+            style="color: #f97316; font-weight: 600"
+          ></span>
+        </p>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+          "
+        >
+          <input
+            type="text"
+            maxlength="1"
+            id="md1"
+            inputmode="numeric"
+            style="
+              width: 64px;
+              height: 72px;
+              text-align: center;
+              font-size: 32px;
+              font-weight: 700;
+              border: 2px solid #e5e5e5;
+              border-radius: 12px;
+              outline: none;
+              font-family: &quot;Syne&quot;, sans-serif;
+            "
+          />
+          <input
+            type="text"
+            maxlength="1"
+            id="md2"
+            inputmode="numeric"
+            style="
+              width: 64px;
+              height: 72px;
+              text-align: center;
+              font-size: 32px;
+              font-weight: 700;
+              border: 2px solid #e5e5e5;
+              border-radius: 12px;
+              outline: none;
+              font-family: &quot;Syne&quot;, sans-serif;
+            "
+          />
+          <input
+            type="text"
+            maxlength="1"
+            id="md3"
+            inputmode="numeric"
+            style="
+              width: 64px;
+              height: 72px;
+              text-align: center;
+              font-size: 32px;
+              font-weight: 700;
+              border: 2px solid #e5e5e5;
+              border-radius: 12px;
+              outline: none;
+              font-family: &quot;Syne&quot;, sans-serif;
+            "
+          />
+          <input
+            type="text"
+            maxlength="1"
+            id="md4"
+            inputmode="numeric"
+            style="
+              width: 64px;
+              height: 72px;
+              text-align: center;
+              font-size: 32px;
+              font-weight: 700;
+              border: 2px solid #e5e5e5;
+              border-radius: 12px;
+              outline: none;
+              font-family: &quot;Syne&quot;, sans-serif;
+            "
+          />
+        </div>
+        <button
+          id="btn-modal-verificar"
+          style="
+            width: 100%;
+            padding: 16px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: &quot;Syne&quot;, sans-serif;
+          "
+        >
+          Verificar cuenta
+        </button>
+        <p style="margin-top: 20px; font-size: 13px; color: #888">
+          ¿No recibiste el código?
+          <a
+            id="btn-modal-reenviar"
+            style="color: #f97316; cursor: pointer; font-weight: 600"
+            >Reenviar</a
+          >
+        </p>
+        <p
+          id="modal-timer"
+          style="margin-top: 8px; font-size: 13px; color: #aaa"
+        ></p>
+        <p
+          id="modal-intentos"
+          style="margin-top: 4px; font-size: 12px; color: #ccc"
+        ></p>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/register.js/register.js"></script>
-    <script src="../js/register.js/ubicacion.js"></script>
-    <script src="../js/register.js/tags-register.js"></script>
-    <script src="../js/idioma.js"></script>
+    <script src="/js/register.js/register.js"></script>
+    <script src="/js/register.js/ubicacion.js"></script>
+    <script src="/js/register.js/tags-register.js"></script>
+    <script src="/js/idioma.js"></script>
   </body>
 </html>

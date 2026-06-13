@@ -5,7 +5,7 @@ let idioma = localStorage.getItem("idioma") || "es";
 function aplicarIdioma() {
   document.documentElement.lang = idioma;
 
-  const textoIdioma = btn.querySelector(".texto-idioma");
+  const textoIdioma = btn ? btn.querySelector(".texto-idioma") : null;
 
   if (textoIdioma) {
     textoIdioma.textContent = idioma.toUpperCase();
@@ -20,6 +20,8 @@ function aplicarIdioma() {
   });
 }
 
+// Se llama al cargar en páginas normales (index, login, register, etc.)
+// En dashboard lo llama loadPage() después de insertar el contenido
 window.addEventListener("DOMContentLoaded", () => {
   aplicarIdioma();
 });

@@ -15,6 +15,11 @@ async function loadPage(url) {
     mainContent.innerHTML = await res.text();
 
     initPageScripts();
+
+    // ── Aplicar idioma después de cargar el contenido ──
+    if (typeof aplicarIdioma === "function") {
+      aplicarIdioma();
+    }
   } catch (error) {
     mainContent.innerHTML =
       '<p style="padding:2rem;color:red">Error cargando la página.</p>';
@@ -119,7 +124,7 @@ document.addEventListener("click", (e) => {
 /* ────────────────────────────────────────────── */
 
 window.addEventListener("DOMContentLoaded", () => {
-  const inicio = "../../templates/dashboard/inicio.html";
+  const inicio = "/dashboard/inicio.html";
 
   setActiveNav(inicio);
 
