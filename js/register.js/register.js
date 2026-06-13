@@ -2,7 +2,6 @@
 //  DIMUSAL – register.js   (flujo 3 pasos + modal verificación)
 // ═══════════════════════════════════════════════════════════════
 
-// Variables globales para guardar los archivos de imagen
 window._reg_foto_logo = null;
 window._reg_portada = null;
 
@@ -16,7 +15,207 @@ window._reg_portada = null;
 })();
 
 // ════════════════════════════════════════════════════════════════
-//  TOGGLE VISIBILIDAD CONTRASEÑA (ojo)
+//  HELPERS DE VALIDACIÓN EN TIEMPO REAL
+// ════════════════════════════════════════════════════════════════
+function mostrarError(id, mensaje) {
+  const input = document.getElementById(id);
+  if (!input) return;
+  input.style.borderColor = "#ef4444";
+  let err = input.parentElement.querySelector(".reg-error-msg");
+  if (!err) {
+    err = document.createElement("span");
+    err.className = "reg-error-msg";
+    err.style.cssText =
+      "color:#ef4444;font-size:12px;margin-top:4px;display:block;";
+    input.parentElement.appendChild(err);
+  }
+  err.textContent = mensaje;
+}
+
+function limpiarError(id) {
+  const input = document.getElementById(id);
+  if (!input) return;
+  input.style.borderColor = "";
+  const err = input.parentElement.querySelector(".reg-error-msg");
+  if (err) err.textContent = "";
+}
+
+function marcarValido(id) {
+  const input = document.getElementById(id);
+  if (!input) return;
+  input.style.borderColor = "#22c55e";
+  const err = input.parentElement.querySelector(".reg-error-msg");
+  if (err) err.textContent = "";
+}
+// ── Específicas para portafolio ───────────────────────────────
+function mostrarErrorPortafolio(mensaje) {
+  const input = document.getElementById("portafolio");
+  input.style.borderColor = "#ef4444";
+  const campo = input.closest(".reg-field");
+  let err = campo.querySelector(".reg-error-msg");
+  if (!err) {
+    err = document.createElement("span");
+    err.className = "reg-error-msg";
+    err.style.cssText =
+      "color:#ef4444;font-size:12px;margin-top:4px;display:block;";
+    campo.appendChild(err);
+  }
+  err.textContent = mensaje;
+}
+
+function limpiarErrorPortafolio() {
+  const input = document.getElementById("portafolio");
+  input.style.borderColor = "";
+  const campo = input.closest(".reg-field");
+  const err = campo.querySelector(".reg-error-msg");
+  if (err) err.textContent = "";
+}
+
+function marcarValidoPortafolio() {
+  const input = document.getElementById("portafolio");
+  input.style.borderColor = "#22c55e";
+  const campo = input.closest(".reg-field");
+  const err = campo.querySelector(".reg-error-msg");
+  if (err) err.textContent = "";
+}
+// ════════════════════════════════════════════════════════════════
+//  VALIDACIONES EN TIEMPO REAL — PASO 1
+// ════════════════════════════════════════════════════════════════
+
+// Nombre
+document.getElementById("nombre").addEventListener("input", function () {
+  if (this.value.trim().length < 3)
+    mostrarError("nombre", "Ingresa tu nombre completo.");
+  else marcarValido("nombre");
+});
+
+// Teléfono
+document.getElementById("telefono").addEventListener("input", function () {
+  // Solo números y guión, sin espacios
+  this.value = this.value.replace(/[^0-9-]/g, "");
+
+  // Auto-insertar guión al llegar al 4to dígito
+  const soloNumeros = this.value.replace(/-/g, "");
+  if (soloNumeros.length > 4) {
+    this.value = soloNumeros.slice(0, 4) + "-" + soloNumeros.slice(4, 8);
+  }
+
+  // Límite máximo 9 caracteres (0000-0000)
+  if (this.value.length > 9) this.value = this.value.slice(0, 9);
+
+  const val = this.value.trim();
+  if (!/^\d{4}-\d{4}$/.test(val))
+    mostrarError("telefono", "Formato: 7123-4567");
+  else marcarValido("telefono");
+});
+
+// Correo
+document.getElementById("correo").addEventListener("input", function () {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim()))
+    mostrarError("correo", "Ingresa un correo válido.");
+  else marcarValido("correo");
+});
+
+// Nombre artístico (en tiempo real)
+document
+  .getElementById("nombre-artistico")
+  .addEventListener("input", function () {
+    const esArtista = document.getElementById("check-artista").checked;
+    if (!esArtista) return;
+    if (this.value.trim().length >= 3) marcarValido("nombre-artistico");
+    else if (this.value.trim().length > 0)
+      mostrarError("nombre-artistico", "Mínimo 3 caracteres.");
+    else limpiarError("nombre-artistico");
+  });
+
+// Contraseña
+document.getElementById("password").addEventListener("input", function () {
+  this.value = this.value.replace(/\s/g, "");
+  const val = this.value;
+
+  // Mostrar requisitos al empezar a escribir
+  const reqBox = document.getElementById("password-requisitos");
+  reqBox.style.display = val.length > 0 ? "flex" : "none";
+
+  // Validar cada requisito
+  const checks = {
+    "req-length": val.length >= 8,
+    "req-upper": /[A-Z]/.test(val),
+    "req-lower": /[a-z]/.test(val),
+    "req-number": /[0-9]/.test(val),
+    "req-sign": /[^A-Za-z0-9]/.test(val),
+  };
+
+  let todoValido = true;
+  Object.entries(checks).forEach(([id, valido]) => {
+    const el = document.getElementById(id);
+    el.textContent = (valido ? "✓ " : "✗ ") + el.textContent.slice(2);
+    el.style.color = valido ? "#22c55e" : "#aaa";
+    if (!valido) todoValido = false;
+  });
+
+  if (todoValido) marcarValido("password");
+  else if (val.length > 0)
+    document.getElementById("password").style.borderColor = "#ef4444";
+
+  // Revalidar confirmar
+  const confirm = document.getElementById("confirm-password");
+  if (confirm.value) {
+    if (confirm.value !== val)
+      mostrarError("confirm-password", "Las contraseñas no coinciden.");
+    else marcarValido("confirm-password");
+  }
+});
+
+// Confirmar contraseña
+document
+  .getElementById("confirm-password")
+  .addEventListener("input", function () {
+    // No permitir espacios
+    this.value = this.value.replace(/\s/g, "");
+
+    const pass = document.getElementById("password").value;
+    if (this.value !== pass) {
+      mostrarError("confirm-password", "Las contraseñas no coinciden.");
+    } else {
+      marcarValido("confirm-password");
+      // Mostrar mensaje de éxito
+      const input = document.getElementById("confirm-password");
+      let msg = input.parentElement.querySelector(".reg-error-msg");
+      if (!msg) {
+        msg = document.createElement("span");
+        msg.className = "reg-error-msg";
+        msg.style.cssText = "font-size:12px;margin-top:4px;display:block;";
+        input.parentElement.appendChild(msg);
+      }
+      msg.style.color = "#22c55e";
+      msg.textContent = "✓ Las contraseñas coinciden.";
+    }
+  });
+// Portafolio (en tiempo real)
+document.getElementById("portafolio").addEventListener("input", function () {
+  const esArtista = document.getElementById("check-artista").checked;
+  if (!esArtista) return;
+  const val = this.value.trim();
+  if (!val) {
+    limpiarErrorPortafolio();
+    return;
+  }
+  if (!val.startsWith("http"))
+    mostrarError(
+      "portafolio",
+      "Debe ser una URL válida (ej: https://mipagina.com).",
+    );
+  else marcarValidoPortafolio();
+});
+
+["departamento", "distrito", "municipio"].forEach((id) => {
+  document.getElementById(id).addEventListener("change", function () {
+    if (this.value) limpiarErrorSelect(id);
+  });
+});
+// ════════════════════════════════════════════════════════════════
+//  TOGGLE VISIBILIDAD CONTRASEÑA
 // ════════════════════════════════════════════════════════════════
 document.querySelectorAll(".reg-field__eye").forEach((eye) => {
   eye.addEventListener("click", () => {
@@ -28,20 +227,31 @@ document.querySelectorAll(".reg-field__eye").forEach((eye) => {
 });
 
 // ════════════════════════════════════════════════════════════════
-//  UPLOAD AREAS (preview de imagen + guardar archivo en memoria)
+//  UPLOAD AREAS
 // ════════════════════════════════════════════════════════════════
 document.querySelectorAll(".reg-upload").forEach((area) => {
   const input = area.querySelector("input[type=file]");
-
   area.addEventListener("click", () => input.click());
 
   input.addEventListener("change", () => {
     if (!input.files || !input.files[0]) return;
-
     const file = input.files[0];
 
-    if (input.id === "foto-logo") window._reg_foto_logo = file;
-    if (input.id === "portada") window._reg_portada = file;
+    if (input.id === "foto-logo") {
+      window._reg_foto_logo = file;
+      // Limpiar error de foto si existía
+      const err = area.parentElement.querySelector(".reg-error-msg");
+      if (err) err.textContent = "";
+      area.style.borderColor = "";
+    }
+
+    if (input.id === "portada") {
+      window._reg_portada = file;
+      // Limpiar error de portada si existía
+      const err = area.parentElement.querySelector(".reg-error-msg");
+      if (err) err.textContent = "";
+      area.style.borderColor = "";
+    }
 
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -53,7 +263,6 @@ document.querySelectorAll(".reg-upload").forEach((area) => {
     reader.readAsDataURL(file);
   });
 });
-
 // ════════════════════════════════════════════════════════════════
 //  UTILIDADES
 // ════════════════════════════════════════════════════════════════
@@ -93,7 +302,7 @@ function alertaRequerido(texto) {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  VALIDACIÓN DUI (input en tiempo real + blur)
+//  VALIDACIÓN DUI
 // ════════════════════════════════════════════════════════════════
 const duiInput = document.getElementById("dui");
 
@@ -111,6 +320,12 @@ duiInput.addEventListener("input", (e) => {
   }
   if (val.length > 10) val = val.slice(0, 10);
   e.target.value = val;
+
+  // Validación en tiempo real
+  if (val && !/^\d{8}-\d{1}$/.test(val))
+    mostrarError("dui", "Formato: 00000000-0");
+  else if (/^\d{8}-\d{1}$/.test(val)) marcarValido("dui");
+  else limpiarError("dui");
 });
 
 duiInput.addEventListener("keydown", (e) => {
@@ -119,20 +334,89 @@ duiInput.addEventListener("keydown", (e) => {
   }
 });
 
-duiInput.addEventListener("blur", () => {
-  const duiRegex = /^\d{8}-\d{1}$/;
-  if (duiInput.value && !duiRegex.test(duiInput.value)) {
-    Swal.fire({
-      icon: "warning",
-      title: "DUI inválido",
-      text: "El DUI debe tener el formato 00000000-0",
-      confirmButtonColor: "#f97316",
-    });
-    duiInput.value = "";
-    duiInput.focus();
-  }
-});
+// ════════════════════════════════════════════════════════════════
+//  SELECCIÓN ÚNICA + MOSTRAR/OCULTAR CAMPOS SEGÚN TIPO
+// ════════════════════════════════════════════════════════════════
+const checkboxesTipo = ["check-artista", "check-oyente", "check-promotor"];
 
+function aplicarCamposPorTipo(tipo) {
+  const campoNombreArtistico = document.getElementById("nombre-artistico");
+  const campoPortafolio = document.getElementById("portafolio");
+  const uploadFoto = document
+    .getElementById("upload-foto")
+    .closest(".reg-field");
+  const uploadPortada = document
+    .getElementById("upload-portada")
+    .closest(".reg-field");
+  const seccionRedes = document
+    .querySelector(".reg-socials")
+    .closest(".reg-field");
+
+  // Resetear todo primero
+  [campoNombreArtistico, campoPortafolio].forEach((el) => {
+    el.disabled = false;
+    el.required = false;
+    el.closest(".reg-field").style.opacity = "1";
+    el.closest(".reg-field").style.pointerEvents = "auto";
+  });
+  [uploadFoto, uploadPortada, seccionRedes].forEach((el) => {
+    el.style.opacity = "1";
+    el.style.pointerEvents = "auto";
+  });
+
+  if (tipo === "artista") {
+    // Todo obligatorio
+    campoNombreArtistico.required = true;
+    campoPortafolio.required = false; // portafolio opcional pero visible
+    uploadFoto.style.opacity = "1";
+    uploadPortada.style.opacity = "1";
+    seccionRedes.style.opacity = "1";
+  } else if (tipo === "oyente") {
+    // Todo deshabilitado
+    [campoNombreArtistico, campoPortafolio].forEach((el) => {
+      el.disabled = true;
+      el.value = "";
+      el.closest(".reg-field").style.opacity = "0.35";
+      el.closest(".reg-field").style.pointerEvents = "none";
+    });
+    uploadFoto.style.opacity = "0.35";
+    uploadFoto.style.pointerEvents = "none";
+    uploadPortada.style.opacity = "0.35";
+    uploadPortada.style.pointerEvents = "none";
+    seccionRedes.style.opacity = "0.35";
+    seccionRedes.style.pointerEvents = "none";
+    // Limpiar imágenes
+    window._reg_foto_logo = null;
+    window._reg_portada = null;
+  } else if (tipo === "promotor") {
+    // Solo foto/logo habilitada, lo demás deshabilitado
+    [campoNombreArtistico, campoPortafolio].forEach((el) => {
+      el.disabled = true;
+      el.value = "";
+      el.closest(".reg-field").style.opacity = "0.35";
+      el.closest(".reg-field").style.pointerEvents = "none";
+    });
+    uploadFoto.style.opacity = "1";
+    uploadFoto.style.pointerEvents = "auto";
+    uploadPortada.style.opacity = "0.35";
+    uploadPortada.style.pointerEvents = "none";
+    seccionRedes.style.opacity = "0.35";
+    seccionRedes.style.pointerEvents = "none";
+    window._reg_portada = null;
+  }
+}
+
+checkboxesTipo.forEach((id) => {
+  document.getElementById(id).addEventListener("change", function () {
+    if (this.checked) {
+      checkboxesTipo.forEach((otherId) => {
+        if (otherId !== id) document.getElementById(otherId).checked = false;
+      });
+      const tipo = id.replace("check-", "");
+      aplicarCamposPorTipo(tipo);
+    }
+  });
+});
 // ════════════════════════════════════════════════════════════════
 //  PASO 1 → PASO 2
 // ════════════════════════════════════════════════════════════════
@@ -144,67 +428,66 @@ document.getElementById("btn-continuar-1").addEventListener("click", () => {
   const password = document.getElementById("password").value;
   const confirm = document.getElementById("confirm-password").value;
   const departamento = document.getElementById("departamento").value.trim();
-  const distrito = document.getElementById("distrito").value.trim(); // ← agregar
+  const distrito = document.getElementById("distrito").value.trim();
   const municipio = document.getElementById("municipio").value.trim();
 
-  if (
-    !nombre ||
-    !telefono ||
-    !dui ||
-    !correo ||
-    !password ||
-    !departamento ||
-    !distrito ||
-    !municipio
-  ) {
-    alertaRequerido("Por favor completa todos los campos obligatorios.");
-    return;
+  let hayError = false;
+
+  if (!nombre || nombre.length < 3) {
+    mostrarError("nombre", "Ingresa tu nombre completo.");
+    hayError = true;
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-    Swal.fire({
-      icon: "error",
-      title: "Correo inválido",
-      text: "Ingresa un correo electrónico válido.",
-      confirmButtonColor: "#f97316",
-    });
-    return;
-  }
-  if (!/^\d{4}-?\d{4}$/.test(telefono)) {
-    Swal.fire({
-      icon: "error",
-      title: "Teléfono inválido",
-      text: "El teléfono debe tener 8 dígitos (ej: 7123-4567).",
-      confirmButtonColor: "#f97316",
-    });
-    return;
+  if (!/^\d{4}-\d{4}$/.test(telefono)) {
+    mostrarError("telefono", "Formato: 7123-4567");
+    hayError = true;
   }
   if (!/^\d{8}-\d{1}$/.test(dui)) {
-    Swal.fire({
-      icon: "error",
-      title: "DUI inválido",
-      text: "El DUI debe tener el formato 00000000-0.",
-      confirmButtonColor: "#f97316",
-    });
-    return;
+    mostrarError("dui", "Formato: 00000000-0");
+    hayError = true;
   }
-  if (password.length < 8) {
-    Swal.fire({
-      icon: "error",
-      title: "Contraseña muy corta",
-      text: "La contraseña debe tener al menos 8 caracteres.",
-      confirmButtonColor: "#f97316",
-    });
-    return;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    mostrarError("correo", "Ingresa un correo válido.");
+    hayError = true;
+  }
+
+  const tienePasswordValida =
+    password.length >= 8 &&
+    /[A-Z]/.test(password) &&
+    /[a-z]/.test(password) &&
+    /[0-9]/.test(password) &&
+    /[^A-Za-z0-9]/.test(password);
+
+  if (!tienePasswordValida) {
+    mostrarError(
+      "password",
+      "Mínimo 8 caracteres, una mayúscula, una minúscula, un número y un signo.",
+    );
+    hayError = true;
   }
   if (password !== confirm) {
-    Swal.fire({
-      icon: "error",
-      title: "Contraseñas no coinciden",
-      text: "Verifica que ambas contraseñas sean iguales.",
-      confirmButtonColor: "#f97316",
-    });
-    return;
+    mostrarError("confirm-password", "Las contraseñas no coinciden.");
+    hayError = true;
   }
+  if (!departamento) {
+    mostrarErrorSelect("departamento", "Selecciona tu departamento.");
+    hayError = true;
+  } else {
+    limpiarErrorSelect("departamento");
+  }
+  if (!distrito) {
+    mostrarErrorSelect("distrito", "Selecciona tu distrito.");
+    hayError = true;
+  } else {
+    limpiarErrorSelect("distrito");
+  }
+  if (!municipio) {
+    mostrarErrorSelect("municipio", "Selecciona tu municipio.");
+    hayError = true;
+  } else {
+    limpiarErrorSelect("municipio");
+  }
+
+  if (hayError) return;
 
   sessionStorage.setItem(
     "reg_step1",
@@ -223,6 +506,31 @@ document.getElementById("btn-continuar-1").addEventListener("click", () => {
   irAPaso("step-1", "step-2");
 });
 
+// ── Helpers selects ───────────────────────────────────────────
+function mostrarErrorSelect(id, mensaje) {
+  const select = document.getElementById(id);
+  if (!select) return;
+  select.style.borderColor = "#ef4444";
+  const wrap = select.closest(".reg-select-wrap");
+  let err = wrap.parentElement.querySelector(".reg-error-msg");
+  if (!err) {
+    err = document.createElement("span");
+    err.className = "reg-error-msg";
+    err.style.cssText =
+      "color:#ef4444;font-size:12px;margin-top:4px;display:block;";
+    wrap.parentElement.appendChild(err);
+  }
+  err.textContent = mensaje;
+}
+
+function limpiarErrorSelect(id) {
+  const select = document.getElementById(id);
+  if (!select) return;
+  select.style.borderColor = "";
+  const wrap = select.closest(".reg-select-wrap");
+  const err = wrap.parentElement.querySelector(".reg-error-msg");
+  if (err) err.textContent = "";
+}
 // ════════════════════════════════════════════════════════════════
 //  PASO 2 → PASO 3
 // ════════════════════════════════════════════════════════════════
@@ -232,30 +540,110 @@ document.getElementById("btn-continuar-2").addEventListener("click", () => {
   const esPromotor = document.getElementById("check-promotor").checked;
 
   if (!esArtista && !esOyente && !esPromotor) {
-    alertaRequerido("Selecciona al menos un tipo de cuenta.");
+    // Este sí puede ser Swal porque no hay campo específico donde mostrar el error
+    alertaRequerido("Selecciona un tipo de cuenta.");
     return;
   }
 
-  const tipo = [];
-  if (esArtista) tipo.push("artista");
-  if (esOyente) tipo.push("oyente");
-  if (esPromotor) tipo.push("promotor");
+  let tipo = "";
+  if (esArtista) tipo = "artista";
+  if (esOyente) tipo = "oyente";
+  if (esPromotor) tipo = "promotor";
+
+  let hayError = false;
+
+  if (tipo === "artista") {
+    const nombreArtistico = document
+      .getElementById("nombre-artistico")
+      .value.trim();
+    if (!nombreArtistico) {
+      mostrarError("nombre-artistico", "El nombre artístico es obligatorio.");
+      hayError = true;
+    } else {
+      marcarValido("nombre-artistico");
+    }
+
+    if (!window._reg_foto_logo) {
+      // Mostrar error debajo del área de foto
+      const areaFoto = document.getElementById("upload-foto");
+      let err = areaFoto.parentElement.querySelector(".reg-error-msg");
+      if (!err) {
+        err = document.createElement("span");
+        err.className = "reg-error-msg";
+        err.style.cssText =
+          "color:#ef4444;font-size:12px;margin-top:4px;display:block;";
+        areaFoto.parentElement.appendChild(err);
+      }
+      err.textContent = "Debes subir tu foto/logo.";
+      areaFoto.style.borderColor = "#ef4444";
+      hayError = true;
+    }
+
+    if (!window._reg_portada) {
+      const areaPortada = document.getElementById("upload-portada");
+      let err = areaPortada.parentElement.querySelector(".reg-error-msg");
+      if (!err) {
+        err = document.createElement("span");
+        err.className = "reg-error-msg";
+        err.style.cssText =
+          "color:#ef4444;font-size:12px;margin-top:4px;display:block;";
+        areaPortada.parentElement.appendChild(err);
+      }
+      err.textContent = "Debes subir tu portada de perfil.";
+      areaPortada.style.borderColor = "#ef4444";
+      hayError = true;
+    }
+  }
+
+  if (tipo === "promotor") {
+    if (!window._reg_foto_logo) {
+      const areaFoto = document.getElementById("upload-foto");
+      let err = areaFoto.parentElement.querySelector(".reg-error-msg");
+      if (!err) {
+        err = document.createElement("span");
+        err.className = "reg-error-msg";
+        err.style.cssText =
+          "color:#ef4444;font-size:12px;margin-top:4px;display:block;";
+        areaFoto.parentElement.appendChild(err);
+      }
+      err.textContent = "Debes subir tu foto/logo.";
+      areaFoto.style.borderColor = "#ef4444";
+      hayError = true;
+    }
+  }
+
+  if (hayError) return;
 
   const portafolio = document.getElementById("portafolio").value.trim();
-  if (portafolio && !portafolio.startsWith("http")) {
-    Swal.fire({
-      icon: "warning",
-      title: "URL inválida",
-      text: "El portafolio debe ser una URL válida (ej: https://mipagina.com).",
-      confirmButtonColor: "#f97316",
-    });
-    return;
+
+  if (tipo === "artista") {
+    if (!portafolio) {
+      mostrarErrorPortafolio("El portafolio es obligatorio para artistas.");
+      return;
+    } else if (!portafolio.startsWith("http")) {
+      mostrarErrorPortafolio(
+        "Debe ser una URL válida (ej: https://mipagina.com).",
+      );
+      return;
+    } else {
+      marcarValidoPortafolio();
+    }
+  } else {
+    // Para promotor u oyente es opcional
+    if (portafolio && !portafolio.startsWith("http")) {
+      mostrarErrorPortafolio(
+        "Debe ser una URL válida (ej: https://mipagina.com).",
+      ); // ← cambiar
+      return;
+    } else {
+      limpiarErrorPortafolio();
+    }
   }
 
   sessionStorage.setItem(
     "reg_step2",
     JSON.stringify({
-      tipo: tipo.join(","),
+      tipo,
       nombre_artistico: document
         .getElementById("nombre-artistico")
         .value.trim(),
@@ -269,9 +657,8 @@ document.getElementById("btn-continuar-2").addEventListener("click", () => {
 
   irAPaso("step-2", "step-3");
 });
-
 // ════════════════════════════════════════════════════════════════
-//  PASO 3 → REGISTRARME → envía código y abre modal
+//  PASO 3 → REGISTRARME
 // ════════════════════════════════════════════════════════════════
 document
   .getElementById("btn-registrarme")
@@ -301,17 +688,11 @@ document
 
     sessionStorage.setItem(
       "reg_pendiente",
-      JSON.stringify({
-        ...step1,
-        ...step2,
-        objetivo,
-        etiquetas,
-      }),
+      JSON.stringify({ ...step1, ...step2, objetivo, etiquetas }),
     );
     sessionStorage.removeItem("reg_step1");
     sessionStorage.removeItem("reg_step2");
 
-    // 1️⃣ Loading
     Swal.fire({
       title: "Enviando código de verificación...",
       allowOutsideClick: false,
@@ -331,7 +712,6 @@ document
       const data = await res.json();
 
       if (data.success) {
-        // 2️⃣ Éxito — esperar que termine el Swal antes de abrir modal
         await Swal.fire({
           icon: "success",
           title: "¡Código enviado!",
@@ -342,7 +722,6 @@ document
           showConfirmButton: false,
           allowOutsideClick: false,
         });
-        // 3️⃣ Modal solo cuando el Swal terminó
         abrirModalVerificacion(step1.correo);
       } else {
         Swal.fire({
@@ -356,7 +735,7 @@ document
       Swal.fire({
         icon: "error",
         title: "Sin conexión",
-        text: "No se pudo conectar con el servidor. ¿Está corriendo node server.js?",
+        text: "No se pudo conectar con el servidor.",
         confirmButtonColor: "#f97316",
       });
     }
@@ -378,15 +757,12 @@ document.getElementById("btn-back-3").addEventListener("click", (e) => {
 // ════════════════════════════════════════════════════════════════
 //  MODAL DE VERIFICACIÓN
 // ════════════════════════════════════════════════════════════════
-
 let _timerInterval = null;
 
 function abrirModalVerificacion(correo) {
   document.getElementById("modal-correo-display").textContent = correo;
-
   const modal = document.getElementById("modal-verificacion");
   modal.style.display = "flex";
-
   document.addEventListener("keydown", bloquearEscape);
 
   ["md1", "md2", "md3", "md4"].forEach((id) => {
@@ -394,12 +770,10 @@ function abrirModalVerificacion(correo) {
   });
   document.getElementById("md1").focus();
 
-  // Resetear intentos y timer
   sessionStorage.setItem("reg_intentos_envio", "0");
   sessionStorage.removeItem("reg_timer_fin");
   if (_timerInterval) clearInterval(_timerInterval);
 
-  // Estado inicial del botón reenviar
   const btnReenviar = document.getElementById("btn-modal-reenviar");
   btnReenviar.style.pointerEvents = "auto";
   btnReenviar.style.opacity = "1";
@@ -413,17 +787,13 @@ function bloquearEscape(e) {
   if (e.key === "Escape") e.preventDefault();
 }
 
-// ── Contador de 2 minutos (solo arranca al reenviar) ──────────
 function iniciarContador() {
   const btnReenviar = document.getElementById("btn-modal-reenviar");
   const timerEl = document.getElementById("modal-timer");
-
   const fin = Date.now() + 2 * 60 * 1000;
   sessionStorage.setItem("reg_timer_fin", fin.toString());
-
   btnReenviar.style.pointerEvents = "none";
   btnReenviar.style.opacity = "0.4";
-
   if (_timerInterval) clearInterval(_timerInterval);
 
   _timerInterval = setInterval(() => {
@@ -433,7 +803,6 @@ function iniciarContador() {
     );
     const min = Math.floor(restante / 60000);
     const seg = Math.floor((restante % 60000) / 1000);
-
     if (restante <= 0) {
       clearInterval(_timerInterval);
       timerEl.textContent = "";
@@ -446,13 +815,11 @@ function iniciarContador() {
   }, 500);
 }
 
-// ── Mostrar intentos restantes ────────────────────────────────
 function actualizarIntentos() {
   const MAX = 5;
   const usados = parseInt(sessionStorage.getItem("reg_intentos_envio") || "0");
   const restantes = MAX - usados;
   const el = document.getElementById("modal-intentos");
-
   if (restantes <= 0) {
     el.textContent = "Has alcanzado el límite de reenvíos.";
     el.style.color = "#ef4444";
@@ -465,17 +832,14 @@ function actualizarIntentos() {
   }
 }
 
-// ── Auto-focus entre inputs del modal ────────────────────────
 ["md1", "md2", "md3", "md4"].forEach((id, i, arr) => {
   const input = document.getElementById(id);
-
   input.addEventListener("input", () => {
     input.value = input.value.replace(/[^0-9]/g, "");
     if (input.value && i < arr.length - 1) {
       document.getElementById(arr[i + 1]).focus();
     }
   });
-
   input.addEventListener("keydown", (e) => {
     if (e.key === "Backspace" && !input.value && i > 0) {
       document.getElementById(arr[i - 1]).focus();
@@ -512,7 +876,6 @@ document
       return;
     }
 
-    // Loading verificando
     Swal.fire({
       title: "Verificando...",
       allowOutsideClick: false,
@@ -521,7 +884,6 @@ document
     });
 
     try {
-      // 1️⃣ Verificar código
       const resVerif = await fetch(
         "http://localhost:3000/api/verificar-codigo",
         {
@@ -546,7 +908,6 @@ document
         return;
       }
 
-      // 2️⃣ Código correcto → registrar
       Swal.fire({
         title: "Creando tu cuenta...",
         allowOutsideClick: false,
@@ -574,7 +935,6 @@ document
       const dataReg = await resReg.json();
 
       if (dataReg.success) {
-        // Limpiar todo
         sessionStorage.removeItem("reg_pendiente");
         sessionStorage.removeItem("reg_intentos_envio");
         sessionStorage.removeItem("reg_timer_fin");
@@ -583,11 +943,9 @@ document
         if (_timerInterval) clearInterval(_timerInterval);
         document.removeEventListener("keydown", bloquearEscape);
 
-        // 3️⃣ Cerrar loading, esperar que cierre
         Swal.close();
         await new Promise((resolve) => setTimeout(resolve, 300));
 
-        // 4️⃣ Mostrar éxito 2.5 segundos y redirigir solo
         await Swal.fire({
           icon: "success",
           title: "¡Cuenta creada!",
@@ -600,7 +958,6 @@ document
           allowEscapeKey: false,
         });
 
-        // 5️⃣ Redirigir después de que el timer termina
         window.location.href = "/login.html";
       } else {
         await Swal.fire({
