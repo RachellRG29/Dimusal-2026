@@ -611,34 +611,32 @@ document.getElementById("btn-continuar-2").addEventListener("click", () => {
       hayError = true;
     }
   }
-
-  if (hayError) return;
-
   const portafolio = document.getElementById("portafolio").value.trim();
 
   if (tipo === "artista") {
     if (!portafolio) {
       mostrarErrorPortafolio("El portafolio es obligatorio para artistas.");
-      return;
+      hayError = true;
     } else if (!portafolio.startsWith("http")) {
       mostrarErrorPortafolio(
         "Debe ser una URL válida (ej: https://mipagina.com).",
       );
-      return;
+      hayError = true;
     } else {
       marcarValidoPortafolio();
     }
   } else {
-    // Para promotor u oyente es opcional
     if (portafolio && !portafolio.startsWith("http")) {
       mostrarErrorPortafolio(
         "Debe ser una URL válida (ej: https://mipagina.com).",
-      ); // ← cambiar
-      return;
+      );
+      hayError = true;
     } else {
       limpiarErrorPortafolio();
     }
   }
+
+  if (hayError) return;
 
   sessionStorage.setItem(
     "reg_step2",

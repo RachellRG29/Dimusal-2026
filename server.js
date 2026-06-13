@@ -308,6 +308,30 @@ app.post("/api/verificar-codigo", (req, res) => {
 });
 
 // ════════════════════════════════════════════════════════════════
+//  OBTENER DATOS DE UN USUARIO
+// ════════════════════════════════════════════════════════════════
+app.get("/api/usuario/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT id, nombre_completo, telefono, dui, correo, departamento, distrito, municipio, tipo, nombre_artistico, portafolio, foto_logo, portada, spotify, instagram, youtube, tiktok, objetivo, etiquetas, created_at FROM users WHERE id = $1",
+      [id],
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, mensaje: "Usuario no encontrado" });
+    }
+
+    res.json({ success: true, usuario: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+// ════════════════════════════════════════════════════════════════
 //  INICIAR SERVIDOR
 // ════════════════════════════════════════════════════════════════
 const PORT = process.env.PORT || 3000;

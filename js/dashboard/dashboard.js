@@ -20,6 +20,11 @@ async function loadPage(url) {
     if (typeof aplicarIdioma === "function") {
       aplicarIdioma();
     }
+
+    // ── Mostrar nombre del usuario después de cargar el contenido ──
+    if (typeof mostrarNombreUsuario === "function") {
+      mostrarNombreUsuario();
+    }
   } catch (error) {
     mainContent.innerHTML =
       '<p style="padding:2rem;color:red">Error cargando la página.</p>';
@@ -129,4 +134,9 @@ window.addEventListener("DOMContentLoaded", () => {
   setActiveNav(inicio);
 
   loadPage(inicio);
+
+  // ── Mostrar nombre del usuario en el dashboard principal ──
+  if (typeof mostrarNombreUsuario === "function") {
+    mostrarNombreUsuario();
+  }
 });
