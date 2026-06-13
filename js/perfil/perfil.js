@@ -71,6 +71,9 @@ animateBars();
 
 /* ── Botones editar en cards (placeholder) ── */
 document.querySelectorAll(".pa-card__edit-btn").forEach((btn) => {
+  // Si ya tiene un onclick definido en el HTML, no agregar el placeholder
+  if (btn.hasAttribute("onclick")) return;
+
   btn.addEventListener("click", () => {
     const card = btn.closest(".pa-card");
     const title =

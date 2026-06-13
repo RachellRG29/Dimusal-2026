@@ -315,7 +315,7 @@ app.get("/api/usuario/:id", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT id, nombre_completo, telefono, dui, correo, departamento, distrito, municipio, tipo, nombre_artistico, portafolio, foto_logo, portada, spotify, instagram, youtube, tiktok, objetivo, etiquetas, created_at FROM users WHERE id = $1",
+      "SELECT id, nombre_completo, telefono, dui, correo, departamento, distrito, municipio, tipo, nombre_artistico, portafolio, foto_logo, portada, spotify, instagram, youtube, tiktok, objetivo, etiquetas, biografia, created_at FROM users WHERE id = $1",
       [id],
     );
 
@@ -329,6 +329,125 @@ app.get("/api/usuario/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR INFORMACIÓN DE CONTACTO Y UBICACIÓN
+// ════════════════════════════════════════════════════════════════
+app.put("/api/usuario/:id/informacion", async (req, res) => {
+  const { id } = req.params;
+  const { telefono, correo, departamento, distrito, municipio } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE users SET
+        telefono = $1,
+        correo = $2,
+        departamento = $3,
+        distrito = $4,
+        municipio = $5
+       WHERE id = $6
+       RETURNING id`,
+      [telefono, correo, departamento, distrito || null, municipio, id],
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, mensaje: "Usuario no encontrado" });
+    }
+
+    res.json({
+      success: true,
+      mensaje: "Información actualizada correctamente",
+    });
+  } catch (err) {
+    console.error(err);
+    if (err.code === "23505") {
+      return res
+        .status(400)
+        .json({ success: false, mensaje: "Ese correo ya está en uso" });
+    }
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR ETIQUETAS
+// ════════════════════════════════════════════════════════════════
+app.put("/api/usuario/:id/etiquetas", async (req, res) => {
+  const { id } = req.params;
+  const { etiquetas } = req.body; // array
+
+  try {
+    await pool.query("UPDATE users SET etiquetas = $1 WHERE id = $2", [
+      JSON.stringify(etiquetas || []),
+      id,
+    ]);
+    res.json({
+      success: true,
+      mensaje: "Etiquetas actualizadas correctamente",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR BIOGRAFÍA
+// ════════════════════════════════════════════════════════════════
+app.put("/api/usuario/:id/biografia", async (req, res) => {
+  const { id } = req.params;
+  const { biografia } = req.body;
+
+  try {
+    await pool.query("UPDATE users SET biografia = $1 WHERE id = $2", [
+      biografia || null,
+      id,
+    ]);
+    res.json({ success: true, mensaje: "Biografía actualizada correctamente" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  TRADUCIR TEXTO (proxy hacia Anthropic)
+// ════════════════════════════════════════════════════════════════
+app.post("/api/traducir", async (req, res) => {
+  const { texto, idioma } = req.body;
+  if (!texto) return res.json({ traduccion: "" });
+  if (idioma === "es") return res.json({ traduccion: texto });
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 1000,
+        messages: [
+          {
+            role: "user",
+            content: `Translate the following artist biography to English. Return only the translated text, no explanations:\n\n${texto}`,
+          },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    const traduccion = data.content?.[0]?.text || texto;
+    res.json({ traduccion });
+  } catch (err) {
+    console.error("Error al traducir:", err);
+    res.json({ traduccion: texto });
   }
 });
 // ════════════════════════════════════════════════════════════════

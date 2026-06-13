@@ -1,42 +1,12 @@
 /* ═══════════════════════════════════════════════════
    RF-01 – Sistema de Etiquetas Musicales
    tags-perfil.js — Perfil de artista
-   Comparte la misma clave de localStorage que el dashboard
-   para que las etiquetas sean consistentes entre páginas.
+   Conectado a la BD vía /api/usuario/:id/etiquetas
 ═══════════════════════════════════════════════════ */
 
 const TagsState = {
   profileTags: [],
-  STORAGE_KEY: "dimusal_profile_tags",
 };
-
-// ── Inicialización ───────────────────────────────
-document.addEventListener("DOMContentLoaded", () => {
-  loadProfileTags();
-  renderProfileTagsBar();
-  syncModalChips();
-});
-
-// ── Persistencia ─────────────────────────────────
-function loadProfileTags() {
-  try {
-    const stored = localStorage.getItem(TagsState.STORAGE_KEY);
-    if (stored) TagsState.profileTags = JSON.parse(stored);
-  } catch (e) {
-    TagsState.profileTags = [];
-  }
-}
-
-function saveToStorage() {
-  try {
-    localStorage.setItem(
-      TagsState.STORAGE_KEY,
-      JSON.stringify(TagsState.profileTags),
-    );
-  } catch (e) {
-    /* fallback silencioso */
-  }
-}
 
 // ── Modal: abrir / cerrar ────────────────────────
 function openTagsModal() {
@@ -82,7 +52,17 @@ function syncModalChips() {
       TagsState.profileTags.includes(chip.dataset.tag),
     );
   });
-  renderCustomChipsInModal();
+}
+
+// ── Resumen del modal ────────────────────────────
+function updateModalSummary() {
+  const countEl = document.getElementById("tagCount");
+  const summaryEl = document.getElementById("tagsSummaryChips");
+  if (countEl) countEl.textContent = TagsState.profileTags.length;
+  if (summaryEl)
+    summaryEl.innerHTML = TagsState.profileTags
+      .map((t) => `<span class="summary-chip">${t}</span>`)
+      .join("");
 }
 
 // ── Etiquetas personalizadas ─────────────────────
@@ -95,11 +75,12 @@ function handleCustomTagKey(event) {
 
 function addCustomTag() {
   const input = document.getElementById("customTagInput");
+  if (!input) return;
   const raw = input.value.trim();
   if (!raw) return;
   const tag = raw.charAt(0).toUpperCase() + raw.slice(1);
   if (TagsState.profileTags.includes(tag)) {
-    showToast("Esa etiqueta ya fue agregada", "warn");
+    showToast("Esa etiqueta ya fue agregada");
     input.value = "";
     return;
   }
@@ -115,11 +96,12 @@ function addCustomTag() {
 
 function renderCustomChipsInModal() {
   const container = document.getElementById("group-custom");
+  if (!container) return; // si el bloque está comentado en el HTML, no falla
+
   const predefined = Array.from(
-    document.querySelectorAll(
-      '.tag-chip[data-group]:not([data-group="custom"])',
-    ),
+    document.querySelectorAll('.tag-chip[data-tag]:not([data-group="custom"])'),
   ).map((c) => c.dataset.tag);
+
   const customTags = TagsState.profileTags.filter(
     (t) => !predefined.includes(t),
   );
@@ -141,21 +123,29 @@ function removeCustomTag(tag, event) {
   updateModalSummary();
 }
 
-// ── Resumen del modal ────────────────────────────
-function updateModalSummary() {
-  document.getElementById("tagCount").textContent =
-    TagsState.profileTags.length;
-  document.getElementById("tagsSummaryChips").innerHTML = TagsState.profileTags
-    .map((t) => `<span class="summary-chip">${t}</span>`)
-    .join("");
-}
+// ── Guardar en BD ────────────────────────────────
+async function saveProfileTags() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  if (!usuario.id) return;
 
-// ── Guardar ──────────────────────────────────────
-function saveProfileTags() {
-  saveToStorage();
-  _doCloseModal();
-  renderProfileTagsBar();
-  showToast("Etiquetas guardadas correctamente ✓");
+  try {
+    const res = await fetch(`/api/usuario/${usuario.id}/etiquetas`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ etiquetas: TagsState.profileTags }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      _doCloseModal();
+      showToast("Etiquetas guardadas correctamente ✓");
+      cargarPerfil();
+    } else {
+      showToast("Error al guardar etiquetas");
+    }
+  } catch (err) {
+    showToast("Sin conexión con el servidor");
+  }
 }
 
 // ── Barra de etiquetas del perfil ────────────────

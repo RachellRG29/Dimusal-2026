@@ -1,0 +1,2622 @@
+<!-- ══ CREAR EVENTO / OPORTUNIDAD – SPA fragment ══ -->
+<style>
+  /* ── Crear Actividad Page ── */
+  .ce-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .ce-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--black);
+  }
+  .ce-subtitle {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #999;
+    margin-top: 4px;
+  }
+
+  /* ── Selección inicial de actividad ── */
+  .ce-actividad-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .ce-actividad-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 20px 18px;
+    border-radius: 14px;
+    border: 2px solid #e0ddd8;
+    background: #fff;
+    cursor: pointer;
+    transition:
+      border-color 0.18s,
+      background 0.18s,
+      box-shadow 0.18s;
+    font-family: "Syne", sans-serif;
+    text-align: left;
+  }
+  .ce-actividad-card:hover {
+    border-color: rgba(255, 155, 81, 0.5);
+    background: #fff8f3;
+  }
+  .ce-actividad-card.selected {
+    border-color: var(--orange);
+    background: #fff6ef;
+    box-shadow: 0 0 0 3px rgba(255, 155, 81, 0.12);
+  }
+  .ce-actividad-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .ce-actividad-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--black);
+  }
+  .ce-actividad-desc {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #888;
+    line-height: 1.45;
+  }
+  .ce-actividad-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .ce-btn-comenzar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    background: var(--orange);
+    color: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
+    margin-top: 4px;
+  }
+  .ce-btn-comenzar:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  /* Steps indicator */
+  .ce-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 28px;
+  }
+  .ce-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    position: relative;
+  }
+  .ce-step:not(:last-child)::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: #e0ddd8;
+    margin: 0 8px;
+    transition: background 0.3s;
+  }
+  .ce-step.done:not(:last-child)::after {
+    background: var(--orange);
+  }
+  .ce-step__num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #eee;
+    color: #999;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition:
+      background 0.3s,
+      color 0.3s;
+    border: 2px solid #e0ddd8;
+  }
+  .ce-step.active .ce-step__num {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+  }
+  .ce-step.done .ce-step__num {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+  }
+  .ce-step__label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #bbb;
+    white-space: nowrap;
+  }
+  .ce-step.active .ce-step__label {
+    color: var(--black);
+  }
+  .ce-step.done .ce-step__label {
+    color: var(--orange);
+  }
+
+  /* Form card */
+  .ce-card {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1.5px solid #ebe9e5;
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+  }
+
+  /* Step panels */
+  .ce-panel {
+    display: none;
+  }
+  .ce-panel.active {
+    display: block;
+    animation: ceSlideIn 0.3s ease;
+  }
+  @keyframes ceSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .ce-section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid #f0ede9;
+  }
+
+  /* Fields */
+  .ce-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .ce-field label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--black);
+  }
+  .ce-field label .req {
+    color: var(--orange);
+  }
+  .ce-field input,
+  .ce-field textarea,
+  .ce-field select {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #e0ddd8;
+    font-family: "Syne", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--black);
+    background: #fff;
+    outline: none;
+    transition:
+      border-color 0.18s,
+      box-shadow 0.18s;
+    -webkit-appearance: none;
+  }
+  .ce-field input:focus,
+  .ce-field textarea:focus,
+  .ce-field select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255, 155, 81, 0.12);
+  }
+  .ce-field textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+  .ce-field .ce-hint {
+    font-size: 0.72rem;
+    color: #aaa;
+    font-weight: 500;
+  }
+
+  .ce-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .ce-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Select wrapper */
+  .ce-select-wrap {
+    position: relative;
+  }
+  .ce-select-wrap select {
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  .ce-select-wrap::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    border: 5px solid transparent;
+    border-top-color: #aaa;
+    margin-top: 3px;
+  }
+
+  /* Tipo evento chips */
+  .ce-tipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .ce-tipo-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 12px 12px;
+    border-radius: 12px;
+    border: 2px solid #e0ddd8;
+    cursor: pointer;
+    transition:
+      border-color 0.15s,
+      background 0.15s;
+    background: #fff;
+    font-family: "Syne", sans-serif;
+    text-align: center;
+  }
+  .ce-tipo-chip:hover {
+    border-color: rgba(255, 155, 81, 0.5);
+    background: #fff8f3;
+  }
+  .ce-tipo-chip.selected {
+    border-color: var(--orange);
+    background: #fff6ef;
+  }
+  .ce-tipo-chip__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f3f3;
+    transition: background 0.15s;
+  }
+  .ce-tipo-chip.selected .ce-tipo-chip__icon {
+    background: var(--orange);
+  }
+  .ce-tipo-chip__icon svg {
+    width: 18px;
+    height: 18px;
+    color: #999;
+  }
+  .ce-tipo-chip.selected .ce-tipo-chip__icon svg {
+    color: #fff;
+  }
+  .ce-tipo-chip__label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  /* Tags chips (géneros) */
+  .ce-tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ce-tag-chip {
+    padding: 5px 14px;
+    border-radius: 50px;
+    border: 1.5px solid #e0ddd8;
+    font-family: "Syne", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #888;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ce-tag-chip:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .ce-tag-chip.selected {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+  }
+
+  /* Upload area */
+  .ce-upload {
+    border: 2px dashed #e0ddd8;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition:
+      border-color 0.18s,
+      background 0.18s;
+    background: #fafafa;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+  }
+  .ce-upload:hover {
+    border-color: var(--orange);
+    background: #fff8f3;
+  }
+  .ce-upload__icon {
+    width: 36px;
+    height: 36px;
+    color: #ccc;
+  }
+  .ce-upload__label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #aaa;
+    text-align: center;
+  }
+  .ce-upload__sublabel {
+    font-size: 0.7rem;
+    color: #ccc;
+  }
+  .ce-upload-preview {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+  }
+
+  /* Toggle switch */
+  .ce-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1.5px solid #ebe9e5;
+    margin-bottom: 10px;
+  }
+  .ce-toggle-info {
+    flex: 1;
+  }
+  .ce-toggle-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--black);
+  }
+  .ce-toggle-desc {
+    font-size: 0.72rem;
+    color: #999;
+    margin-top: 2px;
+  }
+  .ce-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .ce-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .ce-slider {
+    position: absolute;
+    inset: 0;
+    background: #e0ddd8;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .ce-slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .ce-switch input:checked + .ce-slider {
+    background: var(--orange);
+  }
+  .ce-switch input:checked + .ce-slider::before {
+    transform: translateX(20px);
+  }
+
+  /* Requisitos artista */
+  .ce-requisitos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ce-requisito-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1.5px solid #ebe9e5;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .ce-requisito-item input[type="checkbox"] {
+    accent-color: var(--orange);
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Preview card */
+  .ce-preview-card {
+    border: 2px solid rgba(255, 155, 81, 0.25);
+    border-radius: 14px;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #fff6ef 0%, #fff 60%);
+    margin-bottom: 20px;
+  }
+  .ce-preview-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .ce-preview-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .ce-preview-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ce-preview-desc {
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* Badge de tipo en preview */
+  .ce-preview-badge {
+    padding: 2px 10px;
+    border-radius: 50px;
+    background: #fff0e6;
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+
+  /* Navigation buttons */
+  .ce-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1.5px solid #f0ede9;
+    gap: 12px;
+  }
+  .ce-btn-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1.5px solid #e0ddd8;
+    background: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .ce-btn-back:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .ce-btn-next {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    background: var(--orange);
+    color: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
+  }
+  .ce-btn-next:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+  .ce-btn-publish {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
+  }
+  .ce-btn-publish:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* Success state */
+  .ce-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+  .ce-success.show {
+    display: flex;
+    animation: ceSlideIn 0.4s ease;
+  }
+  .ce-success__icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ce-success__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--black);
+  }
+  .ce-success__desc {
+    font-size: 0.88rem;
+    color: #888;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+
+  .ce-error-msg {
+    color: #ef4444;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* Info box para oportunidad */
+  .ce-info-box {
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: #f0f9ff;
+    border: 1.5px solid #bae6fd;
+    font-size: 0.78rem;
+    color: #0369a1;
+    font-weight: 500;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .ce-card {
+      padding: 20px 18px;
+    }
+    .ce-row,
+    .ce-row-3 {
+      grid-template-columns: 1fr;
+    }
+    .ce-tipo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .ce-actividad-grid {
+      grid-template-columns: 1fr;
+    }
+    .ce-steps {
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .ce-step__label {
+      display: none;
+    }
+  }
+  @media (max-width: 480px) {
+    .ce-tipo-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+<!-- ══ HEADER ══ -->
+<div class="ce-header">
+  <div>
+    <div class="ce-title" id="ceTitulo">Crear actividad</div>
+    <div class="ce-subtitle" id="ceSubtitulo">
+      Selecciona si deseas crear un evento o una oportunidad.
+    </div>
+  </div>
+  <span
+    style="
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: #fff0e6;
+      color: var(--orange);
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: 1.5px solid rgba(255, 155, 81, 0.3);
+    "
+  >
+    ⚡ Promotor
+  </span>
+</div>
+
+<!-- ══ PASO 0 – Selección de actividad ══ -->
+<div id="ce-paso0">
+  <div class="ce-actividad-grid">
+    <button
+      type="button"
+      class="ce-actividad-card selected"
+      data-actividad="evento"
+      onclick="selectActividad(this)"
+    >
+      <div class="ce-actividad-icon">🎤</div>
+      <div class="ce-actividad-title">Evento</div>
+      <div class="ce-actividad-desc">
+        Ya tienes fecha, lugar y detalles definidos. Publica el evento
+        directamente en DIMUSAL.
+      </div>
+    </button>
+    <button
+      type="button"
+      class="ce-actividad-card"
+      data-actividad="oportunidad"
+      onclick="selectActividad(this)"
+    >
+      <div class="ce-actividad-icon">📢</div>
+      <div class="ce-actividad-title">Oportunidad</div>
+      <div class="ce-actividad-desc">
+        Buscas artistas para una futura actividad. Los artistas podrán
+        postularse a tu convocatoria.
+      </div>
+    </button>
+  </div>
+  <div style="display: flex; justify-content: flex-end">
+    <button class="ce-btn-next" onclick="iniciarFlujo()">
+      Continuar
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 15px; height: 15px"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══ FLUJO WIZARD (se muestra tras elegir actividad) ══ -->
+<div id="ce-wizard" style="display: none">
+  <!-- Steps -->
+  <div class="ce-steps" id="ceSteps" style="margin-top: 24px"></div>
+
+  <div class="ce-card">
+    <!-- ══ SUCCESS STATE ══ -->
+    <div class="ce-success" id="ceSuccess">
+      <div class="ce-success__icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 36px; height: 36px"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div class="ce-success__title" id="ceSuccessTitle">¡Publicado!</div>
+      <div class="ce-success__desc" id="ceSuccessDesc">
+        Tu publicación ya está visible en DIMUSAL.
+      </div>
+      <div
+        style="
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          justify-content: center;
+          margin-top: 8px;
+        "
+      >
+        <button class="ce-btn-next" onclick="resetCrearEvento()">
+          Crear otra actividad
+        </button>
+        <button
+          class="ce-btn-back"
+          onclick="
+            document
+              .querySelector('[data-page=\'/dashboard/inicio-promotor.html\']')
+              ?.click()
+          "
+        >
+          Ir al inicio
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANELES EVENTO
+    ══════════════════════════════════════════ -->
+
+    <!-- EVENTO – Paso 1: Información básica -->
+    <div class="ce-panel" id="ce-panel-ev-1" data-flujo="evento">
+      <div class="ce-section-title">Tipo de evento</div>
+      <div class="ce-tipo-grid" id="ceTipoGrid">
+        <button
+          type="button"
+          class="ce-tipo-chip"
+          data-tipo="Festival"
+          onclick="selectTipo(this)"
+        >
+          <div class="ce-tipo-chip__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+              />
+            </svg>
+          </div>
+          <span class="ce-tipo-chip__label">Festival</span>
+        </button>
+        <button
+          type="button"
+          class="ce-tipo-chip"
+          data-tipo="Tocata"
+          onclick="selectTipo(this)"
+        >
+          <div class="ce-tipo-chip__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="9" cy="18" r="3" />
+              <circle cx="15" cy="15" r="3" />
+              <path d="M12 15V7l6-2v4" />
+            </svg>
+          </div>
+          <span class="ce-tipo-chip__label">Tocata</span>
+        </button>
+        <button
+          type="button"
+          class="ce-tipo-chip"
+          data-tipo="Concierto"
+          onclick="selectTipo(this)"
+        >
+          <div class="ce-tipo-chip__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+            </svg>
+          </div>
+          <span class="ce-tipo-chip__label">Concierto</span>
+        </button>
+        <button
+          type="button"
+          class="ce-tipo-chip"
+          data-tipo="Corporativo"
+          onclick="selectTipo(this)"
+        >
+          <div class="ce-tipo-chip__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+          </div>
+          <span class="ce-tipo-chip__label">Corporativo</span>
+        </button>
+        <button
+          type="button"
+          class="ce-tipo-chip"
+          data-tipo="Cultural"
+          onclick="selectTipo(this)"
+        >
+          <div class="ce-tipo-chip__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <span class="ce-tipo-chip__label">Cultural</span>
+        </button>
+        <button
+          type="button"
+          class="ce-tipo-chip"
+          data-tipo="Otro"
+          onclick="selectTipo(this)"
+        >
+          <div class="ce-tipo-chip__icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="19" cy="12" r="1" />
+              <circle cx="5" cy="12" r="1" />
+            </svg>
+          </div>
+          <span class="ce-tipo-chip__label">Otro</span>
+        </button>
+      </div>
+      <span class="ce-error-msg" id="err-tipo" style="display: none"
+        >Selecciona un tipo de evento</span
+      >
+
+      <div class="ce-section-title">Datos del evento</div>
+
+      <div class="ce-field">
+        <label>Nombre del evento <span class="req">*</span></label>
+        <input
+          type="text"
+          id="ce-nombre"
+          placeholder="ej. Festival de Música Independiente 2026"
+          maxlength="80"
+        />
+        <span class="ce-error-msg" id="err-nombre" style="display: none"
+          >El nombre es obligatorio</span
+        >
+      </div>
+
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Fecha de inicio <span class="req">*</span></label>
+          <input type="date" id="ce-fecha-inicio" />
+          <span class="ce-error-msg" id="err-fecha" style="display: none"
+            >Selecciona una fecha</span
+          >
+        </div>
+        <div class="ce-field">
+          <label>Fecha de cierre</label>
+          <input type="date" id="ce-fecha-fin" />
+          <span class="ce-hint">Si el evento dura un día, déjalo vacío</span>
+        </div>
+      </div>
+
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Hora de inicio</label>
+          <input type="time" id="ce-hora" />
+        </div>
+        <div class="ce-field">
+          <label>Modalidad <span class="req">*</span></label>
+          <div class="ce-select-wrap">
+            <select id="ce-modalidad">
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="presencial">Presencial</option>
+              <option value="virtual">Virtual</option>
+              <option value="hibrido">Híbrido</option>
+            </select>
+          </div>
+          <span class="ce-error-msg" id="err-modalidad" style="display: none"
+            >Selecciona una modalidad</span
+          >
+        </div>
+      </div>
+
+      <div class="ce-field">
+        <label>Descripción <span class="req">*</span></label>
+        <textarea
+          id="ce-descripcion"
+          placeholder="Describe tu evento: qué es, qué incluye, a quién va dirigido…"
+          rows="4"
+        ></textarea>
+        <span class="ce-error-msg" id="err-desc" style="display: none"
+          >Agrega una descripción (mín. 20 caracteres)</span
+        >
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="volverPaso0()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Cambiar tipo
+        </button>
+        <button class="ce-btn-next" onclick="ceNextEvento(1)">
+          Continuar
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 15px; height: 15px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-ev-1 -->
+
+    <!-- EVENTO – Paso 2: Lugar y logística -->
+    <div class="ce-panel" id="ce-panel-ev-2" data-flujo="evento">
+      <div class="ce-section-title">Ubicación</div>
+
+      <div class="ce-field">
+        <label>Nombre del lugar / venue <span class="req">*</span></label>
+        <input
+          type="text"
+          id="ce-lugar"
+          placeholder="ej. Teatro Nacional de El Salvador"
+        />
+        <span class="ce-error-msg" id="err-lugar" style="display: none"
+          >Ingresa el lugar del evento</span
+        >
+      </div>
+
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Departamento <span class="req">*</span></label>
+          <div class="ce-select-wrap">
+            <select id="ce-departamento">
+              <option value="" disabled selected>Seleccionar</option>
+              <option>San Salvador</option>
+              <option>Santa Ana</option>
+              <option>San Miguel</option>
+              <option>La Libertad</option>
+              <option>Sonsonate</option>
+              <option>Usulután</option>
+              <option>San Vicente</option>
+              <option>La Paz</option>
+              <option>Chalatenango</option>
+              <option>Cuscatlán</option>
+              <option>Cabañas</option>
+              <option>Morazán</option>
+              <option>La Unión</option>
+              <option>Ahuachapán</option>
+            </select>
+          </div>
+          <span class="ce-error-msg" id="err-depto" style="display: none"
+            >Selecciona un departamento</span
+          >
+        </div>
+        <div class="ce-field">
+          <label>Municipio</label>
+          <input type="text" id="ce-municipio" placeholder="ej. San Salvador" />
+        </div>
+      </div>
+
+      <div class="ce-field">
+        <label>Dirección exacta</label>
+        <input
+          type="text"
+          id="ce-direccion"
+          placeholder="ej. Av. Robert Mathies Norte y Calle El Mirador, Col. Escalón"
+        />
+      </div>
+
+      <div class="ce-section-title" style="margin-top: 24px">
+        Capacidad y precio
+      </div>
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Capacidad máxima</label>
+          <input
+            type="number"
+            id="ce-capacidad"
+            placeholder="ej. 500"
+            min="1"
+          />
+        </div>
+        <div class="ce-field">
+          <label>Precio de entrada</label>
+          <input type="text" id="ce-precio" placeholder="ej. $10 / Gratis" />
+        </div>
+      </div>
+
+      <div class="ce-section-title" style="margin-top: 24px">
+        Imagen del evento
+      </div>
+      <div
+        class="ce-upload"
+        id="ceUploadFlyer"
+        onclick="document.getElementById('ceImagenInput').click()"
+      >
+        <div
+          class="ce-upload-preview"
+          id="ceImagenPreview"
+          style="display: none"
+        ></div>
+        <input
+          type="file"
+          id="ceImagenInput"
+          accept="image/*"
+          style="display: none"
+          onchange="previewImagen(this, 'ceImagenPreview', 'ceUploadFlyer')"
+        />
+        <svg
+          class="ce-upload__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <polyline points="21 15 16 10 5 21" />
+        </svg>
+        <div class="ce-upload__label">Subir imagen del evento</div>
+        <div class="ce-upload__sublabel">
+          JPG, PNG o WEBP · Máx. 5MB · Recomendado 1200×630px
+        </div>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="ceBackEvento(2)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Atrás
+        </button>
+        <button class="ce-btn-next" onclick="ceNextEvento(2)">
+          Continuar
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 15px; height: 15px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-ev-2 -->
+
+    <!-- EVENTO – Paso 3: Convocatoria para artistas -->
+    <div class="ce-panel" id="ce-panel-ev-3" data-flujo="evento">
+      <div class="ce-section-title">¿Buscas artistas para este evento?</div>
+
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Abrir convocatoria para artistas</div>
+          <div class="ce-toggle-desc">
+            Los artistas de DIMUSAL podrán postularse a tu evento
+          </div>
+        </div>
+        <label class="ce-switch">
+          <input
+            type="checkbox"
+            id="ceAbreConvocatoria"
+            onchange="toggleConvocatoria(this)"
+          />
+          <span class="ce-slider"></span>
+        </label>
+      </div>
+
+      <div
+        id="ceConvocatoriaFields"
+        style="display: none; margin-top: 4px; animation: ceSlideIn 0.25s ease"
+      >
+        <div class="ce-row" style="margin-top: 16px">
+          <div class="ce-field">
+            <label>Número de artistas necesarios</label>
+            <input
+              type="number"
+              id="ce-num-artistas"
+              placeholder="ej. 3"
+              min="1"
+              max="100"
+            />
+          </div>
+          <div class="ce-field">
+            <label>Cachet por artista</label>
+            <input
+              type="text"
+              id="ce-cachet"
+              placeholder="ej. $200 / Negociable / TBD"
+            />
+          </div>
+        </div>
+
+        <div class="ce-field">
+          <label>Géneros musicales buscados</label>
+          <div class="ce-tags-grid" id="ceGenerosGrid">
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Rock"
+              onclick="this.classList.toggle('selected')"
+            >
+              Rock
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Pop"
+              onclick="this.classList.toggle('selected')"
+            >
+              Pop
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Jazz"
+              onclick="this.classList.toggle('selected')"
+            >
+              Jazz
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Clásica"
+              onclick="this.classList.toggle('selected')"
+            >
+              Clásica
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Folk"
+              onclick="this.classList.toggle('selected')"
+            >
+              Folk
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Cumbia"
+              onclick="this.classList.toggle('selected')"
+            >
+              Cumbia
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Reggaeton"
+              onclick="this.classList.toggle('selected')"
+            >
+              Reggaeton
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Hip-Hop"
+              onclick="this.classList.toggle('selected')"
+            >
+              Hip-Hop
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Electrónica"
+              onclick="this.classList.toggle('selected')"
+            >
+              Electrónica
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Metal"
+              onclick="this.classList.toggle('selected')"
+            >
+              Metal
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Indie"
+              onclick="this.classList.toggle('selected')"
+            >
+              Indie
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Alternativo"
+              onclick="this.classList.toggle('selected')"
+            >
+              Alternativo
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Salsa"
+              onclick="this.classList.toggle('selected')"
+            >
+              Salsa
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Tropical"
+              onclick="this.classList.toggle('selected')"
+            >
+              Tropical
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="Blues"
+              onclick="this.classList.toggle('selected')"
+            >
+              Blues
+            </button>
+            <button
+              type="button"
+              class="ce-tag-chip"
+              data-tag="R&amp;B"
+              onclick="this.classList.toggle('selected')"
+            >
+              R&amp;B
+            </button>
+          </div>
+        </div>
+
+        <div class="ce-field" style="margin-top: 12px">
+          <label>Fecha límite de postulación</label>
+          <input type="date" id="ce-fecha-postulacion" />
+        </div>
+
+        <div class="ce-field">
+          <label>Requisitos para artistas</label>
+          <div class="ce-requisitos">
+            <label class="ce-requisito-item"
+              ><input type="checkbox" /> Perfil completo en DIMUSAL</label
+            >
+            <label class="ce-requisito-item"
+              ><input type="checkbox" /> Demo o portafolio disponible</label
+            >
+            <label class="ce-requisito-item"
+              ><input type="checkbox" /> Equipo propio de sonido</label
+            >
+            <label class="ce-requisito-item"
+              ><input type="checkbox" /> Disponibilidad de transporte</label
+            >
+            <label class="ce-requisito-item"
+              ><input type="checkbox" /> Experiencia en vivo requerida</label
+            >
+          </div>
+        </div>
+
+        <div class="ce-field">
+          <label>Notas adicionales para los artistas</label>
+          <textarea
+            id="ce-notas-artistas"
+            placeholder="Información extra sobre el proceso de selección, logística, soundcheck…"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="ceBackEvento(3)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Atrás
+        </button>
+        <button class="ce-btn-next" onclick="ceNextEvento(3)">
+          Continuar
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 15px; height: 15px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-ev-3 -->
+
+    <!-- EVENTO – Paso 4: Revisar y publicar -->
+    <div class="ce-panel" id="ce-panel-ev-4" data-flujo="evento">
+      <div class="ce-section-title">Resumen del evento</div>
+
+      <div class="ce-preview-card" id="cePreviewCard">
+        <div class="ce-preview-title" id="prev-nombre">—</div>
+        <div class="ce-preview-meta">
+          <span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 12px; height: 12px"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span id="prev-fecha">—</span>
+          </span>
+          <span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 12px; height: 12px"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span id="prev-lugar">—</span>
+          </span>
+          <span class="ce-preview-badge" id="prev-tipo-badge">—</span>
+        </div>
+        <div class="ce-preview-desc" id="prev-desc">—</div>
+      </div>
+
+      <div class="ce-section-title">Opciones de publicación</div>
+
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Publicar inmediatamente</div>
+          <div class="ce-toggle-desc">
+            El evento será visible en DIMUSAL al publicarlo
+          </div>
+        </div>
+        <label class="ce-switch"
+          ><input type="checkbox" id="cePublicarAhora" checked /><span
+            class="ce-slider"
+          ></span
+        ></label>
+      </div>
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Destacar en la página de inicio</div>
+          <div class="ce-toggle-desc">
+            Tu evento aparecerá en la sección principal (sujeto a revisión)
+          </div>
+        </div>
+        <label class="ce-switch"
+          ><input type="checkbox" id="ceDestacar" /><span
+            class="ce-slider"
+          ></span
+        ></label>
+      </div>
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Notificar a artistas relacionados</div>
+          <div class="ce-toggle-desc">
+            Artistas con géneros similares recibirán una notificación
+          </div>
+        </div>
+        <label class="ce-switch"
+          ><input type="checkbox" id="ceNotificar" checked /><span
+            class="ce-slider"
+          ></span
+        ></label>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="ceBackEvento(4)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Atrás
+        </button>
+        <button class="ce-btn-publish" onclick="publicarActividad()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 16px; height: 16px"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Publicar evento
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-ev-4 -->
+
+    <!-- ══════════════════════════════════════════
+         PANELES OPORTUNIDAD
+    ══════════════════════════════════════════ -->
+
+    <!-- OPORTUNIDAD – Paso 1: Información de la convocatoria -->
+    <div class="ce-panel" id="ce-panel-op-1" data-flujo="oportunidad">
+      <div class="ce-section-title">Información de la convocatoria</div>
+
+      <div class="ce-info-box">
+        📢 Una <strong>oportunidad</strong> es una convocatoria abierta donde
+        los artistas pueden postularse. No necesitas tener una fecha fija aún.
+      </div>
+
+      <div class="ce-field">
+        <label>Título de la convocatoria <span class="req">*</span></label>
+        <input
+          type="text"
+          id="op-titulo"
+          placeholder="ej. Buscamos bandas para Feria de Agosto 2026"
+          maxlength="80"
+        />
+        <span class="ce-error-msg" id="err-op-titulo" style="display: none"
+          >El título es obligatorio</span
+        >
+      </div>
+
+      <div class="ce-field">
+        <label>Categoría <span class="req">*</span></label>
+        <div class="ce-select-wrap">
+          <select id="op-categoria">
+            <option value="" disabled selected>Seleccionar</option>
+            <option value="fiesta-patronal">Fiesta patronal</option>
+            <option value="festival">Festival</option>
+            <option value="evento-corporativo">Evento corporativo</option>
+            <option value="restaurante-bar">Restaurante / Bar</option>
+            <option value="evento-cultural">Evento cultural</option>
+            <option value="boda-celebracion">Boda / Celebración privada</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <span class="ce-error-msg" id="err-op-categoria" style="display: none"
+          >Selecciona una categoría</span
+        >
+      </div>
+
+      <div class="ce-field">
+        <label>Descripción de la oportunidad <span class="req">*</span></label>
+        <textarea
+          id="op-descripcion"
+          placeholder="Describe el tipo de evento, el ambiente esperado, el público y cualquier detalle relevante para los artistas…"
+          rows="4"
+        ></textarea>
+        <span class="ce-error-msg" id="err-op-desc" style="display: none"
+          >Agrega una descripción (mín. 20 caracteres)</span
+        >
+      </div>
+
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Fecha estimada del evento</label>
+          <input type="date" id="op-fecha-evento" />
+          <span class="ce-hint"
+            >Puedes dejarlo vacío si aún no está definida</span
+          >
+        </div>
+        <div class="ce-field">
+          <label>Fecha límite de postulación <span class="req">*</span></label>
+          <input type="date" id="op-fecha-limite" />
+          <span class="ce-error-msg" id="err-op-limite" style="display: none"
+            >Define la fecha límite de postulación</span
+          >
+        </div>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="volverPaso0()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Cambiar tipo
+        </button>
+        <button class="ce-btn-next" onclick="ceNextOportunidad(1)">
+          Continuar
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 15px; height: 15px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-op-1 -->
+
+    <!-- OPORTUNIDAD – Paso 2: Requisitos y perfil buscado -->
+    <div class="ce-panel" id="ce-panel-op-2" data-flujo="oportunidad">
+      <div class="ce-section-title">Perfil del artista buscado</div>
+
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Número de artistas / grupos necesarios</label>
+          <input
+            type="number"
+            id="op-num-artistas"
+            placeholder="ej. 2"
+            min="1"
+            max="100"
+          />
+        </div>
+        <div class="ce-field">
+          <label>Cachet ofrecido</label>
+          <input
+            type="text"
+            id="op-cachet"
+            placeholder="ej. $150 / Negociable / A convenir"
+          />
+        </div>
+      </div>
+
+      <div class="ce-field">
+        <label>Géneros musicales buscados</label>
+        <div class="ce-tags-grid" id="opGenerosGrid">
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Rock"
+            onclick="this.classList.toggle('selected')"
+          >
+            Rock
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Pop"
+            onclick="this.classList.toggle('selected')"
+          >
+            Pop
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Jazz"
+            onclick="this.classList.toggle('selected')"
+          >
+            Jazz
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Clásica"
+            onclick="this.classList.toggle('selected')"
+          >
+            Clásica
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Folk"
+            onclick="this.classList.toggle('selected')"
+          >
+            Folk
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Cumbia"
+            onclick="this.classList.toggle('selected')"
+          >
+            Cumbia
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Reggaeton"
+            onclick="this.classList.toggle('selected')"
+          >
+            Reggaeton
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Hip-Hop"
+            onclick="this.classList.toggle('selected')"
+          >
+            Hip-Hop
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Electrónica"
+            onclick="this.classList.toggle('selected')"
+          >
+            Electrónica
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Metal"
+            onclick="this.classList.toggle('selected')"
+          >
+            Metal
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Indie"
+            onclick="this.classList.toggle('selected')"
+          >
+            Indie
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Alternativo"
+            onclick="this.classList.toggle('selected')"
+          >
+            Alternativo
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Salsa"
+            onclick="this.classList.toggle('selected')"
+          >
+            Salsa
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Tropical"
+            onclick="this.classList.toggle('selected')"
+          >
+            Tropical
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="Blues"
+            onclick="this.classList.toggle('selected')"
+          >
+            Blues
+          </button>
+          <button
+            type="button"
+            class="ce-tag-chip"
+            data-tag="R&amp;B"
+            onclick="this.classList.toggle('selected')"
+          >
+            R&amp;B
+          </button>
+        </div>
+      </div>
+
+      <div class="ce-field" style="margin-top: 8px">
+        <label>Requisitos</label>
+        <div class="ce-requisitos">
+          <label class="ce-requisito-item"
+            ><input type="checkbox" /> Perfil completo en DIMUSAL</label
+          >
+          <label class="ce-requisito-item"
+            ><input type="checkbox" /> Demo o portafolio disponible</label
+          >
+          <label class="ce-requisito-item"
+            ><input type="checkbox" /> Equipo propio de sonido</label
+          >
+          <label class="ce-requisito-item"
+            ><input type="checkbox" /> Disponibilidad de transporte</label
+          >
+          <label class="ce-requisito-item"
+            ><input type="checkbox" /> Experiencia en vivo requerida</label
+          >
+        </div>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="ceBackOportunidad(2)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Atrás
+        </button>
+        <button class="ce-btn-next" onclick="ceNextOportunidad(2)">
+          Continuar
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 15px; height: 15px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-op-2 -->
+
+    <!-- OPORTUNIDAD – Paso 3: Lugar e imagen -->
+    <div class="ce-panel" id="ce-panel-op-3" data-flujo="oportunidad">
+      <div class="ce-section-title">Lugar (referencial)</div>
+
+      <div class="ce-row">
+        <div class="ce-field">
+          <label>Departamento <span class="req">*</span></label>
+          <div class="ce-select-wrap">
+            <select id="op-departamento">
+              <option value="" disabled selected>Seleccionar</option>
+              <option>San Salvador</option>
+              <option>Santa Ana</option>
+              <option>San Miguel</option>
+              <option>La Libertad</option>
+              <option>Sonsonate</option>
+              <option>Usulután</option>
+              <option>San Vicente</option>
+              <option>La Paz</option>
+              <option>Chalatenango</option>
+              <option>Cuscatlán</option>
+              <option>Cabañas</option>
+              <option>Morazán</option>
+              <option>La Unión</option>
+              <option>Ahuachapán</option>
+            </select>
+          </div>
+          <span class="ce-error-msg" id="err-op-depto" style="display: none"
+            >Selecciona un departamento</span
+          >
+        </div>
+        <div class="ce-field">
+          <label>Municipio</label>
+          <input type="text" id="op-municipio" placeholder="ej. Santa Ana" />
+        </div>
+      </div>
+
+      <div class="ce-field">
+        <label>Notas sobre el lugar</label>
+        <textarea
+          id="op-lugar-notas"
+          placeholder="ej. El evento será al aire libre en el parque central, se necesita equipo de sonido propio."
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="ce-section-title" style="margin-top: 24px">
+        Imagen de la convocatoria
+      </div>
+      <div
+        class="ce-upload"
+        id="opUploadFlyer"
+        onclick="document.getElementById('opImagenInput').click()"
+      >
+        <div
+          class="ce-upload-preview"
+          id="opImagenPreview"
+          style="display: none"
+        ></div>
+        <input
+          type="file"
+          id="opImagenInput"
+          accept="image/*"
+          style="display: none"
+          onchange="previewImagen(this, 'opImagenPreview', 'opUploadFlyer')"
+        />
+        <svg
+          class="ce-upload__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <polyline points="21 15 16 10 5 21" />
+        </svg>
+        <div class="ce-upload__label">Subir imagen de la convocatoria</div>
+        <div class="ce-upload__sublabel">
+          JPG, PNG o WEBP · Máx. 5MB · Opcional
+        </div>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="ceBackOportunidad(3)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Atrás
+        </button>
+        <button class="ce-btn-next" onclick="ceNextOportunidad(3)">
+          Revisar y publicar
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 15px; height: 15px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-op-3 -->
+
+    <!-- OPORTUNIDAD – Paso 4: Revisar y publicar -->
+    <div class="ce-panel" id="ce-panel-op-4" data-flujo="oportunidad">
+      <div class="ce-section-title">Resumen de la oportunidad</div>
+
+      <div class="ce-preview-card" id="opPreviewCard">
+        <div class="ce-preview-title" id="op-prev-titulo">—</div>
+        <div class="ce-preview-meta">
+          <span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 12px; height: 12px"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            Cierra: <span id="op-prev-limite">—</span>
+          </span>
+          <span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 12px; height: 12px"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span id="op-prev-lugar">—</span>
+          </span>
+          <span class="ce-preview-badge" id="op-prev-cat">—</span>
+        </div>
+        <div class="ce-preview-desc" id="op-prev-desc">—</div>
+      </div>
+
+      <div class="ce-section-title">Opciones de publicación</div>
+
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Publicar inmediatamente</div>
+          <div class="ce-toggle-desc">
+            La convocatoria será visible para los artistas al publicarla
+          </div>
+        </div>
+        <label class="ce-switch"
+          ><input type="checkbox" id="opPublicarAhora" checked /><span
+            class="ce-slider"
+          ></span
+        ></label>
+      </div>
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Destacar en oportunidades</div>
+          <div class="ce-toggle-desc">
+            Aparecerá en la parte superior de la sección (sujeto a revisión)
+          </div>
+        </div>
+        <label class="ce-switch"
+          ><input type="checkbox" id="opDestacar" /><span
+            class="ce-slider"
+          ></span
+        ></label>
+      </div>
+      <div class="ce-toggle-row">
+        <div class="ce-toggle-info">
+          <div class="ce-toggle-label">Notificar a artistas relacionados</div>
+          <div class="ce-toggle-desc">
+            Artistas con géneros afines recibirán una notificación
+          </div>
+        </div>
+        <label class="ce-switch"
+          ><input type="checkbox" id="opNotificar" checked /><span
+            class="ce-slider"
+          ></span
+        ></label>
+      </div>
+
+      <div class="ce-nav">
+        <button class="ce-btn-back" onclick="ceBackOportunidad(4)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 14px; height: 14px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Atrás
+        </button>
+        <button class="ce-btn-publish" onclick="publicarActividad()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 16px; height: 16px"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Publicar oportunidad
+        </button>
+      </div>
+    </div>
+    <!-- /ce-panel-op-4 -->
+  </div>
+  <!-- /ce-card -->
+</div>
+<!-- /ce-wizard -->
+
+<script>
+  /* ══════════════════════════════════════
+   Estado global
+══════════════════════════════════════ */
+  let ceActividad = "evento"; // "evento" | "oportunidad"
+  let ceCurrentStep = 1;
+  let ceTipoSelected = "";
+
+  /* ══════════════════════════════════════
+   Paso 0 – Selección de actividad
+══════════════════════════════════════ */
+  function selectActividad(el) {
+    document
+      .querySelectorAll(".ce-actividad-card")
+      .forEach((c) => c.classList.remove("selected"));
+    el.classList.add("selected");
+    ceActividad = el.dataset.actividad;
+  }
+
+  function iniciarFlujo() {
+    // Actualizar header
+    const titulo = document.getElementById("ceTitulo");
+    const subtitulo = document.getElementById("ceSubtitulo");
+
+    if (ceActividad === "evento") {
+      titulo.textContent = "Crear evento";
+      subtitulo.textContent = "Completa la información de tu evento.";
+      renderSteps(["Información", "Lugar", "Convocatoria", "Publicar"]);
+    } else {
+      titulo.textContent = "Crear oportunidad";
+      subtitulo.textContent =
+        "Publica una convocatoria para encontrar artistas.";
+      renderSteps(["Convocatoria", "Artistas", "Lugar", "Publicar"]);
+    }
+
+    document.getElementById("ce-paso0").style.display = "none";
+    document.getElementById("ce-wizard").style.display = "block";
+
+    ceCurrentStep = 1;
+    setActivePanel(1);
+  }
+
+  /* ══════════════════════════════════════
+   Steps dinámicos
+══════════════════════════════════════ */
+  function renderSteps(labels) {
+    const container = document.getElementById("ceSteps");
+    container.innerHTML = labels
+      .map(
+        (lbl, i) => `
+    <div class="ce-step ${i === 0 ? "active" : ""}" data-step="${i + 1}">
+      <div class="ce-step__num">${i + 1}</div>
+      <div class="ce-step__label">${lbl}</div>
+    </div>
+  `,
+      )
+      .join("");
+  }
+
+  function updateSteps(n) {
+    document.querySelectorAll(".ce-step").forEach((s, i) => {
+      s.classList.remove("active", "done");
+      if (i + 1 === n) s.classList.add("active");
+      if (i + 1 < n) s.classList.add("done");
+    });
+  }
+
+  /* ══════════════════════════════════════
+   Activar panel
+══════════════════════════════════════ */
+  function setActivePanel(n) {
+    ceCurrentStep = n;
+    const prefix = ceActividad === "evento" ? "ce-panel-ev-" : "ce-panel-op-";
+
+    // Ocultar todos los paneles del flujo actual
+    document
+      .querySelectorAll(`.ce-panel[data-flujo="${ceActividad}"]`)
+      .forEach((p) => p.classList.remove("active"));
+
+    // Activar el correcto
+    const panel = document.getElementById(prefix + n);
+    if (panel) panel.classList.add("active");
+
+    updateSteps(n);
+
+    // Scroll suave al card
+    const card = document.querySelector(".ce-card");
+    if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ══════════════════════════════════════
+   Volver al paso 0
+══════════════════════════════════════ */
+  function volverPaso0() {
+    // Ocultar todos los paneles
+    document
+      .querySelectorAll(".ce-panel")
+      .forEach((p) => p.classList.remove("active"));
+    document.getElementById("ce-wizard").style.display = "none";
+    document.getElementById("ce-paso0").style.display = "block";
+
+    // Restaurar header
+    document.getElementById("ceTitulo").textContent = "Crear actividad";
+    document.getElementById("ceSubtitulo").textContent =
+      "Selecciona si deseas crear un evento o una oportunidad.";
+  }
+
+  /* ══════════════════════════════════════
+   Tipo de evento (chips)
+══════════════════════════════════════ */
+  function selectTipo(el) {
+    document
+      .querySelectorAll(".ce-tipo-chip")
+      .forEach((c) => c.classList.remove("selected"));
+    el.classList.add("selected");
+    ceTipoSelected = el.dataset.tipo;
+    document.getElementById("err-tipo").style.display = "none";
+  }
+
+  /* ══════════════════════════════════════
+   Toggle convocatoria
+══════════════════════════════════════ */
+  function toggleConvocatoria(el) {
+    document.getElementById("ceConvocatoriaFields").style.display = el.checked
+      ? "block"
+      : "none";
+  }
+
+  /* ══════════════════════════════════════
+   Preview imagen
+══════════════════════════════════════ */
+  function previewImagen(input, previewId, wrapperId) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const preview = document.getElementById(previewId);
+        preview.style.backgroundImage = `url(${e.target.result})`;
+        preview.style.display = "block";
+        const wrapper = document.getElementById(wrapperId);
+        wrapper
+          .querySelectorAll(
+            ".ce-upload__icon,.ce-upload__label,.ce-upload__sublabel",
+          )
+          .forEach((el) => (el.style.display = "none"));
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  /* ══════════════════════════════════════
+   Helpers de validación
+══════════════════════════════════════ */
+  function markError(inputId, errId, condition) {
+    const input = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (!input || !err) return !condition;
+    if (condition) {
+      err.style.display = "none";
+      if (input.style) input.style.borderColor = "#22c55e";
+      return true;
+    } else {
+      err.style.display = "block";
+      if (input.style) input.style.borderColor = "#ef4444";
+      return false;
+    }
+  }
+
+  function formatDate(val) {
+    if (!val) return "—";
+    return new Date(val + "T12:00:00").toLocaleDateString("es-SV", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }
+
+  /* ══════════════════════════════════════
+   FLUJO EVENTO – Navegación
+══════════════════════════════════════ */
+  function ceNextEvento(step) {
+    if (step === 1) {
+      let ok = true;
+      if (!ceTipoSelected) {
+        document.getElementById("err-tipo").style.display = "block";
+        ok = false;
+      }
+      ok =
+        markError(
+          "ce-nombre",
+          "err-nombre",
+          document.getElementById("ce-nombre")?.value.trim().length > 0,
+        ) && ok;
+      ok =
+        markError(
+          "ce-fecha-inicio",
+          "err-fecha",
+          !!document.getElementById("ce-fecha-inicio")?.value,
+        ) && ok;
+      ok =
+        markError(
+          "ce-modalidad",
+          "err-modalidad",
+          !!document.getElementById("ce-modalidad")?.value,
+        ) && ok;
+      ok =
+        markError(
+          "ce-descripcion",
+          "err-desc",
+          document.getElementById("ce-descripcion")?.value.trim().length >= 20,
+        ) && ok;
+      if (!ok) return;
+    }
+
+    if (step === 2) {
+      let ok = true;
+      ok =
+        markError(
+          "ce-lugar",
+          "err-lugar",
+          document.getElementById("ce-lugar")?.value.trim().length > 0,
+        ) && ok;
+      ok =
+        markError(
+          "ce-departamento",
+          "err-depto",
+          !!document.getElementById("ce-departamento")?.value,
+        ) && ok;
+      if (!ok) return;
+    }
+
+    if (step === 3) buildPreviewEvento();
+
+    setActivePanel(step + 1);
+  }
+
+  function ceBackEvento(step) {
+    setActivePanel(step - 1);
+  }
+
+  function buildPreviewEvento() {
+    const nombre =
+      document.getElementById("ce-nombre")?.value.trim() || "Sin nombre";
+    const fecha = document.getElementById("ce-fecha-inicio")?.value || "";
+    const lugar = document.getElementById("ce-lugar")?.value.trim() || "—";
+    const depto = document.getElementById("ce-departamento")?.value || "";
+    const desc = document.getElementById("ce-descripcion")?.value.trim() || "—";
+
+    document.getElementById("prev-nombre").textContent = nombre;
+    document.getElementById("prev-fecha").textContent = formatDate(fecha);
+    document.getElementById("prev-lugar").textContent = [lugar, depto]
+      .filter(Boolean)
+      .join(", ");
+    document.getElementById("prev-tipo-badge").textContent =
+      ceTipoSelected || "—";
+    document.getElementById("prev-desc").textContent =
+      desc.length > 200 ? desc.slice(0, 200) + "…" : desc;
+  }
+
+  /* ══════════════════════════════════════
+   FLUJO OPORTUNIDAD – Navegación
+══════════════════════════════════════ */
+  function ceNextOportunidad(step) {
+    if (step === 1) {
+      let ok = true;
+      ok =
+        markError(
+          "op-titulo",
+          "err-op-titulo",
+          document.getElementById("op-titulo")?.value.trim().length > 0,
+        ) && ok;
+      ok =
+        markError(
+          "op-categoria",
+          "err-op-categoria",
+          !!document.getElementById("op-categoria")?.value,
+        ) && ok;
+      ok =
+        markError(
+          "op-descripcion",
+          "err-op-desc",
+          document.getElementById("op-descripcion")?.value.trim().length >= 20,
+        ) && ok;
+      ok =
+        markError(
+          "op-fecha-limite",
+          "err-op-limite",
+          !!document.getElementById("op-fecha-limite")?.value,
+        ) && ok;
+      if (!ok) return;
+    }
+
+    if (step === 3) {
+      const ok = markError(
+        "op-departamento",
+        "err-op-depto",
+        !!document.getElementById("op-departamento")?.value,
+      );
+      if (!ok) return;
+      buildPreviewOportunidad();
+    }
+
+    setActivePanel(step + 1);
+  }
+
+  function ceBackOportunidad(step) {
+    setActivePanel(step - 1);
+  }
+
+  function buildPreviewOportunidad() {
+    const titulo =
+      document.getElementById("op-titulo")?.value.trim() || "Sin título";
+    const limite = document.getElementById("op-fecha-limite")?.value || "";
+    const depto = document.getElementById("op-departamento")?.value || "—";
+    const mun = document.getElementById("op-municipio")?.value.trim() || "";
+    const cat = document.getElementById("op-categoria")?.value || "—";
+    const desc = document.getElementById("op-descripcion")?.value.trim() || "—";
+
+    document.getElementById("op-prev-titulo").textContent = titulo;
+    document.getElementById("op-prev-limite").textContent = formatDate(limite);
+    document.getElementById("op-prev-lugar").textContent = [depto, mun]
+      .filter(Boolean)
+      .join(", ");
+    document.getElementById("op-prev-cat").textContent = cat.replace(/-/g, " ");
+    document.getElementById("op-prev-desc").textContent =
+      desc.length > 200 ? desc.slice(0, 200) + "…" : desc;
+  }
+
+  /* ══════════════════════════════════════
+   Publicar
+══════════════════════════════════════ */
+  function publicarActividad() {
+    document
+      .querySelectorAll(".ce-panel")
+      .forEach((p) => p.classList.remove("active"));
+    document.querySelectorAll(".ce-step").forEach((s) => {
+      s.classList.remove("active");
+      s.classList.add("done");
+    });
+
+    const isEvento = ceActividad === "evento";
+    document.getElementById("ceSuccessTitle").textContent = isEvento
+      ? "¡Evento publicado!"
+      : "¡Oportunidad publicada!";
+    document.getElementById("ceSuccessDesc").textContent = isEvento
+      ? "Tu evento ya está visible en DIMUSAL. Los artistas podrán encontrarlo y postularse."
+      : "Tu convocatoria está activa. Los artistas podrán revisarla y enviar su postulación.";
+
+    document.getElementById("ceSuccess").classList.add("show");
+  }
+
+  /* ══════════════════════════════════════
+   Reset completo
+══════════════════════════════════════ */
+  function resetCrearEvento() {
+    document.getElementById("ceSuccess").classList.remove("show");
+    ceTipoSelected = "";
+    ceCurrentStep = 1;
+    ceActividad = "evento";
+
+    // Limpiar campos evento
+    [
+      "ce-nombre",
+      "ce-fecha-inicio",
+      "ce-fecha-fin",
+      "ce-hora",
+      "ce-descripcion",
+      "ce-lugar",
+      "ce-municipio",
+      "ce-direccion",
+      "ce-capacidad",
+      "ce-precio",
+      "ce-notas-artistas",
+    ].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = "";
+        el.style.borderColor = "";
+      }
+    });
+    const mod = document.getElementById("ce-modalidad");
+    const dep = document.getElementById("ce-departamento");
+    if (mod) {
+      mod.value = "";
+      mod.style.borderColor = "";
+    }
+    if (dep) {
+      dep.value = "";
+      dep.style.borderColor = "";
+    }
+
+    // Limpiar campos oportunidad
+    [
+      "op-titulo",
+      "op-descripcion",
+      "op-fecha-evento",
+      "op-fecha-limite",
+      "op-num-artistas",
+      "op-cachet",
+      "op-municipio",
+      "op-lugar-notas",
+    ].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = "";
+        el.style.borderColor = "";
+      }
+    });
+    const opCat = document.getElementById("op-categoria");
+    const opDep = document.getElementById("op-departamento");
+    if (opCat) opCat.value = "";
+    if (opDep) opDep.value = "";
+
+    // Chips y tags
+    document
+      .querySelectorAll(".ce-tipo-chip,.ce-tag-chip")
+      .forEach((c) => c.classList.remove("selected"));
+
+    // Checkboxes
+    document
+      .querySelectorAll(".ce-card input[type='checkbox']")
+      .forEach((cb) => {
+        cb.checked = false;
+      });
+    const pub1 = document.getElementById("cePublicarAhora");
+    const pub2 = document.getElementById("opPublicarAhora");
+    const not1 = document.getElementById("ceNotificar");
+    const not2 = document.getElementById("opNotificar");
+    if (pub1) pub1.checked = true;
+    if (pub2) pub2.checked = true;
+    if (not1) not1.checked = true;
+    if (not2) not2.checked = true;
+
+    // Previews de imagen
+    ["ceImagenPreview", "opImagenPreview"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.display = "none";
+        el.style.backgroundImage = "";
+      }
+    });
+    // Restaurar iconos de upload
+    document
+      .querySelectorAll(
+        ".ce-upload__icon,.ce-upload__label,.ce-upload__sublabel",
+      )
+      .forEach((el) => (el.style.display = ""));
+
+    // Toggle convocatoria
+    const conv = document.getElementById("ceConvocatoriaFields");
+    if (conv) conv.style.display = "none";
+    const togConv = document.getElementById("ceAbreConvocatoria");
+    if (togConv) togConv.checked = false;
+
+    // Volver al paso 0
+    document.getElementById("ce-wizard").style.display = "none";
+    document.getElementById("ce-paso0").style.display = "block";
+    document.getElementById("ceTitulo").textContent = "Crear actividad";
+    document.getElementById("ceSubtitulo").textContent =
+      "Selecciona si deseas crear un evento o una oportunidad.";
+
+    // Re-seleccionar "evento" por defecto
+    document
+      .querySelectorAll(".ce-actividad-card")
+      .forEach((c) => c.classList.remove("selected"));
+    const defaultCard = document.querySelector(
+      '.ce-actividad-card[data-actividad="evento"]',
+    );
+    if (defaultCard) defaultCard.classList.add("selected");
+  }
+
+  /* ══════════════════════════════════════
+   Auto-clear errores al escribir
+══════════════════════════════════════ */
+  document.addEventListener("input", (e) => {
+    const el = e.target;
+    if (!el.closest(".ce-card") && !el.closest(".ce-panel")) return;
+    if (el.value && el.value.trim()) {
+      el.style.borderColor = "#22c55e";
+    }
+  });
+  document.addEventListener("change", (e) => {
+    const el = e.target;
+    if (!el.closest(".ce-card") && !el.closest(".ce-panel")) return;
+    if (el.value) el.style.borderColor = "#22c55e";
+  });
+</script>

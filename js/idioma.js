@@ -13,11 +13,18 @@ function aplicarIdioma() {
 
   document.querySelectorAll("[data-es]").forEach((el) => {
     const texto = el.getAttribute(`data-${idioma}`);
-
     if (texto) {
       el.innerHTML = texto;
     }
   });
+
+  // Traducir biografía dinámica si existe
+  if (
+    typeof traducirBiografia === "function" &&
+    typeof bioOriginal !== "undefined"
+  ) {
+    traducirBiografia(bioOriginal, idioma);
+  }
 }
 
 // Se llama al cargar en páginas normales (index, login, register, etc.)

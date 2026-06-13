@@ -605,3 +605,136 @@ button {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   Modal: Editar Información
+   
+═══════════════════════════════════════════════════ */
+
+#infoModalBackdrop .reg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#infoModalBackdrop .reg-field label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #9a8070;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+#infoModalBackdrop input[type="email"],
+#infoModalBackdrop input[type="tel"],
+#infoModalBackdrop select {
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #e0ddd8;
+  font-family: "Syne", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1e1e1e;
+  background: #fafafa;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  width: 100%;
+}
+
+#infoModalBackdrop input[type="email"]:focus,
+#infoModalBackdrop input[type="tel"]:focus,
+#infoModalBackdrop select:focus {
+  border-color: #ff9b51;
+  background: #fff;
+}
+
+#infoModalBackdrop input::placeholder {
+  color: #bbb;
+}
+
+/* ── Select wrapper con flecha custom ──────────────── */
+#infoModalBackdrop .reg-select-wrap {
+  position: relative;
+}
+
+#infoModalBackdrop .reg-select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 38px;
+}
+
+#infoModalBackdrop .reg-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #9a8070;
+  border-bottom: 2px solid #9a8070;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+#infoModalBackdrop select:disabled {
+  background: #f0ece6;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+/* ── Layout en dos columnas para selects ──────────── */
+#infoModalBackdrop .reg-row {
+  display: flex;
+  gap: 14px;
+}
+
+#infoModalBackdrop .reg-row .reg-field {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  #infoModalBackdrop .reg-row {
+    flex-direction: column;
+    gap: 22px;
+  }
+}
+
+/* ── Textarea biografía ── */
+#bioModalBackdrop textarea {
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #e0ddd8;
+  font-family: "Syne", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1e1e1e;
+  background: #fafafa;
+  outline: none;
+  resize: vertical;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  box-sizing: border-box;
+}
+
+#bioModalBackdrop textarea:focus {
+  border-color: #ff9b51;
+  background: #fff;
+}
+
+#bioModalBackdrop textarea::placeholder {
+  color: #bbb;
+}
+
+.bio-counter {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 4px;
+}

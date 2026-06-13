@@ -1,0 +1,694 @@
+<!-- ══ BANNER PROMOTOR ══ -->
+<div
+  class="banner"
+  style="
+    background: linear-gradient(
+      110deg,
+      #0a0a1a 0%,
+      #1a1060 45%,
+      #3a20c0 80%,
+      #6b4ff0 100%
+    );
+  "
+>
+  <div
+    class="banner-image"
+    style="
+      background-image: url(&quot;/images/dashboard/banner-guitarra-electrica2-eterea.png&quot;);
+      opacity: 0.35;
+    "
+  ></div>
+  <div class="banner-left">
+    <div
+      class="banner-tag"
+      data-es="Panel de Promotor · DIMUSAL"
+      data-en="Promoter Panel · DIMUSAL"
+    ></div>
+    <div
+      class="banner-title"
+      data-es="Organiza eventos.<br>Conecta artistas."
+      data-en="Organize events.<br>Connect artists."
+    ></div>
+    <div class="banner-actions">
+      <button
+        class="btn-primary"
+        onclick="
+          document
+            .querySelector('[data-page=\'/dashboard/crear-evento.html\']')
+            .click()
+        "
+        data-es="Crear evento"
+        data-en="Create event"
+      >
+        Crear evento
+      </button>
+      <button
+        class="btn-secondary"
+        data-es="Publicar oportunidad"
+        data-en="Post opportunity"
+        onclick="openCrearModal()"
+      >
+        Publicar oportunidad
+      </button>
+    </div>
+  </div>
+  <div class="banner-progress" style="background: rgba(0, 0, 0, 0.4)">
+    <div
+      class="progress-pct"
+      style="font-size: 1.6rem; letter-spacing: -0.02em"
+    >
+      ⚡
+    </div>
+    <div
+      class="progress-label"
+      style="color: rgba(255, 255, 255, 0.9); font-size: 0.82rem"
+    >
+      Medio administrador
+    </div>
+    <hr
+      style="
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        margin: 8px 0;
+      "
+    />
+    <div
+      class="progress-hint"
+      style="
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.75rem;
+        line-height: 1.5;
+      "
+    >
+      Puedes crear eventos y publicar oportunidades para artistas
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATS GRID PROMOTOR ══ -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-dot" style="background: #6b4ff0"></div>
+    <div class="stat-number">0</div>
+    <div class="stat-label">Eventos creados</div>
+    <span class="stat-badge badge-orange">¡Comienza ya!</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-dot" style="background: #4a9fd4"></div>
+    <div class="stat-number">0</div>
+    <div class="stat-label">Oportunidades publicadas</div>
+    <span class="stat-badge badge-celeste">Activa</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-dot" style="background: #22c55e"></div>
+    <div class="stat-number">0</div>
+    <div class="stat-label">Postulaciones recibidas</div>
+    <span class="stat-badge" style="background: #dcfce7; color: #16a34a"
+      >En revisión</span
+    >
+  </div>
+  <div class="stat-card">
+    <div class="stat-dot" style="background: var(--orange)"></div>
+    <div class="stat-number">12</div>
+    <div class="stat-label">Artistas disponibles</div>
+    <span class="stat-badge badge-celeste">En la red</span>
+  </div>
+</div>
+
+<!-- ══ ACCIONES RÁPIDAS ══ -->
+<div>
+  <div class="section-header">
+    <div
+      class="section-title"
+      style="margin-bottom: 14px"
+      data-es="Acciones rápidas"
+      data-en="Quick actions"
+    ></div>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+    <!-- Crear evento -->
+    <div
+      class="stat-card"
+      style="cursor: pointer; gap: 14px; padding: 22px 22px 18px"
+      onclick="
+        document
+          .querySelector('[data-page=\'/dashboard/crear-evento.html\']')
+          ?.click()
+      "
+    >
+      <div
+        style="
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #6b4ff0, #9b7ff0);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 256 256"
+          style="width: 22px; height: 22px; fill: #fff"
+        >
+          <path
+            d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-48-56a8,8,0,0,1-8,8H136v16a8,8,0,0,1-16,0V160H104a8,8,0,0,1,0-16h16V128a8,8,0,0,1,16,0v16h16A8,8,0,0,1,160,152Z"
+          />
+        </svg>
+      </div>
+      <div>
+        <div style="font-size: 0.92rem; font-weight: 700; color: var(--black)">
+          Crear evento
+        </div>
+        <div style="font-size: 0.75rem; color: #999; margin-top: 2px">
+          Para artistas o el público general
+        </div>
+      </div>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ccc"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 16px; height: 16px; margin-left: auto; flex-shrink: 0"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </div>
+
+    <!-- Publicar oportunidad -->
+    <div
+      class="stat-card"
+      style="cursor: pointer; gap: 14px; padding: 22px 22px 18px"
+      onclick="openCrearModal()"
+    >
+      <div
+        style="
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, var(--orange), #ffb87a);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        "
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 20px; height: 20px"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </div>
+      <div>
+        <div style="font-size: 0.92rem; font-weight: 700; color: var(--black)">
+          Publicar oportunidad
+        </div>
+        <div style="font-size: 0.75rem; color: #999; margin-top: 2px">
+          Convocatoria, audición, residencia…
+        </div>
+      </div>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ccc"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 16px; height: 16px; margin-left: auto; flex-shrink: 0"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </div>
+
+    <!-- Ver postulaciones -->
+    <div
+      class="stat-card"
+      style="cursor: pointer; gap: 14px; padding: 22px 22px 18px"
+    >
+      <div
+        style="
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        "
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 20px; height: 20px"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+      </div>
+      <div>
+        <div style="font-size: 0.92rem; font-weight: 700; color: var(--black)">
+          Ver postulaciones
+        </div>
+        <div style="font-size: 0.75rem; color: #999; margin-top: 2px">
+          Revisa quién aplicó a tus eventos
+        </div>
+      </div>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ccc"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 16px; height: 16px; margin-left: auto; flex-shrink: 0"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </div>
+
+    <!-- Buscar artistas -->
+    <div
+      class="stat-card"
+      style="cursor: pointer; gap: 14px; padding: 22px 22px 18px"
+      onclick="
+        document
+          .querySelector('[data-page=\'/dashboard/oportunidades.html\']')
+          ?.click()
+      "
+    >
+      <div
+        style="
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #22c55e, #4ade80);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        "
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 20px; height: 20px"
+        >
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      </div>
+      <div>
+        <div style="font-size: 0.92rem; font-weight: 700; color: var(--black)">
+          Explorar artistas
+        </div>
+        <div style="font-size: 0.75rem; color: #999; margin-top: 2px">
+          Encuentra talento para tu evento
+        </div>
+      </div>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ccc"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="width: 16px; height: 16px; margin-left: auto; flex-shrink: 0"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MIS EVENTOS RECIENTES ══ -->
+<div>
+  <div
+    class="section-header"
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    "
+  >
+    <div class="section-title" data-es="Mis eventos" data-en="My events"></div>
+    <span
+      style="
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--orange);
+        cursor: pointer;
+      "
+      onclick="
+        document
+          .querySelector('[data-page=\'/dashboard/crear-evento.html\']')
+          ?.click()
+      "
+      >+ Crear nuevo</span
+    >
+  </div>
+
+  <!-- Empty state -->
+  <div
+    style="
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1.5px dashed #e0ddd8;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    "
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 256 256"
+      style="width: 44px; height: 44px; color: #ddd; fill: currentColor"
+    >
+      <path
+        d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-48-56a8,8,0,0,1-8,8H136v16a8,8,0,0,1-16,0V160H104a8,8,0,0,1,0-16h16V128a8,8,0,0,1,16,0v16h16A8,8,0,0,1,160,152Z"
+      />
+    </svg>
+    <div style="font-size: 0.88rem; font-weight: 600; color: #aaa">
+      Aún no has creado ningún evento
+    </div>
+    <div
+      style="
+        font-size: 0.78rem;
+        color: #ccc;
+        max-width: 280px;
+        line-height: 1.5;
+      "
+    >
+      Crea tu primer evento para que artistas y el público puedan encontrarlo en
+      DIMUSAL
+    </div>
+    <button
+      class="btn-primary"
+      style="margin-top: 4px; padding: 9px 22px; font-size: 0.82rem"
+      onclick="
+        document
+          .querySelector('[data-page=\'/dashboard/crear-evento.html\']')
+          ?.click()
+      "
+    >
+      Crear primer evento
+    </button>
+  </div>
+</div>
+
+<!-- ══ TIPS PROMOTOR ══ -->
+<div>
+  <div class="section-header">
+    <div
+      class="section-title"
+      style="margin-bottom: 14px"
+      data-es="Tips para promotores"
+      data-en="Tips for promoters"
+    ></div>
+  </div>
+  <div class="tips-card">
+    <div class="tips-list">
+      <div class="tip-item">
+        <div class="tip-num">1</div>
+        <div class="tip-text">
+          Completa tu perfil con tipos de eventos que organizas — los artistas
+          filtran promotores por especialidad.
+        </div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">2</div>
+        <div class="tip-text">
+          Al crear una oportunidad, especifica bien el cachet, género musical y
+          fechas para recibir postulaciones de calidad.
+        </div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">3</div>
+        <div class="tip-text">
+          Responde las postulaciones en menos de 72 horas — mejora tu reputación
+          en la plataforma y atrae más talento.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CREAR: Evento u Oportunidad ══ -->
+<div
+  id="crearModal"
+  style="
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  "
+  onclick="closeCrearModal(event)"
+>
+  <div
+    style="
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+      font-family: &quot;Syne&quot;, sans-serif;
+    "
+    onclick="event.stopPropagation()"
+  >
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      "
+    >
+      <div style="font-size: 1.2rem; font-weight: 800; color: var(--black)">
+        ¿Qué deseas crear?
+      </div>
+      <button
+        onclick="closeCrearModal()"
+        style="background: none; border: none; cursor: pointer; padding: 4px"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#999"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 20px; height: 20px"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <p style="font-size: 0.82rem; color: #999; margin-bottom: 24px">
+      Como promotor puedes publicar eventos o abrir convocatorias para artistas.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <!-- Opción Evento -->
+      <div
+        onclick="irACrearEvento()"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 18px 20px;
+          border-radius: 14px;
+          border: 2px solid #ebe9e5;
+          cursor: pointer;
+          transition:
+            border-color 0.15s,
+            background 0.15s;
+        "
+        onmouseenter="
+          this.style.borderColor = '#6b4ff0';
+          this.style.background = '#f8f6ff';
+        "
+        onmouseleave="
+          this.style.borderColor = '#ebe9e5';
+          this.style.background = '#fff';
+        "
+      >
+        <div
+          style="
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6b4ff0, #9b7ff0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 256 256"
+            style="width: 22px; height: 22px; fill: #fff"
+          >
+            <path
+              d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-48-56a8,8,0,0,1-8,8H136v16a8,8,0,0,1-16,0V160H104a8,8,0,0,1,0-16h16V128a8,8,0,0,1,16,0v16h16A8,8,0,0,1,160,152Z"
+            />
+          </svg>
+        </div>
+        <div style="flex: 1">
+          <div
+            style="font-size: 0.95rem; font-weight: 700; color: var(--black)"
+          >
+            Crear evento
+          </div>
+          <div style="font-size: 0.77rem; color: #999; margin-top: 2px">
+            Festival, tocata, concierto, corporativo…
+          </div>
+        </div>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#ccc"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 18px; height: 18px; flex-shrink: 0"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </div>
+
+      <!-- Opción Oportunidad -->
+      <div
+        onclick="irACrearOportunidad()"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 18px 20px;
+          border-radius: 14px;
+          border: 2px solid #ebe9e5;
+          cursor: pointer;
+          transition:
+            border-color 0.15s,
+            background 0.15s;
+        "
+        onmouseenter="
+          this.style.borderColor = 'var(--orange)';
+          this.style.background = '#fff6ef';
+        "
+        onmouseleave="
+          this.style.borderColor = '#ebe9e5';
+          this.style.background = '#fff';
+        "
+      >
+        <div
+          style="
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--orange), #ffb87a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+          "
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#fff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 20px; height: 20px"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </div>
+        <div style="flex: 1">
+          <div
+            style="font-size: 0.95rem; font-weight: 700; color: var(--black)"
+          >
+            Publicar oportunidad
+          </div>
+          <div style="font-size: 0.77rem; color: #999; margin-top: 2px">
+            Convocatoria, audición, residencia, taller…
+          </div>
+        </div>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#ccc"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 18px; height: 18px; flex-shrink: 0"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openCrearModal() {
+    const m = document.getElementById("crearModal");
+    m.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+  function closeCrearModal(e) {
+    if (!e || e.target === document.getElementById("crearModal")) {
+      document.getElementById("crearModal").style.display = "none";
+      document.body.style.overflow = "";
+    }
+  }
+  function irACrearEvento() {
+    closeCrearModal();
+    const btn = document.querySelector(
+      '[data-page="/dashboard/crear-evento.html"]',
+    );
+    if (btn) btn.click();
+  }
+  function irACrearOportunidad() {
+    closeCrearModal();
+    // Aquí iría a la página de crear oportunidad cuando exista
+    alert("Próximamente: Crear oportunidad");
+  }
+</script>
+
+<script src="/js/idioma.js"></script>

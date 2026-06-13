@@ -83,6 +83,30 @@ function pintarPerfil(u) {
   const nameEl = document.querySelector(".pa-profile-header__name");
   if (nameEl) nameEl.textContent = nombreMostrar;
 
+  // ── Biografía ────────────────────────────────────────────────
+  const bio1 = document.getElementById("bio-p1");
+  const bio2 = document.getElementById("bio-p2");
+
+  if (bio1) {
+    if (u.biografia) {
+      const parrafos = u.biografia.split("\n").filter((p) => p.trim());
+      bio1.textContent = parrafos[0] || "";
+      if (bio2) bio2.textContent = parrafos[1] || "";
+
+      // Guardar original y traducir si el idioma activo es inglés
+      if (typeof bioOriginal !== "undefined") {
+        bioOriginal = u.biografia;
+        const idiomaActivo = localStorage.getItem("idioma") || "es";
+        if (idiomaActivo === "en" && typeof traducirBiografia === "function") {
+          traducirBiografia(u.biografia, "en");
+        }
+      }
+    } else {
+      bio1.textContent = "Aún no has agregado una biografía.";
+      if (bio2) bio2.textContent = "";
+    }
+  }
+
   // ── Badge tipo de cuenta ────────────────────────────────────
   const badgeEl = document.querySelector(".pa-badge");
   if (badgeEl && u.tipo) {
@@ -113,22 +137,17 @@ function pintarPerfil(u) {
   // ── Información de contacto ─────────────────────────────────
   const infoItems = document.querySelectorAll(".pa-info-list .pa-info-item");
   if (infoItems.length >= 4) {
-    // Item 1: Municipio / Departamento
     infoItems[0].querySelector(".pa-info-item__main").textContent = u.municipio;
     infoItems[0].querySelector(".pa-info-item__sub").textContent =
       u.departamento;
 
-    // Item 2: Edad/Activo desde (usamos fecha de creación)
     const fecha = new Date(u.created_at);
     const año = fecha.getFullYear();
     infoItems[1].querySelector(".pa-info-item__main").textContent = "";
     infoItems[1].querySelector(".pa-info-item__sub").textContent =
       `Activo desde ${año}`;
 
-    // Item 3: Correo
     infoItems[2].querySelector(".pa-info-item__main").textContent = u.correo;
-
-    // Item 4: Teléfono
     infoItems[3].querySelector(".pa-info-item__main").textContent =
       `+503 ${u.telefono}`;
   }
@@ -170,17 +189,15 @@ function pintarPerfil(u) {
 
   // ── Portafolio ───────────────────────────────────────────────
   const tabPortafolio = document.getElementById("tab-portafolio");
-  if (tabPortafolio) {
-    if (u.portafolio) {
-      tabPortafolio.innerHTML = `
-        <div class="pa-card">
-          <h2 class="pa-card__title">Portafolio</h2>
-          <p class="pa-card__text">
-            <a href="${u.portafolio}" target="_blank" style="color:var(--orange);">${u.portafolio}</a>
-          </p>
-        </div>
-      `;
-    }
+  if (tabPortafolio && u.portafolio) {
+    tabPortafolio.innerHTML = `
+      <div class="pa-card">
+        <h2 class="pa-card__title">Portafolio</h2>
+        <p class="pa-card__text">
+          <a href="${u.portafolio}" target="_blank" style="color:var(--orange);">${u.portafolio}</a>
+        </p>
+      </div>
+    `;
   }
 
   // ── Etiquetas ────────────────────────────────────────────────
@@ -195,6 +212,11 @@ function pintarPerfil(u) {
 }
 
 function pintarEtiquetas(etiquetas) {
+  // ── Sincronizar estado global para tags-perfil.js ───────────
+  if (typeof TagsState !== "undefined") {
+    TagsState.profileTags = [...etiquetas];
+  }
+
   // ── Barra superior "Mis etiquetas" ──────────────────────────
   const display = document.getElementById("profileTagsDisplay");
   if (display) {
@@ -214,50 +236,46 @@ function pintarEtiquetas(etiquetas) {
   // ── Géneros musicales (card "Sobre mí") ─────────────────────
   const tagsContainer = document.querySelector(".pa-card .pa-tags");
   if (tagsContainer) {
-    if (generos.length > 0) {
-      tagsContainer.innerHTML = generos
-        .map((tag) => `<span class="pa-tag pa-tag--orange">${tag}</span>`)
-        .join("");
-    } else {
-      tagsContainer.innerHTML =
-        '<span style="color:#aaa;font-size:13px;">Sin géneros agregados</span>';
-    }
+    tagsContainer.innerHTML =
+      generos.length > 0
+        ? generos
+            .map((tag) => `<span class="pa-tag pa-tag--orange">${tag}</span>`)
+            .join("")
+        : '<span style="color:#aaa;font-size:13px;">Sin géneros agregados</span>';
   }
 
   // ── Disponibilidad (estilos + eventos) ──────────────────────
   const disponibilidadTags = document.querySelector(".pa-card .pa-tags[style]");
   if (disponibilidadTags) {
     const combinados = [...estilos, ...eventos];
-    if (combinados.length > 0) {
-      disponibilidadTags.innerHTML = combinados
-        .map((tag) => `<span class="pa-tag pa-tag--dark">${tag}</span>`)
-        .join("");
-    } else {
-      disponibilidadTags.innerHTML =
-        '<span style="color:#aaa;font-size:13px;">Sin preferencias agregadas</span>';
-    }
+    disponibilidadTags.innerHTML =
+      combinados.length > 0
+        ? combinados
+            .map((tag) => `<span class="pa-tag pa-tag--dark">${tag}</span>`)
+            .join("")
+        : '<span style="color:#aaa;font-size:13px;">Sin preferencias agregadas</span>';
   }
 
-  // ── Instrumentos (si hay, mostrarlos en barra al 100%) ──────
+  // ── Instrumentos ────────────────────────────────────────────
   const instrumentsGrid = document.querySelector(".pa-instruments-grid");
-  if (instrumentsGrid && instrumentos.length > 0) {
-    instrumentsGrid.innerHTML = instrumentos
-      .map(
-        (instr) => `
-        <div class="pa-instrument">
-          <div class="pa-instrument__header">
-            <span class="pa-instrument__name">${instr}</span>
-          </div>
-          <div class="pa-progress">
-            <div class="pa-progress__bar" style="width: 100%"></div>
-          </div>
-        </div>
-      `,
-      )
-      .join("");
-  } else if (instrumentsGrid) {
+  if (instrumentsGrid) {
     instrumentsGrid.innerHTML =
-      '<p style="color:#aaa;font-size:13px;">Sin instrumentos agregados</p>';
+      instrumentos.length > 0
+        ? instrumentos
+            .map(
+              (instr) => `
+          <div class="pa-instrument">
+            <div class="pa-instrument__header">
+              <span class="pa-instrument__name">${instr}</span>
+            </div>
+            <div class="pa-progress">
+              <div class="pa-progress__bar" style="width: 100%"></div>
+            </div>
+          </div>
+        `,
+            )
+            .join("")
+        : '<p style="color:#aaa;font-size:13px;">Sin instrumentos agregados</p>';
   }
 }
 

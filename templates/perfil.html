@@ -553,6 +553,90 @@
         </div>
       </div>
     </div>
+    <!-- ══ MODAL: Editar Información ══ -->
+    <!-- /modal información -->
+    <div
+      class="tags-modal-backdrop"
+      id="infoModalBackdrop"
+      onclick="closeInfoModal(event)"
+    >
+      <div
+        class="tags-modal"
+        role="dialog"
+        aria-modal="true"
+        style="max-width: 480px"
+      >
+        <div class="tags-modal-header">
+          <div>
+            <div class="tags-modal-title">Editar información</div>
+            <div class="tags-modal-subtitle">
+              Actualiza tus datos de contacto y ubicación
+            </div>
+          </div>
+          <button
+            class="tags-modal-close"
+            onclick="closeInfoModal()"
+            aria-label="Cerrar"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="tags-modal-body">
+          <div class="reg-field">
+            <label>Correo electrónico</label>
+            <input type="email" id="infoCorreo" />
+          </div>
+
+          <div class="reg-field">
+            <label>Teléfono</label>
+            <input type="tel" id="infoTelefono" placeholder="0000-0000" />
+          </div>
+
+          <div class="reg-field">
+            <label>Departamento</label>
+            <div class="reg-select-wrap">
+              <select id="departamento"></select>
+            </div>
+          </div>
+
+          <div class="reg-row">
+            <div class="reg-field">
+              <label>Distrito</label>
+              <div class="reg-select-wrap">
+                <select id="distrito"></select>
+              </div>
+            </div>
+            <div class="reg-field">
+              <label>Municipio</label>
+              <div class="reg-select-wrap">
+                <select id="municipio"></select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tags-modal-footer">
+          <button class="btn-secondary-tags" onclick="closeInfoModal()">
+            Cancelar
+          </button>
+          <button class="btn-primary-tags" onclick="guardarInformacion()">
+            Guardar cambios
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- /modal etiquetas -->
 
     <!-- ══ NAVBAR ══ -->
@@ -640,6 +724,71 @@
         </div>
       </div>
     </nav>
+
+    <!-- ══ MODAL: Editar Sobre mí ══ -->
+    <div
+      class="tags-modal-backdrop"
+      id="bioModalBackdrop"
+      onclick="closeBioModal(event)"
+    >
+      <div
+        class="tags-modal"
+        role="dialog"
+        aria-modal="true"
+        style="max-width: 480px"
+      >
+        <div class="tags-modal-header">
+          <div>
+            <div class="tags-modal-title">Sobre mí</div>
+            <div class="tags-modal-subtitle">
+              Cuéntale al mundo quién eres como artista
+            </div>
+          </div>
+          <button
+            class="tags-modal-close"
+            onclick="closeBioModal()"
+            aria-label="Cerrar"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="tags-modal-body">
+          <div class="reg-field">
+            <label>Biografía</label>
+            <textarea
+              id="bioBiografia"
+              rows="6"
+              maxlength="600"
+              placeholder="Describe tu trayectoria, estilo musical, experiencia..."
+            ></textarea>
+            <span class="bio-counter"
+              ><span id="bioCharCount">0</span> / 600</span
+            >
+          </div>
+        </div>
+
+        <div class="tags-modal-footer">
+          <button class="btn-secondary-tags" onclick="closeBioModal()">
+            Cancelar
+          </button>
+          <button class="btn-primary-tags" onclick="guardarBiografia()">
+            Guardar cambios
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /modal sobre mí -->
 
     <!-- ══ PORTADA ══ -->
     <div class="pa-cover">
@@ -802,7 +951,11 @@
           <div class="pa-col-left">
             <!-- Sobre mí -->
             <div class="pa-card">
-              <button class="pa-card__edit-btn" title="Editar">
+              <button
+                class="pa-card__edit-btn"
+                title="Editar"
+                onclick="abrirBioModal()"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -822,11 +975,11 @@
               <h2 class="pa-card__title" data-es="Sobre mí" data-en="About me">
                 Sobre mí
               </h2>
-              <p class="pa-card__text">
+              <p class="pa-card__text" id="bio-p1">
                 Lorem ipsum dolor sit amet consectetur adipiscing elit quisque
                 faucibus.
               </p>
-              <p class="pa-card__text">
+              <p class="pa-card__text" id="bio-p2">
                 Lorem ipsum dolor sit amet consectetur adipiscing elit quisque
                 faucibus.
               </p>
@@ -936,7 +1089,11 @@
           <div class="pa-col-right">
             <!-- Información -->
             <div class="pa-card">
-              <button class="pa-card__edit-btn" title="Editar">
+              <button
+                class="pa-card__edit-btn"
+                title="Editar"
+                onclick="abrirInfoModal()"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -1089,8 +1246,11 @@
         </div>
       </section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/perfil/perfil-datos.js"></script>
+    <script src="/js/register.js/ubicacion.js"></script>
+    <script src="/js/perfil/perfil-editar.js"></script>
     <script src="/js/perfil/perfil.js"></script>
     <script src="/js/perfil/tags-perfil.js"></script>
     <script src="/js/idioma.js"></script>

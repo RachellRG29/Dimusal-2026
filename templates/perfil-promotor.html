@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIMUSAL – Perfil Promotor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/paleta-colores.css" />
+    <link rel="stylesheet" href="/css/perfil/perfil.css" />
+    <link rel="stylesheet" href="/css/btn-idioma.css" />
+    <style>
+      /* ── Promotor-specific overrides ── */
+      .pa-badge--promotor {
+        background: linear-gradient(135deg, #1e1e1e 0%, #3a3a3a 100%);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 4px 14px;
+        border-radius: 50px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .pa-badge--admin-hint {
+        background: rgba(255, 155, 81, 0.13);
+        color: var(--orange);
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 3px 12px;
+        border-radius: 50px;
+        border: 1.5px solid rgba(255, 155, 81, 0.3);
+        letter-spacing: 0.05em;
+      }
+
+      /* Stats row promotor */
+      .promotor-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin: 0 0 28px;
+      }
+      .promotor-stat {
+        background: #fff;
+        border-radius: 14px;
+        padding: 20px 18px 16px;
+        border: 1.5px solid #ebe9e5;
+        box-shadow: 0 2px 14px rgba(1, 2, 1, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s;
+      }
+      .promotor-stat:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 22px rgba(1, 2, 1, 0.1);
+      }
+      .promotor-stat__dot {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--orange);
+      }
+      .promotor-stat__num {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: var(--black);
+        line-height: 1;
+      }
+      .promotor-stat__label {
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: #888;
+      }
+      .promotor-stat__badge {
+        display: inline-block;
+        margin-top: 6px;
+        padding: 3px 10px;
+        border-radius: 50px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        background: #fff0e6;
+        color: var(--orange);
+      }
+      .promotor-stat__badge.celeste {
+        background: #e8f5ff;
+        color: #4a9fd4;
+      }
+
+      /* Permisos card */
+      .permisos-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .permiso-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: #fafafa;
+        border: 1.5px solid #ebe9e5;
+      }
+      .permiso-item.active {
+        background: #fff6ef;
+        border-color: rgba(255, 155, 81, 0.35);
+      }
+      .permiso-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eee;
+        flex-shrink: 0;
+      }
+      .permiso-item.active .permiso-icon {
+        background: var(--orange);
+      }
+      .permiso-icon svg {
+        width: 16px;
+        height: 16px;
+        color: #fff;
+      }
+      .permiso-item:not(.active) .permiso-icon svg {
+        color: #999;
+      }
+      .permiso-text {
+        flex: 1;
+      }
+      .permiso-name {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--black);
+      }
+      .permiso-desc {
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: #999;
+        margin-top: 1px;
+      }
+      .permiso-check {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .permiso-item.active .permiso-check {
+        background: var(--orange);
+        border-color: var(--orange);
+        color: #fff;
+      }
+      .permiso-check svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      /* Eventos recientes */
+      .eventos-mini-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .evento-mini {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: #fafafa;
+        border: 1.5px solid #ebe9e5;
+        transition: border-color 0.15s;
+      }
+      .evento-mini:hover {
+        border-color: rgba(255, 155, 81, 0.4);
+      }
+      .evento-mini__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .evento-mini__info {
+        flex: 1;
+        min-width: 0;
+      }
+      .evento-mini__name {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--black);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .evento-mini__meta {
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: #999;
+        margin-top: 1px;
+      }
+      .evento-mini__status {
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 50px;
+      }
+      .status-activo {
+        background: #dcfce7;
+        color: #16a34a;
+      }
+      .status-borrador {
+        background: #f3f4f6;
+        color: #6b7280;
+      }
+      .status-pasado {
+        background: #fef3c7;
+        color: #d97706;
+      }
+
+      /* Tabs promotor: Perfil / Mis Eventos / Oportunidades / Reseñas */
+      .pa-col-full {
+        grid-column: 1 / -1;
+      }
+
+      /* empty event */
+      .eventos-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 2.5rem;
+        color: #ccc;
+        text-align: center;
+      }
+      .eventos-empty svg {
+        width: 38px;
+        height: 38px;
+      }
+      .eventos-empty p {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #aaa;
+      }
+
+      @media (max-width: 900px) {
+        .promotor-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .promotor-stats {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══ NAVBAR ══ -->
+    <nav class="pa-navbar">
+      <div class="pa-navbar__left">
+        <button class="pa-btn-back" id="btnBack">
+          <span class="pa-btn-back__arrow">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </span>
+          <span>Regresar</span>
+        </button>
+      </div>
+      <div class="pa-navbar__center">
+        <span class="pa-navbar__logo">DIMUSAL</span>
+      </div>
+      <div class="pa-navbar__right">
+        <a class="btn-idioma btn-idioma-p-artista" id="btnIdioma">
+          <div class="icon-idioma">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              xml:space="preserve"
+            >
+              <path
+                style="fill: #fff"
+                d="M185.802 105.689h277.06c21.364 0 38.688 17.32 38.688 38.689V462.86c.001 21.366-17.318 38.69-38.687 38.69H280.479z"
+              />
+              <path
+                style="fill: #0084ff"
+                d="m361.15 406.306-80.671 95.239-31.69-95.239z"
+              />
+              <path
+                style="fill: #10bafc"
+                d="M361.15 406.306H49.137c-21.364 0-38.688-17.32-38.688-38.69V49.138c0-21.365 17.32-38.689 38.688-38.689h182.387z"
+              />
+              <path
+                d="M462.863 95.24H270.286L241.455 7.197A10.45 10.45 0 0 0 231.524 0H49.137C22.043 0 0 22.043 0 49.138v318.478c0 27.095 22.043 49.138 49.137 49.138h192.115l29.311 88.095a10.45 10.45 0 0 0 9.914 7.15h182.384C489.957 512 512 489.957 512 462.862V144.38c0-27.095-22.043-49.14-49.137-49.14"
+              />
+            </svg>
+          </div>
+          <span class="texto-idioma">ES</span>
+        </a>
+        <div class="pa-navbar__user" id="userMenu">
+          <span>Hola, <strong>Promotor</strong></span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="16"
+            height="16"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+          <div class="pa-user-dropdown" id="userDropdown">
+            <a href="#">Configuración</a>
+            <a href="#" class="logout">Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ══ PORTADA ══ -->
+    <div class="pa-cover">
+      <img
+        class="pa-cover__img"
+        src="/images/homepage/banner-piano.png"
+        alt="Portada"
+        id="coverImg"
+      />
+      <button class="pa-cover__edit" id="editCover" title="Editar portada">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+          />
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+      </button>
+      <input type="file" id="coverInput" accept="image/*" hidden />
+    </div>
+
+    <!-- ══ HEADER PERFIL ══ -->
+    <div class="pa-profile-header">
+      <div class="pa-profile-header__inner">
+        <div class="pa-avatar-wrap">
+          <img
+            class="pa-avatar"
+            src="/images/homepage/piano-girl-inicio.png"
+            alt="Avatar promotor"
+            id="avatarImg"
+          />
+          <button class="pa-avatar__edit" id="editAvatar" title="Cambiar foto">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 13V17C21 18.1046 20.1046 19 19 19H9M5 19C3.89543 19 3 18.1046 3 17V9C3 7.89543 3.89543 7 5 7H7.5C8.05228 7 8.5 6.55228 8.5 6C8.5 5.44772 8.94772 5 9.5 5H14.5C15.0523 5 15.5 5.44772 15.5 6C15.5 6.55228 15.9477 7 16.5 7H19C20.1046 7 21 7.89543 21 9M9 13C9 14.6569 10.3431 16 12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10"
+                stroke="#fff"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <input type="file" id="avatarInput" accept="image/*" hidden />
+        </div>
+        <div class="pa-profile-header__info">
+          <h1 class="pa-profile-header__name">Nombre Promotor</h1>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              flex-wrap: wrap;
+              margin-top: 6px;
+            "
+          >
+            <span class="pa-badge--promotor">Promotor</span>
+            <span class="pa-badge--admin-hint">⚡ Medio administrador</span>
+          </div>
+          <p class="pa-profile-header__meta" style="margin-top: 8px">
+            Departamento, Municipio &nbsp;·&nbsp; Organiza eventos y conecta
+            artistas
+          </p>
+        </div>
+      </div>
+
+      <!-- tabs -->
+      <div class="pa-tabs">
+        <button class="pa-tab active" data-tab="perfil">Perfil</button>
+        <button class="pa-tab" data-tab="mis-eventos">Mis Eventos</button>
+        <button class="pa-tab" data-tab="oportunidades">Oportunidades</button>
+        <button class="pa-tab" data-tab="resenas">Reseñas</button>
+      </div>
+    </div>
+
+    <!-- ══ CONTENIDO TABS ══ -->
+    <main class="pa-main">
+      <!-- ── TAB: PERFIL ── -->
+      <section class="pa-tab-content active" id="tab-perfil">
+        <!-- Stats rápidas -->
+        <div class="promotor-stats">
+          <div class="promotor-stat">
+            <div class="promotor-stat__dot"></div>
+            <div class="promotor-stat__num">0</div>
+            <div class="promotor-stat__label">Eventos creados</div>
+            <span class="promotor-stat__badge">¡Crea tu primero!</span>
+          </div>
+          <div class="promotor-stat">
+            <div class="promotor-stat__dot" style="background: #4a9fd4"></div>
+            <div class="promotor-stat__num">0</div>
+            <div class="promotor-stat__label">Oportunidades publicadas</div>
+            <span class="promotor-stat__badge celeste">Nuevo</span>
+          </div>
+          <div class="promotor-stat">
+            <div class="promotor-stat__dot" style="background: #22c55e"></div>
+            <div class="promotor-stat__num">0</div>
+            <div class="promotor-stat__label">Artistas contactados</div>
+            <span
+              class="promotor-stat__badge"
+              style="background: #dcfce7; color: #16a34a"
+              >Conecta</span
+            >
+          </div>
+          <div class="promotor-stat">
+            <div class="promotor-stat__dot" style="background: #a855f7"></div>
+            <div class="promotor-stat__num">0</div>
+            <div class="promotor-stat__label">Reseñas recibidas</div>
+            <span
+              class="promotor-stat__badge"
+              style="background: #faf5ff; color: #a855f7"
+              >Pronto</span
+            >
+          </div>
+        </div>
+
+        <div class="pa-grid">
+          <!-- columna izquierda -->
+          <div class="pa-col-left">
+            <!-- Sobre mí -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Sobre mí</h2>
+              <p class="pa-card__text">
+                Promotor musical con experiencia organizando eventos en El
+                Salvador. Especializado en conectar artistas locales con
+                escenarios y oportunidades de crecimiento.
+              </p>
+              <hr class="pa-divider" />
+              <p class="pa-card__label">Tipos de evento que organizo</p>
+              <div class="pa-tags">
+                <span class="pa-tag pa-tag--orange">Festivales</span>
+                <span class="pa-tag pa-tag--dark">Tocatas</span>
+                <span class="pa-tag pa-tag--dark">Corporativos</span>
+                <span class="pa-tag pa-tag--dark">Culturales</span>
+              </div>
+            </div>
+
+            <!-- Permisos / Rol -->
+            <div class="pa-card">
+              <h2
+                class="pa-card__title"
+                style="display: flex; align-items: center; gap: 8px"
+              >
+                Permisos de cuenta
+                <span class="pa-badge--admin-hint">Medio administrador</span>
+              </h2>
+              <p
+                class="pa-card__text"
+                style="font-size: 0.8rem; color: #999; margin-bottom: 12px"
+              >
+                Como promotor tienes acceso a herramientas de gestión de eventos
+                y publicación de oportunidades.
+              </p>
+              <div class="permisos-grid">
+                <div class="permiso-item active">
+                  <div class="permiso-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                  </div>
+                  <div class="permiso-text">
+                    <div class="permiso-name">Crear eventos</div>
+                    <div class="permiso-desc">
+                      Publica eventos para artistas y el público
+                    </div>
+                  </div>
+                  <div class="permiso-check">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="permiso-item active">
+                  <div class="permiso-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                  </div>
+                  <div class="permiso-text">
+                    <div class="permiso-name">Publicar oportunidades</div>
+                    <div class="permiso-desc">
+                      Crea convocatorias para artistas
+                    </div>
+                  </div>
+                  <div class="permiso-check">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="permiso-item active">
+                  <div class="permiso-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      />
+                    </svg>
+                  </div>
+                  <div class="permiso-text">
+                    <div class="permiso-name">Mensajería con artistas</div>
+                    <div class="permiso-desc">
+                      Contacta directamente a los artistas
+                    </div>
+                  </div>
+                  <div class="permiso-check">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="permiso-item">
+                  <div class="permiso-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </div>
+                  <div class="permiso-text">
+                    <div class="permiso-name">Gestión de usuarios</div>
+                    <div class="permiso-desc">
+                      Disponible solo para administradores
+                    </div>
+                  </div>
+                  <div class="permiso-check"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /col-left -->
+
+          <!-- columna derecha -->
+          <div class="pa-col-right">
+            <!-- Información -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Información</h2>
+              <div class="pa-info-list">
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">Municipio</span>
+                  <span class="pa-info-item__sub">Departamento</span>
+                </div>
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">correo@correo.com</span>
+                </div>
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">+503 0000-0000</span>
+                </div>
+                <div class="pa-info-item">
+                  <span class="pa-info-item__main">Activo desde 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Disponibilidad -->
+            <div class="pa-card">
+              <button class="pa-card__edit-btn" title="Editar">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+              </button>
+              <h2 class="pa-card__title">Disponibilidad</h2>
+              <p class="pa-disponible">
+                <span class="pa-disponible__dot"></span>
+                Disponible para organizar eventos
+              </p>
+              <div class="pa-tags" style="margin-top: 0.75rem">
+                <span class="pa-tag pa-tag--dark">Festivales</span>
+                <span class="pa-tag pa-tag--dark">Tocatas</span>
+                <span class="pa-tag pa-tag--dark">Residencias</span>
+              </div>
+            </div>
+
+            <!-- Eventos recientes -->
+            <div class="pa-card">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 12px;
+                "
+              >
+                <h2 class="pa-card__title" style="margin-bottom: 0">
+                  Eventos recientes
+                </h2>
+                <a
+                  href="#"
+                  onclick="
+                    document.querySelector('[data-tab=mis-eventos]').click();
+                    return false;
+                  "
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: var(--orange);
+                    text-decoration: none;
+                  "
+                  >Ver todos</a
+                >
+              </div>
+              <div class="eventos-empty">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <p>Aún no has creado eventos</p>
+                <a
+                  href="/dashboard-promotor.html"
+                  style="
+                    font-size: 0.78rem;
+                    font-weight: 600;
+                    color: var(--orange);
+                    text-decoration: none;
+                  "
+                  >Ir a crear evento →</a
+                >
+              </div>
+            </div>
+          </div>
+          <!-- /col-right -->
+        </div>
+      </section>
+
+      <!-- ── TAB: MIS EVENTOS ── -->
+      <section class="pa-tab-content" id="tab-mis-eventos">
+        <div class="pa-card" style="padding: 28px">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <div>
+              <h2 class="pa-card__title">Mis Eventos</h2>
+              <p class="pa-card__text" style="margin-top: 4px">
+                Todos los eventos que has creado en DIMUSAL
+              </p>
+            </div>
+            <a
+              href="/dashboard-promotor.html"
+              style="
+                padding: 9px 20px;
+                border-radius: 50px;
+                background: var(--orange);
+                color: #fff;
+                font-family: &quot;Syne&quot;, sans-serif;
+                font-size: 0.82rem;
+                font-weight: 600;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+              "
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                style="width: 14px; height: 14px"
+              >
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Crear evento
+            </a>
+          </div>
+          <div class="eventos-empty" style="padding: 3rem 0">
+            <svg
+              viewBox="0 0 256 256"
+              style="width: 40px; height: 40px; color: #ddd"
+              fill="currentColor"
+            >
+              <path
+                d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-48-56a8,8,0,0,1-8,8H136v16a8,8,0,0,1-16,0V160H104a8,8,0,0,1,0-16h16V128a8,8,0,0,1,16,0v16h16A8,8,0,0,1,160,152Z"
+              />
+            </svg>
+            <p>No has creado ningún evento todavía</p>
+            <a
+              href="/dashboard-promotor.html"
+              style="
+                margin-top: 4px;
+                padding: 9px 20px;
+                border-radius: 50px;
+                background: var(--orange);
+                color: #fff;
+                font-family: &quot;Syne&quot;, sans-serif;
+                font-size: 0.82rem;
+                font-weight: 600;
+                text-decoration: none;
+              "
+              >Crear mi primer evento</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TAB: OPORTUNIDADES ── -->
+      <section class="pa-tab-content" id="tab-oportunidades">
+        <div class="pa-card pa-card--empty">
+          <p>Las oportunidades publicadas aparecerán aquí.</p>
+        </div>
+      </section>
+
+      <!-- ── TAB: RESEÑAS ── -->
+      <section class="pa-tab-content" id="tab-resenas">
+        <div class="pa-card pa-card--empty">
+          <p>Las reseñas del promotor aparecerán aquí.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Tabs
+      document.querySelectorAll(".pa-tab").forEach((tab) => {
+        tab.addEventListener("click", function () {
+          document
+            .querySelectorAll(".pa-tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".pa-tab-content")
+            .forEach((c) => c.classList.remove("active"));
+          this.classList.add("active");
+          const target = document.getElementById("tab-" + this.dataset.tab);
+          if (target) target.classList.add("active");
+        });
+      });
+
+      // Back button
+      document
+        .getElementById("btnBack")
+        .addEventListener("click", () => history.back());
+
+      // Avatar / cover edit
+      document
+        .getElementById("editAvatar")
+        .addEventListener("click", () =>
+          document.getElementById("avatarInput").click(),
+        );
+      document
+        .getElementById("avatarInput")
+        .addEventListener("change", function () {
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) =>
+              (document.getElementById("avatarImg").src = e.target.result);
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+      document
+        .getElementById("editCover")
+        .addEventListener("click", () =>
+          document.getElementById("coverInput").click(),
+        );
+      document
+        .getElementById("coverInput")
+        .addEventListener("change", function () {
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) =>
+              (document.getElementById("coverImg").src = e.target.result);
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+
+      // User dropdown
+      document
+        .getElementById("userMenu")
+        .addEventListener("click", function (e) {
+          document.getElementById("userDropdown").classList.toggle("open");
+          e.stopPropagation();
+        });
+      document.addEventListener("click", () =>
+        document.getElementById("userDropdown").classList.remove("open"),
+      );
+    </script>
+    <script src="/js/idioma.js"></script>
+  </body>
+</html>
