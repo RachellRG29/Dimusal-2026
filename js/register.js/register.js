@@ -699,7 +699,7 @@ document
     });
 
     try {
-      const res = await fetch("http://localhost:3000/api/enviar-codigo", {
+      const res = await fetch("/api/enviar-codigo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -882,14 +882,11 @@ document
     });
 
     try {
-      const resVerif = await fetch(
-        "http://localhost:3000/api/verificar-codigo",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ correo: datos.correo, codigo }),
-        },
-      );
+      const resVerif = await fetch("/api/verificar-codigo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo: datos.correo, codigo }),
+      });
       const dataVerif = await resVerif.json();
 
       if (!dataVerif.success) {
@@ -926,7 +923,7 @@ document
         formData.append("foto_logo", window._reg_foto_logo);
       if (window._reg_portada) formData.append("portada", window._reg_portada);
 
-      const resReg = await fetch("http://localhost:3000/api/register", {
+      const resReg = await fetch("/api/register", {
         method: "POST",
         body: formData,
       });
@@ -1006,7 +1003,7 @@ document
     });
 
     try {
-      const res = await fetch("http://localhost:3000/api/enviar-codigo", {
+      const res = await fetch("/api/enviar-codigo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
