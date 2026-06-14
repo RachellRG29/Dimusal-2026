@@ -29,32 +29,6 @@ document
   .getElementById("btnBack")
   .addEventListener("click", () => history.back());
 
-/* ── Cambiar portada ── */
-const editCover = document.getElementById("editCover");
-const coverInput = document.getElementById("coverInput");
-const coverImg = document.getElementById("coverImg");
-
-editCover.addEventListener("click", () => coverInput.click());
-coverInput.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const url = URL.createObjectURL(file);
-  coverImg.src = url;
-});
-
-/* ── Cambiar avatar ── */
-const editAvatar = document.getElementById("editAvatar");
-const avatarInput = document.getElementById("avatarInput");
-const avatarImg = document.getElementById("avatarImg");
-
-editAvatar.addEventListener("click", () => avatarInput.click());
-avatarInput.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const url = URL.createObjectURL(file);
-  avatarImg.src = url;
-});
-
 /* ── Animar barras de progreso al cargar ── */
 function animateBars() {
   document.querySelectorAll(".pa-progress__bar").forEach((bar) => {

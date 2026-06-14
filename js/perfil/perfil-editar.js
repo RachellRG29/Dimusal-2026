@@ -2,14 +2,15 @@
 //  DIMUSAL – perfil-editar.js
 //  Modales de edición del perfil
 // ═══════════════════════════════════════════════════════════════
+
 // ── Variable global para traducción de biografía ──
 let bioOriginal = "";
+
 // ── Abrir modal de información ──────────────────────────────────
 function abrirInfoModal() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   if (!usuario.id) return;
 
-  // Traer datos actuales del usuario
   fetch(`/api/usuario/${usuario.id}`)
     .then((res) => res.json())
     .then((data) => {
@@ -19,13 +20,9 @@ function abrirInfoModal() {
       document.getElementById("infoCorreo").value = u.correo || "";
       document.getElementById("infoTelefono").value = u.telefono || "";
 
-      // Inicializar selects de ubicación si no se han llenado
       const selDepto = document.getElementById("departamento");
-      if (selDepto.options.length <= 1) {
-        initUbicacionSelects();
-      }
+      if (selDepto.options.length <= 1) initUbicacionSelects();
 
-      // Preseleccionar departamento, distrito y municipio
       selDepto.value = u.departamento || "";
       selDepto.dispatchEvent(new Event("change"));
 
@@ -35,10 +32,8 @@ function abrirInfoModal() {
           selDistrito.value = u.distrito;
           selDistrito.dispatchEvent(new Event("change"));
         }
-
         setTimeout(() => {
-          const selMunicipio = document.getElementById("municipio");
-          selMunicipio.value = u.municipio || "";
+          document.getElementById("municipio").value = u.municipio || "";
         }, 100);
       }, 100);
     });
@@ -51,7 +46,6 @@ function closeInfoModal(e) {
   document.getElementById("infoModalBackdrop").classList.remove("open");
 }
 
-// ── Guardar información ──────────────────────────────────────────
 async function guardarInformacion() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   if (!usuario.id) return;
@@ -87,17 +81,18 @@ async function guardarInformacion() {
     const data = await res.json();
 
     if (data.success) {
-      await Swal.fire({
+      closeInfoModal();
+      cargarPerfil();
+      Swal.fire({
         icon: "success",
         title: "¡Actualizado!",
         text: "Tu información fue guardada correctamente.",
-        confirmButtonColor: "#f97316",
-        timer: 2000,
-        timerProgressBar: true,
+        toast: true,
+        position: "bottom-end",
         showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
       });
-      closeInfoModal();
-      cargarPerfil(); // recargar datos del perfil
     } else {
       Swal.fire({
         icon: "error",
@@ -139,18 +134,6 @@ function closeBioModal(e) {
   document.getElementById("bioModalBackdrop").classList.remove("open");
 }
 
-// Contador de caracteres
-document.addEventListener("DOMContentLoaded", () => {
-  const textarea = document.getElementById("bioBiografia");
-  if (textarea) {
-    textarea.addEventListener("input", () => {
-      document.getElementById("bioCharCount").textContent =
-        textarea.value.length;
-    });
-  }
-});
-
-// ── Guardar biografía ───────────────────────────────────────────
 async function guardarBiografia() {
   const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
   if (!usuario.id) return;
@@ -166,17 +149,18 @@ async function guardarBiografia() {
     const data = await res.json();
 
     if (data.success) {
-      await Swal.fire({
+      closeBioModal();
+      cargarPerfil();
+      Swal.fire({
         icon: "success",
         title: "¡Actualizado!",
         text: "Tu biografía fue guardada correctamente.",
-        confirmButtonColor: "#f97316",
-        timer: 2000,
-        timerProgressBar: true,
+        toast: true,
+        position: "bottom-end",
         showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
       });
-      closeBioModal();
-      cargarPerfil();
     } else {
       Swal.fire({
         icon: "error",
@@ -195,6 +179,278 @@ async function guardarBiografia() {
   }
 }
 
+// ── Modal Instrumentos ──────────────────────────────────────────
+function abrirInstrModal() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  if (!usuario.id) return;
+
+  fetch(`/api/usuario/${usuario.id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success) return;
+      const u = data.usuario;
+
+      let etiquetas = [];
+      try {
+        etiquetas = JSON.parse(u.etiquetas || "[]");
+      } catch (e) {}
+
+      let niveles = {};
+      try {
+        niveles = JSON.parse(u.instrumentos_niveles || "{}");
+      } catch (e) {}
+
+      const TAGS_INSTRUMENTOS = [
+        "Guitarra",
+        "Piano",
+        "Batería",
+        "Bajo",
+        "Voz",
+        "Violín",
+        "Saxofón",
+        "Trompeta",
+        "Teclado",
+        "Percusión",
+        "DJ / Producción",
+        "Flauta",
+      ];
+
+      const instrumentos = etiquetas.filter((t) =>
+        TAGS_INSTRUMENTOS.includes(t),
+      );
+      const body = document.getElementById("instrModalBody");
+
+      if (instrumentos.length === 0) {
+        body.innerHTML = `<p style="color:#aaa;font-size:13px;">
+          No tienes instrumentos en tus etiquetas.
+          Agrégalos desde "Editar etiquetas" primero.
+        </p>`;
+      } else {
+        body.innerHTML = instrumentos
+          .map(
+            (instr) => `
+          <div class="reg-field">
+            <label>${instr}</label>
+            <div class="reg-select-wrap">
+              <select id="nivel-${instr.replace(/\s|\//g, "_")}">
+                <option value="">Sin nivel</option>
+                <option value="Básico"     ${niveles[instr] === "Básico" ? "selected" : ""}>Básico</option>
+                <option value="Intermedio" ${niveles[instr] === "Intermedio" ? "selected" : ""}>Intermedio</option>
+                <option value="Avanzado"   ${niveles[instr] === "Avanzado" ? "selected" : ""}>Avanzado</option>
+              </select>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+    });
+
+  document.getElementById("instrModalBackdrop").classList.add("open");
+}
+
+function closeInstrModal(e) {
+  if (e && e.target.id !== "instrModalBackdrop") return;
+  document.getElementById("instrModalBackdrop").classList.remove("open");
+}
+
+async function guardarNivelesInstrumentos() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  if (!usuario.id) return;
+
+  const TAGS_INSTRUMENTOS = [
+    "Guitarra",
+    "Piano",
+    "Batería",
+    "Bajo",
+    "Voz",
+    "Violín",
+    "Saxofón",
+    "Trompeta",
+    "Teclado",
+    "Percusión",
+    "DJ / Producción",
+    "Flauta",
+  ];
+
+  const niveles = {};
+  TAGS_INSTRUMENTOS.forEach((instr) => {
+    const sel = document.getElementById(
+      `nivel-${instr.replace(/\s|\//g, "_")}`,
+    );
+    if (sel && sel.value) niveles[instr] = sel.value;
+  });
+
+  try {
+    const res = await fetch(`/api/usuario/${usuario.id}/instrumentos-niveles`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ instrumentos_niveles: niveles }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      closeInstrModal();
+      cargarPerfil();
+      Swal.fire({
+        icon: "success",
+        title: "¡Actualizado!",
+        text: "Niveles guardados correctamente.",
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: data.mensaje,
+        confirmButtonColor: "#f97316",
+      });
+    }
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Sin conexión",
+      text: "No se pudo conectar con el servidor.",
+      confirmButtonColor: "#f97316",
+    });
+  }
+}
+
+// ── Modal Redes Sociales ────────────────────────────────────────
+function abrirRedesModal() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  if (!usuario.id) return;
+
+  fetch(`/api/usuario/${usuario.id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success) return;
+      const u = data.usuario;
+      document.getElementById("redesSpotify").value = u.spotify || "";
+      document.getElementById("redesInstagram").value = u.instagram || "";
+      document.getElementById("redesYoutube").value = u.youtube || "";
+      document.getElementById("redesTiktok").value = u.tiktok || "";
+    });
+
+  document.getElementById("redesModalBackdrop").classList.add("open");
+}
+
+function closeRedesModal(e) {
+  if (e && e.target.id !== "redesModalBackdrop") return;
+  document.getElementById("redesModalBackdrop").classList.remove("open");
+}
+
+async function guardarRedes() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  if (!usuario.id) return;
+
+  const spotify = document.getElementById("redesSpotify").value.trim();
+  const instagram = document.getElementById("redesInstagram").value.trim();
+  const youtube = document.getElementById("redesYoutube").value.trim();
+  const tiktok = document.getElementById("redesTiktok").value.trim();
+
+  try {
+    const res = await fetch(`/api/usuario/${usuario.id}/redes`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ spotify, instagram, youtube, tiktok }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      closeRedesModal();
+      cargarPerfil();
+      Swal.fire({
+        icon: "success",
+        title: "¡Actualizado!",
+        text: "Redes sociales guardadas correctamente.",
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: data.mensaje,
+        confirmButtonColor: "#f97316",
+      });
+    }
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Sin conexión",
+      text: "No se pudo conectar con el servidor.",
+      confirmButtonColor: "#f97316",
+    });
+  }
+}
+
+// ── Toggle Disponibilidad ───────────────────────────────────────
+async function toggleDisponibilidad() {
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+  if (!usuario.id) return;
+
+  const res = await fetch(`/api/usuario/${usuario.id}`);
+  const data = await res.json();
+  if (!data.success) return;
+
+  const actualDisponible = data.usuario.disponible !== false;
+  const nuevoEstado = !actualDisponible;
+  const textoEstado = nuevoEstado
+    ? "Disponible para contratación"
+    : "No disponible";
+
+  const confirm = await Swal.fire({
+    icon: "question",
+    title: "Cambiar disponibilidad",
+    text: `¿Cambiar a "${textoEstado}"?`,
+    showCancelButton: true,
+    confirmButtonText: "Sí, cambiar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#f97316",
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  try {
+    const putRes = await fetch(`/api/usuario/${usuario.id}/disponibilidad`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ disponible: nuevoEstado }),
+    });
+    const putData = await putRes.json();
+
+    if (putData.success) {
+      cargarPerfil();
+      Swal.fire({
+        icon: "success",
+        title: "¡Actualizado!",
+        text: `Ahora apareces como "${textoEstado}"`,
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+    }
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Sin conexión",
+      text: "No se pudo conectar con el servidor.",
+      confirmButtonColor: "#f97316",
+    });
+  }
+}
+
+// ── Traducir biografía ──────────────────────────────────────────
 async function traducirBiografia(texto, idiomaDestino) {
   const bio1 = document.getElementById("bio-p1");
   const bio2 = document.getElementById("bio-p2");
@@ -222,3 +478,134 @@ async function traducirBiografia(texto, idiomaDestino) {
     console.error("Error al traducir:", err);
   }
 }
+
+// ── Imágenes: portada y avatar ──────────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  // Contador biografía
+  const textarea = document.getElementById("bioBiografia");
+  if (textarea) {
+    textarea.addEventListener("input", () => {
+      document.getElementById("bioCharCount").textContent =
+        textarea.value.length;
+    });
+  }
+
+  // Portada
+  const editCover = document.getElementById("editCover");
+  const coverInput = document.getElementById("coverInput");
+  const coverImg = document.getElementById("coverImg");
+
+  if (editCover) editCover.addEventListener("click", () => coverInput.click());
+
+  if (coverInput) {
+    coverInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+      if (!usuario.id) return;
+
+      coverImg.src = URL.createObjectURL(file);
+
+      const formData = new FormData();
+      formData.append("portada", file);
+
+      try {
+        const res = await fetch(`/api/usuario/${usuario.id}/portada`, {
+          method: "PUT",
+          body: formData,
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Actualizado!",
+            text: "Portada actualizada correctamente.",
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.mensaje,
+            confirmButtonColor: "#f97316",
+          });
+        }
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Sin conexión",
+          text: "No se pudo conectar con el servidor.",
+          confirmButtonColor: "#f97316",
+        });
+      }
+
+      coverInput.value = "";
+    });
+  }
+
+  // Avatar
+  const editAvatar = document.getElementById("editAvatar");
+  const avatarInput = document.getElementById("avatarInput");
+  const avatarImg = document.getElementById("avatarImg");
+
+  if (editAvatar)
+    editAvatar.addEventListener("click", () => avatarInput.click());
+
+  if (avatarInput) {
+    avatarInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+      if (!usuario.id) return;
+
+      avatarImg.src = URL.createObjectURL(file);
+
+      const formData = new FormData();
+      formData.append("foto_logo", file);
+
+      try {
+        const res = await fetch(`/api/usuario/${usuario.id}/foto-logo`, {
+          method: "PUT",
+          body: formData,
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Actualizado!",
+            text: "Foto de perfil actualizada correctamente.",
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: data.mensaje,
+            confirmButtonColor: "#f97316",
+          });
+        }
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Sin conexión",
+          text: "No se pudo conectar con el servidor.",
+          confirmButtonColor: "#f97316",
+        });
+      }
+
+      avatarInput.value = "";
+    });
+  }
+});

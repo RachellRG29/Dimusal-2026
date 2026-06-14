@@ -129,6 +129,15 @@ function pintarPerfil(u) {
     avatarImg.src = `/${u.foto_logo}`;
   }
 
+  // ── Disponibilidad ───────────────────────────────────────────
+  const disponibleEl = document.querySelector(".pa-disponible");
+  if (disponibleEl) {
+    const disponible = u.disponible !== false;
+    disponibleEl.innerHTML = `
+    <span class="pa-disponible__dot" style="background:${disponible ? "#22c55e" : "#ef4444"}"></span>
+    ${disponible ? "Disponible para contratación" : "No disponible"}
+  `;
+  }
   const coverImg = document.getElementById("coverImg");
   if (coverImg && u.portada) {
     coverImg.src = `/${u.portada}`;
@@ -251,31 +260,51 @@ function pintarEtiquetas(etiquetas) {
     disponibilidadTags.innerHTML =
       combinados.length > 0
         ? combinados
-            .map((tag) => `<span class="pa-tag pa-tag--dark">${tag}</span>`)
+            .map((tag) => `<span class="pa-tag pa-tag--orange">${tag}</span>`)
             .join("")
         : '<span style="color:#aaa;font-size:13px;">Sin preferencias agregadas</span>';
   }
-
   // ── Instrumentos ────────────────────────────────────────────
   const instrumentsGrid = document.querySelector(".pa-instruments-grid");
   if (instrumentsGrid) {
-    instrumentsGrid.innerHTML =
-      instrumentos.length > 0
-        ? instrumentos
-            .map(
-              (instr) => `
-          <div class="pa-instrument">
-            <div class="pa-instrument__header">
-              <span class="pa-instrument__name">${instr}</span>
-            </div>
-            <div class="pa-progress">
-              <div class="pa-progress__bar" style="width: 100%"></div>
-            </div>
-          </div>
-        `,
-            )
-            .join("")
-        : '<p style="color:#aaa;font-size:13px;">Sin instrumentos agregados</p>';
+    if (instrumentos.length > 0) {
+      const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+      fetch(`/api/usuario/${usuario.id}`)
+        .then((r) => r.json())
+        .then((d) => {
+          let niveles = {};
+          try {
+            niveles = JSON.parse(d.usuario.instrumentos_niveles || "{}");
+          } catch (e) {}
+
+          const nivelAncho = {
+            Básico: "30%",
+            Intermedio: "55%",
+            Avanzado: "85%",
+          };
+
+          instrumentsGrid.innerHTML = instrumentos
+            .map((instr) => {
+              const nivel = niveles[instr] || "";
+              const ancho = nivelAncho[nivel] || "100%";
+              return `
+              <div class="pa-instrument">
+                <div class="pa-instrument__header">
+                  <span class="pa-instrument__name">${instr}</span>
+                  ${nivel ? `<span class="pa-instrument__level">${nivel}</span>` : ""}
+                </div>
+                <div class="pa-progress">
+                  <div class="pa-progress__bar" style="width: ${ancho}"></div>
+                </div>
+              </div>
+            `;
+            })
+            .join("");
+        });
+    } else {
+      instrumentsGrid.innerHTML =
+        '<p style="color:#aaa;font-size:13px;">Sin instrumentos agregados</p>';
+    }
   }
 }
 

@@ -79,15 +79,32 @@ function addCustomTag() {
   const raw = input.value.trim();
   if (!raw) return;
   const tag = raw.charAt(0).toUpperCase() + raw.slice(1);
+
   if (TagsState.profileTags.includes(tag)) {
-    showToast("Esa etiqueta ya fue agregada");
+    Swal.fire({
+      icon: "warning",
+      text: "Esa etiqueta ya fue agregada",
+      toast: true,
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 2000,
+    });
     input.value = "";
     return;
   }
+
   if (TagsState.profileTags.length >= 20) {
-    showToast("Máximo 20 etiquetas por perfil");
+    Swal.fire({
+      icon: "warning",
+      text: "Máximo 20 etiquetas por perfil",
+      toast: true,
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 2000,
+    });
     return;
   }
+
   TagsState.profileTags.push(tag);
   input.value = "";
   renderCustomChipsInModal();
@@ -96,7 +113,7 @@ function addCustomTag() {
 
 function renderCustomChipsInModal() {
   const container = document.getElementById("group-custom");
-  if (!container) return; // si el bloque está comentado en el HTML, no falla
+  if (!container) return;
 
   const predefined = Array.from(
     document.querySelectorAll('.tag-chip[data-tag]:not([data-group="custom"])'),
@@ -138,13 +155,32 @@ async function saveProfileTags() {
 
     if (data.success) {
       _doCloseModal();
-      showToast("Etiquetas guardadas correctamente ✓");
       cargarPerfil();
+      Swal.fire({
+        icon: "success",
+        title: "¡Actualizado!",
+        text: "Etiquetas guardadas correctamente.",
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
     } else {
-      showToast("Error al guardar etiquetas");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudieron guardar las etiquetas.",
+        confirmButtonColor: "#f97316",
+      });
     }
   } catch (err) {
-    showToast("Sin conexión con el servidor");
+    Swal.fire({
+      icon: "error",
+      title: "Sin conexión",
+      text: "No se pudo conectar con el servidor.",
+      confirmButtonColor: "#f97316",
+    });
   }
 }
 
@@ -167,22 +203,4 @@ function renderProfileTagsBar() {
     (extra > 0
       ? `<span class="profile-tag-pill" style="background:#f5f3f0;color:#888;border-color:#e0ddd8">+${extra} más</span>`
       : "");
-}
-
-// ── Toast ────────────────────────────────────────
-function showToast(message) {
-  const existing = document.querySelector(".tags-toast");
-  if (existing) existing.remove();
-  const toast = document.createElement("div");
-  toast.className = "tags-toast";
-  toast.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    ${message}`;
-  document.body.appendChild(toast);
-  setTimeout(() => {
-    toast.classList.add("out");
-    setTimeout(() => toast.remove(), 300);
-  }, 2800);
 }

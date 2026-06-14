@@ -315,7 +315,7 @@ app.get("/api/usuario/:id", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT id, nombre_completo, telefono, dui, correo, departamento, distrito, municipio, tipo, nombre_artistico, portafolio, foto_logo, portada, spotify, instagram, youtube, tiktok, objetivo, etiquetas, biografia, created_at FROM users WHERE id = $1",
+      "SELECT id, nombre_completo, telefono, dui, correo, departamento, distrito, municipio, tipo, nombre_artistico, portafolio, foto_logo, portada, spotify, instagram, youtube, tiktok, objetivo, etiquetas, biografia, instrumentos_niveles, disponible, created_at FROM users WHERE id = $1",
       [id],
     );
 
@@ -415,7 +415,7 @@ app.put("/api/usuario/:id/biografia", async (req, res) => {
 });
 
 // ════════════════════════════════════════════════════════════════
-//  TRADUCIR TEXTO (proxy hacia Anthropic)
+//  TRADUCIR TEXTO (Google Translate gratuito)
 // ════════════════════════════════════════════════════════════════
 app.post("/api/traducir", async (req, res) => {
   const { texto, idioma } = req.body;
@@ -423,33 +423,165 @@ app.post("/api/traducir", async (req, res) => {
   if (idioma === "es") return res.json({ traduccion: texto });
 
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 1000,
-        messages: [
-          {
-            role: "user",
-            content: `Translate the following artist biography to English. Return only the translated text, no explanations:\n\n${texto}`,
-          },
-        ],
-      }),
-    });
-
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=en&dt=t&q=${encodeURIComponent(texto)}`;
+    const response = await fetch(url);
     const data = await response.json();
-    const traduccion = data.content?.[0]?.text || texto;
+
+    // Google devuelve un array anidado, unimos todos los fragmentos
+    const traduccion = data[0].map((item) => item[0]).join("") || texto;
     res.json({ traduccion });
   } catch (err) {
     console.error("Error al traducir:", err);
     res.json({ traduccion: texto });
   }
 });
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR NIVELES DE INSTRUMENTOS
+// ════════════════════════════════════════════════════════════════
+app.put("/api/usuario/:id/instrumentos-niveles", async (req, res) => {
+  const { id } = req.params;
+  const { instrumentos_niveles } = req.body;
+
+  try {
+    await pool.query(
+      "UPDATE users SET instrumentos_niveles = $1 WHERE id = $2",
+      [JSON.stringify(instrumentos_niveles || {}), id],
+    );
+    res.json({ success: true, mensaje: "Niveles actualizados correctamente" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR REDES SOCIALES
+// ════════════════════════════════════════════════════════════════
+app.put("/api/usuario/:id/redes", async (req, res) => {
+  const { id } = req.params;
+  const { spotify, instagram, youtube, tiktok } = req.body;
+
+  try {
+    await pool.query(
+      `UPDATE users SET spotify = $1, instagram = $2, youtube = $3, tiktok = $4 WHERE id = $5`,
+      [spotify || null, instagram || null, youtube || null, tiktok || null, id],
+    );
+    res.json({
+      success: true,
+      mensaje: "Redes sociales actualizadas correctamente",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR DISPONIBILIDAD
+// ════════════════════════════════════════════════════════════════
+app.put("/api/usuario/:id/disponibilidad", async (req, res) => {
+  const { id } = req.params;
+  const { disponible } = req.body;
+
+  try {
+    await pool.query("UPDATE users SET disponible = $1 WHERE id = $2", [
+      disponible,
+      id,
+    ]);
+    res.json({ success: true, mensaje: "Disponibilidad actualizada" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR PORTADA
+// ════════════════════════════════════════════════════════════════
+app.put(
+  "/api/usuario/:id/portada",
+  upload.single("portada"),
+  async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      // Obtener portada anterior para borrarla
+      const anterior = await pool.query(
+        "SELECT portada FROM users WHERE id = $1",
+        [id],
+      );
+      const portadaAnterior = anterior.rows[0]?.portada;
+
+      const nuevaPortada = req.file ? `uploads/${req.file.filename}` : null;
+
+      if (!nuevaPortada) {
+        return res
+          .status(400)
+          .json({ success: false, mensaje: "No se recibió imagen" });
+      }
+
+      await pool.query("UPDATE users SET portada = $1 WHERE id = $2", [
+        nuevaPortada,
+        id,
+      ]);
+
+      // Borrar imagen anterior si existía y no es la default
+      if (portadaAnterior && portadaAnterior.startsWith("uploads/")) {
+        const rutaAnterior = path.join(__dirname, portadaAnterior);
+        if (fs.existsSync(rutaAnterior)) fs.unlinkSync(rutaAnterior);
+      }
+
+      res.json({ success: true, portada: nuevaPortada });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+    }
+  },
+);
+
+// ════════════════════════════════════════════════════════════════
+//  ACTUALIZAR FOTO/LOGO
+// ════════════════════════════════════════════════════════════════
+app.put(
+  "/api/usuario/:id/foto-logo",
+  upload.single("foto_logo"),
+  async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const anterior = await pool.query(
+        "SELECT foto_logo FROM users WHERE id = $1",
+        [id],
+      );
+      const fotoAnterior = anterior.rows[0]?.foto_logo;
+
+      const nuevaFoto = req.file ? `uploads/${req.file.filename}` : null;
+
+      if (!nuevaFoto) {
+        return res
+          .status(400)
+          .json({ success: false, mensaje: "No se recibió imagen" });
+      }
+
+      await pool.query("UPDATE users SET foto_logo = $1 WHERE id = $2", [
+        nuevaFoto,
+        id,
+      ]);
+
+      // Borrar imagen anterior si existía
+      if (fotoAnterior && fotoAnterior.startsWith("uploads/")) {
+        const rutaAnterior = path.join(__dirname, fotoAnterior);
+        if (fs.existsSync(rutaAnterior)) fs.unlinkSync(rutaAnterior);
+      }
+
+      res.json({ success: true, foto_logo: nuevaFoto });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+    }
+  },
+);
 // ════════════════════════════════════════════════════════════════
 //  INICIAR SERVIDOR
 // ════════════════════════════════════════════════════════════════

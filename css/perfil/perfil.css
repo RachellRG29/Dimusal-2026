@@ -738,3 +738,127 @@ button {
   color: #aaa;
   margin-top: 4px;
 }
+
+/* ── Modal Instrumentos ── */
+#instrModalBackdrop .tags-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+#instrModalBackdrop .reg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#instrModalBackdrop .reg-field label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #9a8070;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+#instrModalBackdrop select {
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #e0ddd8;
+  font-family: "Syne", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1e1e1e;
+  background: #fafafa;
+  outline: none;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+#instrModalBackdrop select:focus {
+  border-color: #ff9b51;
+  background: #fff;
+}
+
+#instrModalBackdrop .reg-select-wrap {
+  position: relative;
+}
+
+#instrModalBackdrop .reg-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #9a8070;
+  border-bottom: 2px solid #9a8070;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* ── Inputs redes sociales ── */
+#redesModalBackdrop input[type="url"],
+#redesModalBackdrop input[type="text"] {
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #e0ddd8;
+  font-family: "Syne", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1e1e1e;
+  background: #fafafa;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  box-sizing: border-box;
+}
+
+#redesModalBackdrop input:focus {
+  border-color: #ff9b51;
+  background: #fff;
+}
+
+#redesModalBackdrop input::placeholder {
+  color: #bbb;
+}
+
+.redes-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e0ddd8;
+  border-radius: 12px;
+  background: #fafafa;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.redes-input-wrap:focus-within {
+  border-color: #ff9b51;
+  background: #fff;
+}
+
+.redes-prefix {
+  padding: 11px 12px 11px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f97316;
+}
+
+.redes-input-wrap input {
+  border: none !important;
+  background: transparent !important;
+  padding-left: 0 !important;
+  flex: 1;
+}
+
+.redes-input-wrap input:focus {
+  border: none !important;
+  background: transparent !important;
+}

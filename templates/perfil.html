@@ -790,6 +790,147 @@
     </div>
     <!-- /modal sobre mí -->
 
+    <!-- ══ MODAL: Editar Instrumentos ══ -->
+    <div
+      class="tags-modal-backdrop"
+      id="instrModalBackdrop"
+      onclick="closeInstrModal(event)"
+    >
+      <div
+        class="tags-modal"
+        role="dialog"
+        aria-modal="true"
+        style="max-width: 480px"
+      >
+        <div class="tags-modal-header">
+          <div>
+            <div class="tags-modal-title">Instrumentos musicales</div>
+            <div class="tags-modal-subtitle">
+              Asigna un nivel a cada instrumento
+            </div>
+          </div>
+          <button
+            class="tags-modal-close"
+            onclick="closeInstrModal()"
+            aria-label="Cerrar"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="tags-modal-body" id="instrModalBody">
+          <p style="color: #aaa; font-size: 13px">
+            Agrega instrumentos desde "Editar etiquetas" primero.
+          </p>
+        </div>
+
+        <div class="tags-modal-footer">
+          <button class="btn-secondary-tags" onclick="closeInstrModal()">
+            Cancelar
+          </button>
+          <button
+            class="btn-primary-tags"
+            onclick="guardarNivelesInstrumentos()"
+          >
+            Guardar cambios
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /modal instrumentos -->
+
+    <!-- ══ MODAL: Editar Redes Sociales ══ -->
+    <div
+      class="tags-modal-backdrop"
+      id="redesModalBackdrop"
+      onclick="closeRedesModal(event)"
+    >
+      <div
+        class="tags-modal"
+        role="dialog"
+        aria-modal="true"
+        style="max-width: 480px"
+      >
+        <div class="tags-modal-header">
+          <div>
+            <div class="tags-modal-title">Redes Sociales</div>
+            <div class="tags-modal-subtitle">
+              Conecta tus plataformas musicales
+            </div>
+          </div>
+          <button
+            class="tags-modal-close"
+            onclick="closeRedesModal()"
+            aria-label="Cerrar"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="tags-modal-body">
+          <div class="reg-field">
+            <label>Spotify (URL)</label>
+            <input
+              type="url"
+              id="redesSpotify"
+              placeholder="https://open.spotify.com/artist/..."
+            />
+          </div>
+          <div class="reg-field">
+            <label>Instagram (usuario)</label>
+            <div class="redes-input-wrap">
+              <span class="redes-prefix">@</span>
+              <input type="text" id="redesInstagram" placeholder="tu_usuario" />
+            </div>
+          </div>
+          <div class="reg-field">
+            <label>YouTube (URL)</label>
+            <input
+              type="url"
+              id="redesYoutube"
+              placeholder="https://youtube.com/@canal"
+            />
+          </div>
+          <div class="reg-field">
+            <label>TikTok (usuario)</label>
+            <div class="redes-input-wrap">
+              <span class="redes-prefix">@</span>
+              <input type="text" id="redesTiktok" placeholder="tu_usuario" />
+            </div>
+          </div>
+        </div>
+
+        <div class="tags-modal-footer">
+          <button class="btn-secondary-tags" onclick="closeRedesModal()">
+            Cancelar
+          </button>
+          <button class="btn-primary-tags" onclick="guardarRedes()">
+            Guardar cambios
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /modal redes sociales -->
     <!-- ══ PORTADA ══ -->
     <div class="pa-cover">
       <img
@@ -1001,7 +1142,11 @@
 
             <!-- Instrumentos -->
             <div class="pa-card">
-              <button class="pa-card__edit-btn" title="Editar">
+              <button
+                class="pa-card__edit-btn"
+                title="Editar"
+                onclick="abrirInstrModal()"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -1137,7 +1282,11 @@
 
             <!-- Redes Sociales -->
             <div class="pa-card">
-              <button class="pa-card__edit-btn" title="Editar">
+              <button
+                class="pa-card__edit-btn"
+                title="Editar"
+                onclick="abrirRedesModal()"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -1171,7 +1320,11 @@
 
             <!-- Disponibilidad -->
             <div class="pa-card">
-              <button class="pa-card__edit-btn" title="Editar">
+              <button
+                class="pa-card__edit-btn"
+                title="Editar"
+                onclick="toggleDisponibilidad()"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"

@@ -18,10 +18,11 @@ function aplicarIdioma() {
     }
   });
 
-  // Traducir biografía dinámica si existe
+  // Traducir biografía dinámica si existe y ya fue cargada
   if (
     typeof traducirBiografia === "function" &&
-    typeof bioOriginal !== "undefined"
+    typeof bioOriginal !== "undefined" &&
+    bioOriginal !== ""
   ) {
     traducirBiografia(bioOriginal, idioma);
   }
