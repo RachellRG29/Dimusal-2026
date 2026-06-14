@@ -55,6 +55,7 @@ app.use(cors());
 app.use(express.json());
 
 // ── Archivos estáticos ──────────────────────────────────────
+app.use(express.static(__dirname)); // sirve index.html desde la raíz
 app.use(express.static("templates")); // HTMLs
 app.use("/css", express.static("css")); // CSS
 app.use("/js", express.static("js")); // JS
