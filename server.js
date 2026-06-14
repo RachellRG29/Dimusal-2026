@@ -37,18 +37,10 @@ const upload = multer({
 });
 
 // ════════════════════════════════════════════════════════════════
-//  NODEMAILER
+//  RESEND LOS EMAILS
 // ════════════════════════════════════════════════════════════════
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-  family: 4, // forzar IPv4
-});
+const { Resend } = require("resend");
+const resend = new Resend(process.env.RESEND_API_KEY);
 // ════════════════════════════════════════════════════════════════
 //  APP definir rutas para que funcione correctamente el servidor
 // ════════════════════════════════════════════════════════════════
@@ -247,26 +239,24 @@ app.post("/api/enviar-codigo", async (req, res) => {
   };
 
   try {
-    await transporter.sendMail({
-      from: `"DIMUSAL" <${process.env.GMAIL_USER}>`,
+    await resend.emails.send({
+      from: "DIMUSAL <onboarding@resend.dev>",
       to: correo,
       subject: "Código de verificación DIMUSAL",
       html: `
-        <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border-radius:12px;border:1px solid #eee;">
-          <h1 style="color:#f97316;text-align:center;">DIMUSAL</h1>
-          <h2 style="text-align:center;">Verifica tu correo</h2>
-          <p>Hola <strong>${nombre}</strong>, usa este código para completar tu registro:</p>
-          <div style="text-align:center;margin:30px 0;">
-            <span style="font-size:48px;font-weight:bold;letter-spacing:12px;color:#f97316;">
-              ${codigo}
-            </span>
-          </div>
-          <p style="color:#888;font-size:13px;text-align:center;">
-            Este código expira en 10 minutos.<br/>
-            Si no creaste una cuenta en DIMUSAL, ignora este correo.
-          </p>
-        </div>
-      `,
+    <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border-radius:12px;border:1px solid #eee;">
+      <h1 style="color:#f97316;text-align:center;">DIMUSAL</h1>
+      <h2 style="text-align:center;">Verifica tu correo</h2>
+      <p>Hola <strong>${nombre}</strong>, usa este código para completar tu registro:</p>
+      <div style="text-align:center;margin:30px 0;">
+        <span style="font-size:48px;font-weight:bold;letter-spacing:12px;color:#f97316;">${codigo}</span>
+      </div>
+      <p style="color:#888;font-size:13px;text-align:center;">
+        Este código expira en 10 minutos.<br/>
+        Si no creaste una cuenta en DIMUSAL, ignora este correo.
+      </p>
+    </div>
+  `,
     });
 
     res.json({ success: true, mensaje: "Código enviado al correo" });
@@ -609,24 +599,24 @@ app.post("/api/recuperar-password", async (req, res) => {
     const codigo = Math.floor(1000 + Math.random() * 9000).toString();
     codigosPendientes[correo] = { codigo, expira: Date.now() + 10 * 60 * 1000 };
 
-    await transporter.sendMail({
-      from: `"DIMUSAL" <${process.env.GMAIL_USER}>`,
+    await resend.emails.send({
+      from: "DIMUSAL <onboarding@resend.dev>",
       to: correo,
       subject: "Recuperación de contraseña DIMUSAL",
       html: `
-        <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border-radius:12px;border:1px solid #eee;">
-          <h1 style="color:#f97316;text-align:center;">DIMUSAL</h1>
-          <h2 style="text-align:center;">Recupera tu contraseña</h2>
-          <p>Hola <strong>${usuario.nombre_completo}</strong>, usa este código para restablecer tu contraseña:</p>
-          <div style="text-align:center;margin:30px 0;">
-            <span style="font-size:48px;font-weight:bold;letter-spacing:12px;color:#f97316;">${codigo}</span>
-          </div>
-          <p style="color:#888;font-size:13px;text-align:center;">
-            Este código expira en 10 minutos.<br/>
-            Si no solicitaste esto, ignora este correo.
-          </p>
-        </div>
-      `,
+    <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border-radius:12px;border:1px solid #eee;">
+      <h1 style="color:#f97316;text-align:center;">DIMUSAL</h1>
+      <h2 style="text-align:center;">Recupera tu contraseña</h2>
+      <p>Hola <strong>${usuario.nombre_completo}</strong>, usa este código para restablecer tu contraseña:</p>
+      <div style="text-align:center;margin:30px 0;">
+        <span style="font-size:48px;font-weight:bold;letter-spacing:12px;color:#f97316;">${codigo}</span>
+      </div>
+      <p style="color:#888;font-size:13px;text-align:center;">
+        Este código expira en 10 minutos.<br/>
+        Si no solicitaste esto, ignora este correo.
+      </p>
+    </div>
+  `,
     });
 
     res.json({ success: true, mensaje: "Código enviado al correo." });
