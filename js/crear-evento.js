@@ -6,7 +6,7 @@ let ceTipoSelected = "";
 /* ══ PASO 0: Selección de actividad ══ */
 function selectActividad(el) {
   document
-    .querySelectorAll(".ce-actividad-card")
+    .querySelectorAll(".act-card")
     .forEach((c) => c.classList.remove("selected"));
   el.classList.add("selected");
   actividadSeleccionada = el.dataset.actividad;
@@ -277,23 +277,22 @@ function publicarEvento() {
 function resetCrearEvento() {
   document.getElementById("ceSuccess").classList.remove("show");
 
-  // Reiniciar estado
   actividadSeleccionada = "evento";
   ceTipoSelected = "";
 
-  // Restaurar selector de actividad
+  // Restaurar card seleccionada (ahora .act-card)
   document
-    .querySelectorAll(".ce-actividad-card")
+    .querySelectorAll(".act-card")
     .forEach((c) => c.classList.remove("selected"));
-  document.querySelector('[data-actividad="evento"]').classList.add("selected");
+  document
+    .querySelector('.act-card[data-actividad="evento"]')
+    .classList.add("selected");
 
-  // Ocultar steps y card, mostrar selector
   document.getElementById("ceSteps").style.display = "none";
   document.getElementById("ceMainCard").style.display = "none";
   document.getElementById("ceActividadSelector").style.display = "block";
   document.getElementById("ceActividadNav").style.display = "flex";
 
-  // Limpiar campos
   [
     "ce-nombre",
     "ce-fecha-inicio",
@@ -341,7 +340,6 @@ function resetCrearEvento() {
     )
     .forEach((el) => (el.style.display = ""));
 
-  // Restaurar header
   document.getElementById("ceTitulo").textContent = "Crear actividad";
   document.getElementById("ceSubtitulo").textContent =
     "Selecciona si deseas crear un evento o una oportunidad.";

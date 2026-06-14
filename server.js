@@ -582,6 +582,111 @@ app.put(
     }
   },
 );
+
+// ════════════════════════════════════════════════════════════════
+//  RECUPERAR CONTRASEÑA — ENVIAR CÓDIGO
+// ════════════════════════════════════════════════════════════════
+app.post("/api/recuperar-password", async (req, res) => {
+  const { correo } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT id, nombre_completo FROM users WHERE correo = $1",
+      [correo],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        mensaje: "No existe una cuenta con ese correo.",
+      });
+    }
+
+    const usuario = result.rows[0];
+    const codigo = Math.floor(1000 + Math.random() * 9000).toString();
+    codigosPendientes[correo] = { codigo, expira: Date.now() + 10 * 60 * 1000 };
+
+    await transporter.sendMail({
+      from: `"DIMUSAL" <${process.env.GMAIL_USER}>`,
+      to: correo,
+      subject: "Recuperación de contraseña DIMUSAL",
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:30px;border-radius:12px;border:1px solid #eee;">
+          <h1 style="color:#f97316;text-align:center;">DIMUSAL</h1>
+          <h2 style="text-align:center;">Recupera tu contraseña</h2>
+          <p>Hola <strong>${usuario.nombre_completo}</strong>, usa este código para restablecer tu contraseña:</p>
+          <div style="text-align:center;margin:30px 0;">
+            <span style="font-size:48px;font-weight:bold;letter-spacing:12px;color:#f97316;">${codigo}</span>
+          </div>
+          <p style="color:#888;font-size:13px;text-align:center;">
+            Este código expira en 10 minutos.<br/>
+            Si no solicitaste esto, ignora este correo.
+          </p>
+        </div>
+      `,
+    });
+
+    res.json({ success: true, mensaje: "Código enviado al correo." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor." });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  RECUPERAR CONTRASEÑA — VERIFICAR CÓDIGO
+// ════════════════════════════════════════════════════════════════
+app.post("/api/verificar-codigo-recovery", (req, res) => {
+  const { correo, codigo } = req.body;
+  const entrada = codigosPendientes[correo];
+
+  if (!entrada)
+    return res
+      .status(400)
+      .json({ success: false, mensaje: "No hay código pendiente." });
+  if (Date.now() > entrada.expira) {
+    delete codigosPendientes[correo];
+    return res
+      .status(400)
+      .json({ success: false, mensaje: "El código expiró." });
+  }
+  if (entrada.codigo !== codigo)
+    return res
+      .status(400)
+      .json({ success: false, mensaje: "Código incorrecto." });
+
+  delete codigosPendientes[correo];
+  res.json({ success: true, mensaje: "Código verificado." });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  RECUPERAR CONTRASEÑA — CAMBIAR CONTRASEÑA
+// ════════════════════════════════════════════════════════════════
+app.post("/api/cambiar-password", async (req, res) => {
+  const { correo, nuevaPassword } = req.body;
+
+  try {
+    const passwordHash = await bcrypt.hash(nuevaPassword, 10);
+    const result = await pool.query(
+      "UPDATE users SET password = $1 WHERE correo = $2 RETURNING id",
+      [passwordHash, correo],
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, mensaje: "Usuario no encontrado." });
+    }
+
+    res.json({
+      success: true,
+      mensaje: "Contraseña actualizada correctamente.",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor." });
+  }
+});
 // ════════════════════════════════════════════════════════════════
 //  INICIAR SERVIDOR
 // ════════════════════════════════════════════════════════════════

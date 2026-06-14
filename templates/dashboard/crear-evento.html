@@ -21,39 +21,122 @@
     margin-top: 4px;
   }
 
-  /* ── Selector de actividad ── */
+  .act-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2.5px solid transparent;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+    background: none;
+    padding: 0;
+    font-family: "Syne", sans-serif;
+    text-align: left;
+    min-height: 220px;
+  }
+  .act-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+  }
+  .act-card.selected {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 4px rgba(255, 155, 81, 0.18);
+  }
+  .act-card-img {
+    position: absolute;
+    inset: 0;
+    background: #c9b99a center/cover no-repeat;
+    transition: transform 0.3s;
+  }
+  .act-card:hover .act-card-img {
+    transform: scale(1.04);
+  }
+  .act-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0.55) 55%,
+      rgba(0, 0, 0, 0.82) 100%
+    );
+  }
+  .act-card.selected .act-card-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 120, 30, 0.12) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+  }
+  .act-card-body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    min-height: 220px;
+    padding: 20px 18px 18px;
+  }
+  .act-card-check {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    font-size: 13px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .act-card.selected .act-card-check {
+    display: flex;
+  }
+  .act-card-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+  .act-card-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .act-card-desc {
+    font-size: 0.73rem;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.5;
+  }
+  .act-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 12px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .act-card.selected .act-card-badge {
+    background: var(--orange);
+    border-color: var(--orange);
+  }
+
   .ce-actividad-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
     margin-bottom: 28px;
-  }
-
-  .ce-actividad-card {
-    position: relative;
-    font-family: "Syne", sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    min-height: 140px;
-    padding: 0;
-    border: 2px solid #ececec;
-    border-radius: 18px;
-    overflow: hidden;
-    background: #fff;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    text-align: left;
-  }
-  .ce-actividad-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255, 155, 81, 0.4);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  }
-
-  .ce-actividad-card.selected {
-    border-color: var(--orange);
-    box-shadow: 0 0 0 4px rgba(255, 155, 81, 0.15);
   }
 
   /* Imagen */
@@ -743,45 +826,73 @@
 <div id="ceActividadSelector">
   <div class="ce-section-title">¿Qué deseas crear?</div>
   <div class="ce-actividad-grid" id="ceActividadGrid">
-    <!-- Oportunidad -->
     <button
       type="button"
-      class="ce-actividad-card"
+      class="act-card"
       data-actividad="oportunidad"
       onclick="selectActividad(this)"
     >
       <div
-        class="ce-actividad-img"
-        style="background-image: url(/images/img1.jpg)"
+        class="act-card-img"
+        style="background-image: url(&quot;images/img1.jpg&quot;)"
       ></div>
-      <div class="ce-actividad-body">
-        <div class="ce-actividad-icon">📢</div>
-        <div class="ce-actividad-title">Oportunidad</div>
-        <div class="ce-actividad-desc">
+      <div class="act-card-overlay"></div>
+      <div class="act-card-check">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 13px; height: 13px"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div class="act-card-body">
+        <div class="act-card-icon">📢</div>
+        <div class="act-card-title">Oportunidad</div>
+        <div class="act-card-desc">
           Buscas artistas para una futura actividad. Los artistas podrán
           postularse.
         </div>
+        <div class="act-card-badge">Seleccionar</div>
       </div>
     </button>
 
-    <!-- Evento -->
     <button
       type="button"
-      class="ce-actividad-card selected"
+      class="act-card selected"
       data-actividad="evento"
       onclick="selectActividad(this)"
     >
       <div
-        class="ce-actividad-img"
-        style="background-image: url(/img/evento.jpg)"
+        class="act-card-img"
+        style="background-image: url(&quot;images/img2.jpg&quot;)"
       ></div>
-      <div class="ce-actividad-body">
-        <div class="ce-actividad-icon">🎤</div>
-        <div class="ce-actividad-title">Evento</div>
-        <div class="ce-actividad-desc">
+      <div class="act-card-overlay"></div>
+      <div class="act-card-check">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#fff"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 13px; height: 13px"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div class="act-card-body">
+        <div class="act-card-icon">🎤</div>
+        <div class="act-card-title">Evento</div>
+        <div class="act-card-desc">
           Ya tienes fecha, lugar y detalles definidos. Publica el evento
           directamente.
         </div>
+        <div class="act-card-badge">Seleccionar</div>
       </div>
     </button>
   </div>
@@ -1058,6 +1169,20 @@
     </div>
 
     <div class="ce-nav">
+      <button class="ce-btn-back" onclick="ceBack(1)">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="width: 14px; height: 14px"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        Atrás
+      </button>
       <div></div>
       <button class="ce-btn-next" onclick="ceNext(1)">
         Continuar
