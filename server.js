@@ -240,7 +240,7 @@ app.post("/api/enviar-codigo", async (req, res) => {
 
   try {
     await resend.emails.send({
-      from: "DIMUSAL <onboarding@resend.dev>",
+      from: "DIMUSAL <noreply@dimusal.xyz>",
       to: correo,
       subject: "Código de verificación DIMUSAL",
       html: `
@@ -600,7 +600,7 @@ app.post("/api/recuperar-password", async (req, res) => {
     codigosPendientes[correo] = { codigo, expira: Date.now() + 10 * 60 * 1000 };
 
     await resend.emails.send({
-      from: "DIMUSAL <onboarding@resend.dev>",
+      from: "DIMUSAL <noreply@dimusal.xyz>",
       to: correo,
       subject: "Recuperación de contraseña DIMUSAL",
       html: `
