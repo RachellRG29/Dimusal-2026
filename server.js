@@ -679,6 +679,114 @@ app.post("/api/cambiar-password", async (req, res) => {
     res.status(500).json({ success: false, mensaje: "Error en el servidor." });
   }
 });
+
+// ════════════════════════════════════════════════════════════════
+//  CREAR ACTIVIDAD (evento u oportunidad)
+// ════════════════════════════════════════════════════════════════
+app.post("/api/actividades", upload.single("imagen"), async (req, res) => {
+  const usuario = JSON.parse(req.body.datos || "{}");
+
+  try {
+    let imagen_url = null;
+
+    if (req.file) {
+      imagen_url = req.file.path; // Cloudinary devuelve la URL en path
+    }
+
+    const result = await pool.query(
+      `INSERT INTO actividades (
+          promotor_id, tipo_actividad, tipo_evento, nombre, descripcion,
+          fecha_inicio, fecha_fin, hora, modalidad,
+          lugar, departamento, municipio, direccion,
+          capacidad, precio, imagen_url,
+          abre_convocatoria, num_artistas, cachet, generos,
+          fecha_postulacion, requisitos, notas_artistas,
+          publicar_ahora, destacar, notificar_artistas
+        ) VALUES (
+          $1,$2,$3,$4,$5,
+          $6,$7,$8,$9,
+          $10,$11,$12,$13,
+          $14,$15,$16,
+          $17,$18,$19,$20,
+          $21,$22,$23,
+          $24,$25,$26
+        ) RETURNING id`,
+      [
+        usuario.promotor_id,
+        usuario.tipo_actividad,
+        usuario.tipo_evento || null,
+        usuario.nombre,
+        usuario.descripcion,
+        usuario.fecha_inicio,
+        usuario.fecha_fin || null,
+        usuario.hora || null,
+        usuario.modalidad,
+        usuario.lugar,
+        usuario.departamento,
+        usuario.municipio || null,
+        usuario.direccion || null,
+        usuario.capacidad || null,
+        usuario.precio || null,
+        imagen_url,
+        usuario.abre_convocatoria || false,
+        usuario.num_artistas || null,
+        usuario.cachet || null,
+        usuario.generos ? JSON.stringify(usuario.generos) : null,
+        usuario.fecha_postulacion || null,
+        usuario.requisitos ? JSON.stringify(usuario.requisitos) : null,
+        usuario.notas_artistas || null,
+        usuario.publicar_ahora !== false,
+        usuario.destacar || false,
+        usuario.notificar_artistas !== false,
+      ],
+    );
+
+    res.json({ success: true, id: result.rows[0].id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  OBTENER EVENTOS
+// ════════════════════════════════════════════════════════════════
+app.get("/api/eventos", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT a.*, u.nombre_completo, u.nombre_artistico, u.foto_logo
+       FROM actividades a
+       JOIN users u ON a.promotor_id = u.id
+       WHERE a.tipo_actividad = 'evento'
+       AND a.estado = 'publicado'
+       ORDER BY a.fecha_inicio ASC`,
+    );
+    res.json({ success: true, eventos: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+//  OBTENER OPORTUNIDADES
+// ════════════════════════════════════════════════════════════════
+app.get("/api/oportunidades", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT a.*, u.nombre_completo, u.nombre_artistico
+       FROM actividades a
+       JOIN users u ON a.promotor_id = u.id
+       WHERE a.tipo_actividad = 'oportunidad'
+       AND a.estado = 'publicado'
+       ORDER BY a.fecha_postulacion ASC NULLS LAST`,
+    );
+    res.json({ success: true, oportunidades: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, mensaje: "Error en el servidor" });
+  }
+});
 // ════════════════════════════════════════════════════════════════
 //  INICIAR SERVIDOR
 // ════════════════════════════════════════════════════════════════

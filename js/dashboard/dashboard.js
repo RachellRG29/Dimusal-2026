@@ -55,6 +55,13 @@ function initPageScripts() {
   if (document.getElementById("oppList") && typeof initOppPage === "function") {
     initOppPage();
   }
+
+  if (
+    document.getElementById("elGrid") &&
+    typeof initEventosPage === "function"
+  ) {
+    initEventosPage();
+  }
 }
 
 /* ────────────────────────────────────────────── */

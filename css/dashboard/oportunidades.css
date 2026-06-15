@@ -182,3 +182,362 @@
   border: 1.5px solid #ffd4b0;
   white-space: nowrap;
 }
+
+/* ════════════════════════════════════════════════════════
+   OPORTUNIDADES — Vista Detalle
+   Agregar al final de tu CSS de oportunidades
+════════════════════════════════════════════════════════ */
+
+/* ── Hero ─────────────────────────────────────────────── */
+.opp-hero {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.opp-hero__img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  transition: transform 0.6s ease;
+}
+.opp-hero:hover .opp-hero__img {
+  transform: scale(1.08);
+}
+.opp-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+.opp-hero__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px 32px;
+  gap: 10px;
+}
+.opp-back-btn {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-family: "Syne", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    border-color 0.18s;
+}
+.opp-back-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.opp-back-btn svg {
+  width: 15px;
+  height: 15px;
+}
+.opp-hero__badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.opp-badge {
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-family: "Syne", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.opp-badge--conv {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+.opp-hero__title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+.opp-hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+}
+.opp-meta-sep {
+  opacity: 0.5;
+}
+
+/* ── Layout body ──────────────────────────────────────── */
+.opp-det-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .opp-det-body {
+    grid-template-columns: 1fr;
+  }
+  .opp-det-sidebar {
+    order: -1;
+  }
+}
+
+/* ── Secciones ────────────────────────────────────────── */
+.opp-det-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 24px;
+  border: 1.5px solid #ebe9e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 16px;
+}
+.opp-det-section:last-child {
+  margin-bottom: 0;
+}
+.opp-det-section-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 14px;
+}
+.opp-det-desc {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #444;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Tags ─────────────────────────────────────────────── */
+.opp-det-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.opp-det-tag {
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1.5px solid rgba(249, 115, 22, 0.35);
+  color: var(--orange);
+  background: #fff6ef;
+}
+
+/* ── Requisitos ───────────────────────────────────────── */
+.opp-req-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0ece6;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #444;
+  line-height: 1.5;
+}
+.opp-req-item:last-child {
+  border-bottom: none;
+}
+.opp-req-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff6ef;
+  border: 1.5px solid var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.opp-req-check svg {
+  width: 11px;
+  height: 11px;
+  color: var(--orange);
+  stroke: var(--orange);
+}
+
+/* ── Promotor ─────────────────────────────────────────── */
+.opp-promotor-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #fafaf8;
+  border: 1.5px solid #ebe9e5;
+}
+.opp-promotor-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.opp-promotor-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--black);
+}
+.opp-promotor-role {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* ── Sidebar ──────────────────────────────────────────── */
+.opp-det-sidebar {
+}
+.opp-sidebar-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 22px;
+  border: 1.5px solid #ebe9e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 16px;
+}
+.opp-sidebar-card:last-child {
+  margin-bottom: 0;
+}
+.opp-sidebar-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 4px;
+  margin-top: 16px;
+}
+.opp-sidebar-label:first-child {
+  margin-top: 0;
+}
+.opp-sidebar-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+/* Botón primario dentro del sidebar */
+.opp-sidebar-card .opp-btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  padding: 13px;
+  background: var(--orange);
+  color: #fff;
+  font-family: "Syne", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition:
+    opacity 0.18s,
+    transform 0.15s;
+  text-align: center;
+}
+.opp-sidebar-card .opp-btn-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+.opp-sidebar-card .opp-btn-secondary {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px;
+  background: transparent;
+  color: var(--gray);
+  font-family: "Syne", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1.5px solid #e0ddd8;
+  border-radius: 50px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+  text-align: center;
+}
+.opp-sidebar-card .opp-btn-secondary:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* ── Mapa / Ubicación ─────────────────────────────────── */
+.opp-map-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fafaf8;
+  border: 1.5px solid #ebe9e5;
+  margin-top: 10px;
+}
+.opp-map-pin {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.opp-map-nombre {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--black);
+}
+.opp-map-dir {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* ── Notas adicionales ────────────────────────────────── */
+.opp-notas {
+  background: #fffbf5;
+  border-left: 3px solid var(--orange);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #666;
+  line-height: 1.6;
+  margin-top: 14px;
+}

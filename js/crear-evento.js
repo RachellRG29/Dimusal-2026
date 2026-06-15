@@ -42,7 +42,7 @@ function iniciarFlujo() {
     document.getElementById("ceDatosTitle").textContent =
       "Datos de la oportunidad";
     document.getElementById("ce-fecha-inicio-label").innerHTML =
-      'Fecha límite de postulación <span class="req">*</span>';
+      'Fecha de inicio <span class="req">*</span>';
     document.getElementById("ce-fecha-fin-wrap").style.display = "none";
     document.getElementById("ce-hora-wrap").style.display = "none";
     // En oportunidad la convocatoria siempre está activa
@@ -253,24 +253,90 @@ function buildPreview() {
 }
 
 /* ══ Publicar ══ */
-function publicarEvento() {
-  document
-    .querySelectorAll(".ce-panel")
-    .forEach((p) => p.classList.remove("active"));
-  document.querySelectorAll(".ce-step").forEach((s) => {
-    s.classList.remove("active");
-    s.classList.add("done");
-  });
+async function publicarEvento() {
+  const usuarioGuardado = JSON.parse(localStorage.getItem("usuario") || "{}");
 
-  const isOportunidad = actividadSeleccionada === "oportunidad";
-  document.getElementById("ceSuccessTitle").textContent = isOportunidad
-    ? "¡Oportunidad publicada!"
-    : "¡Evento publicado!";
-  document.getElementById("ceSuccessDesc").textContent = isOportunidad
-    ? "Tu convocatoria ya está visible en DIMUSAL. Los artistas podrán encontrarla y postularse."
-    : "Tu evento ya está visible en DIMUSAL. Los artistas podrán encontrarlo y postularse.";
+  // Recopilar géneros seleccionados
+  const generos = Array.from(
+    document.querySelectorAll(".ce-tag-chip.selected"),
+  ).map((el) => el.textContent.trim());
 
-  document.getElementById("ceSuccess").classList.add("show");
+  // Recopilar requisitos seleccionados
+  const requisitos = Array.from(
+    document.querySelectorAll(".ce-requisito-item input:checked"),
+  ).map((el) => el.parentElement.textContent.trim());
+
+  const datos = {
+    promotor_id: usuarioGuardado.id,
+    tipo_actividad: actividadSeleccionada,
+    tipo_evento: ceTipoSelected || null,
+    nombre: document.getElementById("ce-nombre").value.trim(),
+    descripcion: document.getElementById("ce-descripcion").value.trim(),
+    fecha_inicio: document.getElementById("ce-fecha-inicio").value,
+    fecha_fin: document.getElementById("ce-fecha-fin").value || null,
+    hora: document.getElementById("ce-hora").value || null,
+    modalidad: document.getElementById("ce-modalidad").value,
+    lugar: document.getElementById("ce-lugar").value.trim(),
+    departamento: document.getElementById("ce-departamento").value,
+    municipio: document.getElementById("ce-municipio").value.trim() || null,
+    direccion: document.getElementById("ce-direccion").value.trim() || null,
+    capacidad: document.getElementById("ce-capacidad").value || null,
+    precio: document.getElementById("ce-precio").value.trim() || null,
+    abre_convocatoria: document.getElementById("ceAbreConvocatoria").checked,
+    num_artistas: document.getElementById("ce-num-artistas").value || null,
+    cachet: document.getElementById("ce-cachet").value.trim() || null,
+    generos: generos.length > 0 ? generos : null,
+    fecha_postulacion:
+      document.getElementById("ce-fecha-postulacion").value || null,
+    requisitos: requisitos.length > 0 ? requisitos : null,
+    notas_artistas:
+      document.getElementById("ce-notas-artistas").value.trim() || null,
+    publicar_ahora: document.getElementById("cePublicarAhora").checked,
+    destacar: document.getElementById("ceDestacar").checked,
+    notificar_artistas: document.getElementById("ceNotificar").checked,
+  };
+
+  const formData = new FormData();
+  formData.append("datos", JSON.stringify(datos));
+
+  const imagenInput = document.getElementById("ceImagenInput");
+  if (imagenInput.files[0]) {
+    formData.append("imagen", imagenInput.files[0]);
+  }
+
+  try {
+    const res = await fetch("/api/actividades", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      // Mostrar pantalla de éxito
+      document
+        .querySelectorAll(".ce-panel")
+        .forEach((p) => p.classList.remove("active"));
+      document.querySelectorAll(".ce-step").forEach((s) => {
+        s.classList.remove("active");
+        s.classList.add("done");
+      });
+
+      const isOportunidad = actividadSeleccionada === "oportunidad";
+      document.getElementById("ceSuccessTitle").textContent = isOportunidad
+        ? "¡Oportunidad publicada!"
+        : "¡Evento publicado!";
+      document.getElementById("ceSuccessDesc").textContent = isOportunidad
+        ? "Tu convocatoria ya está visible en DIMUSAL."
+        : "Tu evento ya está visible en DIMUSAL.";
+
+      document.getElementById("ceSuccess").classList.add("show");
+    } else {
+      alert("Error al publicar: " + data.mensaje);
+    }
+  } catch (err) {
+    console.error(err);
+    alert("No se pudo conectar con el servidor.");
+  }
 }
 
 /* ══ Reset ══ */

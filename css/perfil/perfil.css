@@ -185,7 +185,7 @@ button {
   right: 1rem;
   width: 42px;
   height: 42px;
-  background: var(--gray);
+  background: var(--black);
   color: #fff;
   border-radius: 50%;
   display: flex;

@@ -1,14 +1,13 @@
 <!-- ── Cabecera sección ── -->
-<div class="opp-page-header">
+<div class="opp-page-header" id="oppHeader">
   <div>
     <div class="section-title">Oportunidades</div>
     <p class="opp-page-subtitle">
       Convocatorias y posibilidades de participación para artistas salvadoreños
     </p>
   </div>
-  <div class="opp-count-badge" id="oppCountBadge">12 disponibles</div>
+  <div class="opp-count-badge" id="oppCountBadge">0 disponibles</div>
 
-  <!-- ── Filtro por categoría ── -->
   <div class="filter-tabs" id="filterTabs">
     <button
       class="tab active"
@@ -112,7 +111,6 @@
     </button>
   </div>
 
-  <!-- ── Filtro por etiquetas del perfil ── -->
   <div class="opp-tag-filter" id="oppTagFilter">
     <div class="opp-tag-filter-label">
       <svg
@@ -128,339 +126,143 @@
       </svg>
       Filtrar por etiqueta:
     </div>
-    <div class="opp-tag-filter-chips" id="oppTagFilterChips">
-      <!-- se llena dinámicamente desde localStorage -->
-    </div>
+    <div class="opp-tag-filter-chips" id="oppTagFilterChips"></div>
   </div>
 </div>
 
-<!-- ── Lista de oportunidades ── -->
-<div class="opp-list" id="oppList">
-  <div
-    class="opp-card"
-    data-category="Festival"
-    data-tags="Festival,Rock,Alternativo"
-  >
-    <div class="opp-card__type-dot" style="background: var(--orange)"></div>
-    <div class="opp-left">
-      <div class="opp-title">Festival de Música Independiente</div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        San Salvador
-        <span class="opp-deadline">Cierra: 15 jun</span>
-      </div>
-      <div class="opp-tags">
-        <span class="tag">Festival</span>
-        <span class="tag" style="background: #f0f0f0">Rock</span>
-        <span class="tag" style="background: #f0f0f0">Alternativo</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="opp-card"
-    data-category="Convocatoria"
-    data-tags="Difusión,Clásica,Popular"
-  >
-    <div class="opp-card__type-dot" style="background: #7c9ef5"></div>
-    <div class="opp-left">
-      <div class="opp-title">
-        Convocatoria: Artistas para Espacios Culturales
-      </div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        Ministerio de Cultura
-        <span class="opp-deadline">Cierra: 20 jun</span>
-      </div>
-      <div class="opp-tags">
-        <span class="tag orange">Difusión</span>
-        <span class="tag" style="background: #f0f0f0">Clásica</span>
-        <span class="tag" style="background: #f0f0f0">Popular</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="opp-card"
-    data-category="Tocata"
-    data-tags="Tocata,Indie,Alternativo"
-  >
-    <div class="opp-card__type-dot" style="background: #f5a623"></div>
-    <div class="opp-left">
-      <div class="opp-title">
-        Tocata en El Árbol Bar – Búsqueda de Teloneros
-      </div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        Santa Ana
-        <span class="opp-deadline">Cierra: 8 jul</span>
-      </div>
-      <div class="opp-tags">
-        <span class="tag orange">Tocata</span>
-        <span class="tag" style="background: #f0f0f0">Indie</span>
-        <span class="tag" style="background: #f0f0f0">Alternativo</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div class="opp-card" data-category="Festival" data-tags="Festival,Jazz">
-    <div class="opp-card__type-dot" style="background: var(--orange)"></div>
-    <div class="opp-left">
-      <div class="opp-title">Festival Internacional de Jazz San Salvador</div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        San Salvador
-        <span class="opp-deadline">Cierra: 25 jul</span>
-      </div>
-      <div class="opp-tags">
-        <span class="tag">Festival</span>
-        <span class="tag" style="background: #f0f0f0">Jazz</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="opp-card"
-    data-category="Grabación"
-    data-tags="Grabación,Rock,Indie"
-  >
-    <div class="opp-card__type-dot" style="background: #22c55e"></div>
-    <div class="opp-left">
-      <div class="opp-title">
-        Sesión de Grabación Estudio Volcán – Beca Artistas
-      </div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        San Salvador
-        <span class="opp-deadline">Cierra: 30 jul</span>
-      </div>
-      <div class="opp-tags">
-        <span
-          class="tag"
-          style="border-color: #22c55e; color: #22c55e; background: #f0fdf4"
-          >Grabación</span
-        >
-        <span class="tag" style="background: #f0f0f0">Rock</span>
-        <span class="tag" style="background: #f0f0f0">Indie</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="opp-card"
-    data-category="Taller"
-    data-tags="Taller,Producción,Electrónica"
-  >
-    <div class="opp-card__type-dot" style="background: #a855f7"></div>
-    <div class="opp-left">
-      <div class="opp-title">
-        Taller de Producción Musical Electrónica – SECULTURA
-      </div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        San Salvador
-        <span class="opp-deadline">Cierra: 5 ago</span>
-      </div>
-      <div class="opp-tags">
-        <span
-          class="tag"
-          style="border-color: #a855f7; color: #a855f7; background: #faf5ff"
-          >Taller</span
-        >
-        <span class="tag" style="background: #f0f0f0">Producción</span>
-        <span class="tag" style="background: #f0f0f0">Electrónica</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="opp-card"
-    data-category="Residencia"
-    data-tags="Residencia,Clásica,Jazz"
-  >
-    <div class="opp-card__type-dot" style="background: #0ea5e9"></div>
-    <div class="opp-left">
-      <div class="opp-title">
-        Residencia Artística Internacional – Músicos Centroamérica
-      </div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        Costa Rica (presencial)
-        <span class="opp-deadline">Cierra: 10 ago</span>
-      </div>
-      <div class="opp-tags">
-        <span
-          class="tag"
-          style="border-color: #0ea5e9; color: #0ea5e9; background: #f0f9ff"
-          >Residencia</span
-        >
-        <span class="tag" style="background: #f0f0f0">Clásica</span>
-        <span class="tag" style="background: #f0f0f0">Jazz</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="opp-card"
-    data-category="Audición"
-    data-tags="Audición,Orquesta,Clásica"
-  >
-    <div class="opp-card__type-dot" style="background: #ef4444"></div>
-    <div class="opp-left">
-      <div class="opp-title">
-        Audición Orquesta Sinfónica Juvenil de El Salvador
-      </div>
-      <div class="opp-meta">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        San Salvador
-        <span class="opp-deadline">Cierra: 20 ago</span>
-      </div>
-      <div class="opp-tags">
-        <span
-          class="tag"
-          style="border-color: #ef4444; color: #ef4444; background: #fef2f2"
-          >Audición</span
-        >
-        <span class="tag" style="background: #f0f0f0">Orquesta</span>
-        <span class="tag" style="background: #f0f0f0">Clásica</span>
-      </div>
-    </div>
-    <div class="opp-right">
-      <button class="btn-primary" style="padding: 8px 18px; font-size: 0.78rem">
-        Postularme
-      </button>
-    </div>
+<!-- ── Vista lista ── -->
+<div id="oppVistaLista">
+  <div class="opp-list" id="oppList"></div>
+  <div class="opp-empty" id="oppEmpty" style="display: none">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+    <p>No hay oportunidades con este filtro</p>
+    <button class="btn-secondary" onclick="resetFiltros()">Ver todas</button>
   </div>
 </div>
 
-<!-- ── Empty state ── -->
-<div class="opp-empty" id="oppEmpty" style="display: none">
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-  <p>No hay oportunidades con este filtro</p>
-  <button class="btn-secondary" onclick="resetFiltros()">Ver todas</button>
+<!-- ══════════════════════════════════════════
+     VISTA DETALLE
+══════════════════════════════════════════ -->
+<div id="oppVistaDetalle" style="display: none">
+  <!-- Hero -->
+  <div class="opp-hero">
+    <div class="opp-hero__img" id="oppHeroImg"></div>
+    <div class="opp-hero__overlay"></div>
+    <div class="opp-hero__content">
+      <button class="opp-back-btn" onclick="oppVolverLista()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        Volver
+      </button>
+      <div class="opp-hero__badges">
+        <span class="opp-badge" id="oppDetBadgeTipo"></span>
+        <span
+          class="opp-badge opp-badge--conv"
+          id="oppDetBadgeConv"
+          style="display: none"
+          >✦ Conv. abierta</span
+        >
+      </div>
+      <h1 class="opp-hero__title" id="oppDetTitulo"></h1>
+      <div class="opp-hero__meta">
+        <span id="oppDetFecha"></span>
+        <span class="opp-meta-sep">·</span>
+        <span id="oppDetLugar"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="opp-det-body">
+    <!-- Columna principal -->
+    <div class="opp-det-main">
+      <!-- Descripción -->
+      <div class="opp-det-section">
+        <div class="opp-det-section-title">Descripción</div>
+        <p class="opp-det-desc" id="oppDetDesc"></p>
+      </div>
+
+      <!-- Géneros -->
+      <div class="opp-det-section">
+        <div class="opp-det-section-title">Géneros y etiquetas</div>
+        <div class="opp-det-tags" id="oppDetTags"></div>
+      </div>
+
+      <!-- Requisitos -->
+      <div class="opp-det-section" id="oppDetConvSection" style="display: none">
+        <div class="opp-det-section-title">Requisitos para postular</div>
+        <div id="oppDetRequisitos"></div>
+        <div id="oppDetNotasSection" style="display: none">
+          <div class="opp-notas" id="oppDetNotas"></div>
+        </div>
+      </div>
+
+      <!-- Promotor -->
+      <div class="opp-det-section">
+        <div class="opp-det-section-title">Publicado por</div>
+        <div class="opp-promotor-card">
+          <div class="opp-promotor-avatar" id="oppDetPromoAva"></div>
+          <div>
+            <div class="opp-promotor-name" id="oppDetPromoNombre"></div>
+            <div class="opp-promotor-role">Promotor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="opp-det-sidebar">
+      <div class="opp-sidebar-card">
+        <div class="opp-sidebar-label">Cachet / Pago</div>
+        <div class="opp-sidebar-value" id="oppDetCachet">—</div>
+
+        <div class="opp-sidebar-label">Fecha límite</div>
+        <div class="opp-sidebar-value" id="oppDetFechaPostulacion">—</div>
+
+        <div class="opp-sidebar-label">Modalidad</div>
+        <div class="opp-sidebar-value" id="oppDetModalidad">—</div>
+
+        <div class="opp-sidebar-label">Artistas buscados</div>
+        <div class="opp-sidebar-value" id="oppDetNumArtistas">—</div>
+
+        <button class="opp-btn-primary" id="oppBtnPostular">
+          Postularme →
+        </button>
+        <button class="opp-btn-secondary" onclick="oppVolverLista()">
+          ← Volver a lista
+        </button>
+      </div>
+
+      <div class="opp-sidebar-card">
+        <div class="opp-det-section-title" style="margin-bottom: 10px">
+          Ubicación
+        </div>
+        <div class="opp-map-block">
+          <div class="opp-map-pin">📍</div>
+          <div>
+            <div class="opp-map-nombre" id="oppDetMapNombre"></div>
+            <div class="opp-map-dir" id="oppDetMapDir"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
 </div>
