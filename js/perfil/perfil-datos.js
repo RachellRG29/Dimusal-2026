@@ -126,7 +126,11 @@ function pintarPerfil(u) {
   // ── Imágenes: foto/logo y portada ───────────────────────────
   const avatarImg = document.getElementById("avatarImg");
   if (avatarImg && u.foto_logo) {
-    avatarImg.src = `/${u.foto_logo}`;
+    avatarImg.src = u.foto_logo
+      ? u.foto_logo.startsWith("http")
+        ? u.foto_logo
+        : `/${u.foto_logo}`
+      : "/images/homepage/piano-girl-inicio.png";
   }
 
   // ── Disponibilidad ───────────────────────────────────────────
@@ -140,7 +144,11 @@ function pintarPerfil(u) {
   }
   const coverImg = document.getElementById("coverImg");
   if (coverImg && u.portada) {
-    coverImg.src = `/${u.portada}`;
+    coverImg.src = u.portada
+      ? u.portada.startsWith("http")
+        ? u.portada
+        : `/${u.portada}`
+      : "/images/homepage/banner-piano.png";
   }
 
   // ── Información de contacto ─────────────────────────────────

@@ -9,31 +9,29 @@ const fs = require("fs");
 require("dotenv").config();
 
 // ════════════════════════════════════════════════════════════════
-//  CREAR CARPETA UPLOADS SI NO EXISTE
+//  CONFIGURACIÓN CLOUDINARY + MULTER PARA SUBIR IMAGENES
 // ════════════════════════════════════════════════════════════════
-const uploadDir = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-// ════════════════════════════════════════════════════════════════
-//  CONFIGURACIÓN MULTER (subida de imágenes)
-// ════════════════════════════════════════════════════════════════
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => {
-    // Nombre único: campo_timestamp.ext  (ej: foto_logo_1717000000000.jpg)
-    const ext = path.extname(file.originalname);
-    cb(null, `${file.fieldname}_${Date.now()}${ext}`);
-  },
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: (req, file) => ({
+    folder: "dimusal",
+    public_id: `${file.fieldname}_${Date.now()}`,
+    allowed_formats: ["jpg", "jpeg", "png", "webp", "gif"],
+  }),
 });
 
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // máximo 5 MB por imagen
-  fileFilter: (req, file, cb) => {
-    const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-    if (allowed.includes(file.mimetype)) cb(null, true);
-    else cb(new Error("Solo se permiten imágenes (jpg, png, webp, gif)"));
-  },
 });
 
 // ════════════════════════════════════════════════════════════════
@@ -54,7 +52,6 @@ app.use(express.static("templates")); // HTMLs
 app.use("/css", express.static("css")); // CSS
 app.use("/js", express.static("js")); // JS
 app.use("/images", express.static("images")); // Imágenes
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Ruta raíz → index.html
 app.get("/", (req, res) => {
@@ -94,13 +91,8 @@ app.post(
     } = req.body;
 
     // Rutas de las imágenes (null si no se subieron)
-    const foto_logo = req.files?.foto_logo?.[0]?.filename
-      ? `uploads/${req.files.foto_logo[0].filename}`
-      : null;
-
-    const portada = req.files?.portada?.[0]?.filename
-      ? `uploads/${req.files.portada[0].filename}`
-      : null;
+    const foto_logo = req.files?.foto_logo?.[0]?.path || null;
+    const portada = req.files?.portada?.[0]?.path || null;
 
     try {
       const passwordHash = await bcrypt.hash(password, 10);
@@ -499,14 +491,13 @@ app.put(
     const { id } = req.params;
 
     try {
-      // Obtener portada anterior para borrarla
       const anterior = await pool.query(
         "SELECT portada FROM users WHERE id = $1",
         [id],
       );
       const portadaAnterior = anterior.rows[0]?.portada;
 
-      const nuevaPortada = req.file ? `uploads/${req.file.filename}` : null;
+      const nuevaPortada = req.file ? req.file.path : null;
 
       if (!nuevaPortada) {
         return res
@@ -519,10 +510,14 @@ app.put(
         id,
       ]);
 
-      // Borrar imagen anterior si existía y no es la default
-      if (portadaAnterior && portadaAnterior.startsWith("uploads/")) {
-        const rutaAnterior = path.join(__dirname, portadaAnterior);
-        if (fs.existsSync(rutaAnterior)) fs.unlinkSync(rutaAnterior);
+      // Borrar imagen anterior de Cloudinary si existía
+      if (portadaAnterior && portadaAnterior.includes("res.cloudinary.com")) {
+        const publicId = portadaAnterior
+          .split("/")
+          .slice(-2)
+          .join("/")
+          .replace(/\.[^/.]+$/, ""); // quita extensión
+        cloudinary.uploader.destroy(publicId).catch(() => {});
       }
 
       res.json({ success: true, portada: nuevaPortada });
@@ -549,7 +544,7 @@ app.put(
       );
       const fotoAnterior = anterior.rows[0]?.foto_logo;
 
-      const nuevaFoto = req.file ? `uploads/${req.file.filename}` : null;
+      const nuevaFoto = req.file ? req.file.path : null;
 
       if (!nuevaFoto) {
         return res
@@ -562,10 +557,14 @@ app.put(
         id,
       ]);
 
-      // Borrar imagen anterior si existía
-      if (fotoAnterior && fotoAnterior.startsWith("uploads/")) {
-        const rutaAnterior = path.join(__dirname, fotoAnterior);
-        if (fs.existsSync(rutaAnterior)) fs.unlinkSync(rutaAnterior);
+      // Borrar imagen anterior de Cloudinary si existía
+      if (fotoAnterior && fotoAnterior.includes("res.cloudinary.com")) {
+        const publicId = fotoAnterior
+          .split("/")
+          .slice(-2)
+          .join("/")
+          .replace(/\.[^/.]+$/, "");
+        cloudinary.uploader.destroy(publicId).catch(() => {});
       }
 
       res.json({ success: true, foto_logo: nuevaFoto });
