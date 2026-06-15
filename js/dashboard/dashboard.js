@@ -129,10 +129,16 @@ document.addEventListener("click", (e) => {
 /* ────────────────────────────────────────────── */
 
 window.addEventListener("DOMContentLoaded", () => {
-  const inicio = "/dashboard/inicio.html";
+  const usuarioGuardado = JSON.parse(localStorage.getItem("usuario") || "{}");
+  const tipo = usuarioGuardado.tipo || "";
+
+  // Cargar inicio según tipo de cuenta
+  const inicio =
+    tipo === "promotor"
+      ? "/dashboard/inicio-promotor.html"
+      : "/dashboard/inicio.html";
 
   setActiveNav(inicio);
-
   loadPage(inicio);
 
   // ── Mostrar nombre del usuario en el dashboard principal ──
