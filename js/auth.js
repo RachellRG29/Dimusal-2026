@@ -6,10 +6,22 @@
 // ── Proteger ruta: si no hay sesión, redirigir a login ────────
 const usuarioGuardado = localStorage.getItem("usuario");
 if (!usuarioGuardado) {
-  window.location.href = "/login.html";
+  window.location.replace("/login.html");
 }
 
 const usuario = JSON.parse(usuarioGuardado || "{}");
+
+// ── Evitar volver atrás después de cerrar sesión ───────────────
+window.addEventListener("pageshow", (e) => {
+  if (
+    e.persisted ||
+    performance.getEntriesByType("navigation")[0]?.type === "back_forward"
+  ) {
+    if (!localStorage.getItem("usuario")) {
+      window.location.replace("/login.html");
+    }
+  }
+});
 
 // ── Helper: iniciales del nombre ───────────────────────────────
 function obtenerIniciales(nombre = "") {
@@ -36,9 +48,11 @@ function mostrarNombreUsuario() {
   const iniciales = obtenerIniciales(usuario.nombre);
   const tipo = usuario.tipo || "";
   const tipoCapitalizado = tipo.charAt(0).toUpperCase() + tipo.slice(1);
-  // ── Dashboard: topbar "Hola, [tipo]" ──
+
+  // Dashboard: topbar "Hola, [tipo]"
   const topbarTipo = document.getElementById("topbarTipo");
   if (topbarTipo && tipo) topbarTipo.textContent = tipoCapitalizado;
+
   // Sidebar – nombre
   const nameEl = document.querySelector(".sidebar-bottom .name");
   if (nameEl && usuario.nombre) nameEl.textContent = usuario.nombre;
@@ -51,7 +65,7 @@ function mostrarNombreUsuario() {
   const perfilNameEl = document.querySelector(".pa-profile-header__name");
   if (perfilNameEl && usuario.nombre) perfilNameEl.textContent = usuario.nombre;
 
-  // ── Eventos: chip flotante del hero ──
+  // Eventos: chip flotante del hero
   const evChipAva = document.querySelector(
     ".ev-promotor-chip .ev-promotor-avatar",
   );
@@ -62,7 +76,7 @@ function mostrarNombreUsuario() {
   );
   if (evChipNombre && usuario.nombre) evChipNombre.textContent = usuario.nombre;
 
-  // ── Eventos: tarjeta promotor en sidebar ──
+  // Eventos: tarjeta promotor en sidebar
   const evPromoAva = document.querySelector(".ev-promotor-ava");
   if (evPromoAva) evPromoAva.textContent = iniciales;
 
@@ -76,7 +90,7 @@ function mostrarNombreUsuario() {
       tipo === "promotor" ? "⚡ Promotor verificado" : `🎵 ${tipoCapitalizado}`;
   }
 
-  // ── Oportunidades: sección "Publicado por" ──
+  // Oportunidades: sección "Publicado por"
   const oppPromoAva = document.getElementById("oppDetPromoAva");
   if (oppPromoAva) oppPromoAva.textContent = iniciales;
 
@@ -84,7 +98,7 @@ function mostrarNombreUsuario() {
   if (oppPromoNombre && usuario.nombre)
     oppPromoNombre.textContent = usuario.nombre;
 
-  // ── Cargar foto real desde BD (aplica a todos los avatares) ──
+  // Cargar foto real desde BD
   cargarAvatarSidebar();
 }
 
@@ -100,22 +114,15 @@ async function cargarAvatarSidebar() {
 
     const fotoUrl = data.usuario.foto_logo;
 
-    // Sidebar
     aplicarFotoAvatar(
       document.querySelector(".sidebar-bottom .avatar"),
       fotoUrl,
     );
-
-    // Eventos – chip hero
     aplicarFotoAvatar(
       document.querySelector(".ev-promotor-chip .ev-promotor-avatar"),
       fotoUrl,
     );
-
-    // Eventos – tarjeta promotor sidebar
     aplicarFotoAvatar(document.querySelector(".ev-promotor-ava"), fotoUrl);
-
-    // Oportunidades – sección promotor
     aplicarFotoAvatar(document.getElementById("oppDetPromoAva"), fotoUrl);
   } catch (err) {
     console.error("Error al cargar avatar:", err);
@@ -129,9 +136,10 @@ document.querySelectorAll(".logout").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.removeItem("usuario");
-    window.location.href = "/login.html";
+    window.location.replace("/login.html");
   });
 });
+
 // ── Topbar dropdown ─────────────────────────────────────────────
 function toggleTopbarMenu() {
   const user = document.getElementById("topbarUser");
