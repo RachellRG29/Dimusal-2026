@@ -63,7 +63,6 @@ body {
 .topbar-user span {
   color: var(--orange);
 }
-
 /* ── Topbar ─────────────────────────────────────── */
 .topbar {
   display: flex;
@@ -91,6 +90,72 @@ body {
   gap: 14px;
 }
 
+/* ── Topbar usuario ──────────────────────────────── */
+.topbar-user {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--black);
+}
+
+#topbarChevron {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.topbar-user.open #topbarChevron {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown ────────────────────────────────────── */
+.topbar-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #f0ede9;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  min-width: 170px;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.topbar-dropdown.open {
+  display: block;
+}
+
+.topbar-dropdown a {
+  display: block;
+  padding: 11px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.topbar-dropdown a:hover {
+  background: #fff5ef;
+  color: var(--orange);
+}
+
+.topbar-dropdown a.logout {
+  color: #e53e3e;
+  border-top: 1px solid #f0ede9;
+}
+
+.topbar-dropdown a.logout:hover {
+  background: #fff5f5;
+}
+
 /* ── Content ────────────────────────────────────── */
 .content {
   padding: 24px 32px 40px;
@@ -99,19 +164,66 @@ body {
   gap: 28px;
 }
 
-@media (max-width: 768px) {
-  :root {
-    --sidebar-w: 220px;
+/* ── Tablets ────────────────────────────────────── */
+@media (max-width: 992px) {
+  .topbar {
+    padding: 18px 20px 0;
+    gap: 16px;
   }
+  .topbar-greeting h1 {
+    font-size: 1.35rem;
+  }
+  .topbar-greeting p {
+    font-size: 0.75rem;
+  }
+  .topbar-right {
+    gap: 10px;
+  }
+  .topbar-user {
+    font-size: 0.8rem;
+  }
+}
 
+/* ── Móviles ────────────────────────────────────── */
+@media (max-width: 768px) {
   .main {
     margin-left: 0;
   }
   .topbar {
-    padding: 18px 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 16px 0;
   }
-  .content {
-    padding: 20px 20px 36px;
+  .topbar > div:first-child {
+    flex: 1;
+    min-width: 0;
+  }
+  .topbar-greeting h1 {
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+  .topbar-greeting p {
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+  .topbar-right {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .topbar-user {
+    font-size: 0.78rem;
+  }
+  .topbar-user svg {
+    width: 12px;
+    height: 12px;
+  }
+  .notif-btn {
+    width: 38px;
+    height: 38px;
   }
   .hamburger {
     display: flex;
@@ -128,113 +240,33 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
   }
-}
-
-/* ─────────────────────────────────────────────
-   TABLETS
-───────────────────────────────────────────── */
-@media (max-width: 992px) {
-  .topbar {
-    padding: 18px 20px 0;
-    gap: 16px;
-  }
-
-  .topbar-greeting h1 {
-    font-size: 1.35rem;
-  }
-
-  .topbar-greeting p {
-    font-size: 0.75rem;
-  }
-
-  .topbar-right {
-    gap: 10px;
-  }
-
-  .topbar-user {
-    font-size: 0.8rem;
+  .content {
+    padding: 20px 20px 36px;
   }
 }
 
-/* ─────────────────────────────────────────────
-   MÓVILES
-───────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .topbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 18px 16px 0;
-  }
-
-  .topbar > div:first-child {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .topbar-greeting h1 {
-    font-size: 1.15rem;
-    line-height: 1.2;
-  }
-
-  .topbar-greeting p {
-    font-size: 0.72rem;
-    line-height: 1.35;
-  }
-
-  .topbar-right {
-    width: 100%;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-
-  .topbar-user {
-    font-size: 0.78rem;
-  }
-
-  .topbar-user svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  .notif-btn {
-    width: 38px;
-    height: 38px;
-  }
-}
-
-/* ─────────────────────────────────────────────
-   TELÉFONOS PEQUEÑOS
-───────────────────────────────────────────── */
+/* ── Teléfonos pequeños ─────────────────────────── */
 @media (max-width: 480px) {
   .topbar {
     padding: 16px 12px 0;
   }
-
   .topbar-greeting h1 {
     font-size: 1rem;
   }
-
   .topbar-greeting p {
     display: none;
   }
-
   .topbar-right {
     justify-content: space-between;
     width: 100%;
   }
-
   .topbar-user {
     font-size: 0.75rem;
     gap: 4px;
   }
-
   .btn-idioma-homepage {
     transform: scale(0.92);
   }
-
   .notif-btn {
     width: 36px;
     height: 36px;

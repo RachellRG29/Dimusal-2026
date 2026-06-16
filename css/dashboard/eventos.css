@@ -453,8 +453,8 @@
   border: 1.5px solid rgba(255, 255, 255, 0.2);
 }
 .ev-promotor-avatar {
-  width: 26px;
-  height: 26px;
+  width: 32px; /* antes 26px */
+  height: 32px; /* antes 26px */
   border-radius: 50%;
   background: linear-gradient(135deg, var(--orange), #ff6b1a);
   display: flex;
@@ -463,6 +463,7 @@
   font-size: 0.7rem;
   font-weight: 800;
   color: #fff;
+  flex-shrink: 0; /* que no se aplaste */
 }
 .ev-promotor-name {
   font-size: 0.75rem;
